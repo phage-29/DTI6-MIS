@@ -97,7 +97,7 @@
                       horizontal: true,
                     }
                   },
-                  colors: ['#040815', '#0c1940', '#142a6b', '#1c3a96', '#244bc1', '#3e65db', '#6987e3', '#94a9eb','#bfccf3', '#eaeefb'],
+                  colors: ["#182015", "#0e1355", "#233b76", "#2e56b6", "#3961d7", "#457ced", "#5182f1", "#5c8dfa", "#6798ff", "#729ee3"],
                   dataLabels: {
                     enabled: true
                   },
@@ -134,7 +134,7 @@
                       show: true
                     }
                   },
-                  colors: ['#040815', '#0c1940', '#142a6b', '#1c3a96', '#244bc1', '#3e65db', '#6987e3', '#94a9eb','#bfccf3', '#eaeefb'],
+                  colors: ["#182015", "#0e1355", "#233b76", "#2e56b6", "#3961d7", "#457ced", "#5182f1", "#5c8dfa", "#6798ff", "#729ee3"],
                   labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
                 }).render();
               });
@@ -164,7 +164,7 @@
                       show: true
                     }
                   },
-                  colors: ['#040815', '#0c1940', '#142a6b', '#1c3a96', '#244bc1', '#3e65db', '#6987e3', '#94a9eb','#bfccf3', '#eaeefb'],
+                  colors: ["#182015", "#0e1355", "#233b76", "#2e56b6", "#3961d7", "#457ced", "#5182f1", "#5c8dfa", "#6798ff", "#729ee3"],
                   labels: ['Male', 'Female']
                 }).render();
               });
@@ -197,7 +197,7 @@
                       enabled: false
                     }
                   },
-                  colors: ['#040815', '#0c1940', '#142a6b', '#1c3a96', '#244bc1', '#3e65db', '#6987e3', '#94a9eb','#bfccf3', '#eaeefb'],
+                  colors: ["#182015", "#0e1355", "#233b76", "#2e56b6", "#3961d7", "#457ced", "#5182f1", "#5c8dfa", "#6798ff", "#729ee3"],
                   dataLabels: {
                     enabled: false
                   },
