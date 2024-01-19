@@ -1,3 +1,4 @@
+<?php $page = "Dashboard" ?>
 <?php require_once "assets/components/templates/header.php"; ?>
 <?php require_once "assets/components/templates/topbar.php"; ?>
 <?php require_once "assets/components/templates/sidebar.php"; ?>

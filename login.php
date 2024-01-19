@@ -1,3 +1,4 @@
+<?php $page="Login" ?>
 <?php require_once "assets/components/templates/header.php"; ?>
 <main>
   <div class="container">
@@ -10,7 +11,7 @@
             <div class="d-flex justify-content-center py-4">
               <a href="#DTI6-MIS" class="logo d-flex align-items-center w-auto">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
+                <span class="d-none d-lg-block"><?= $website ?></span>
               </a>
             </div><!-- End Logo -->
 
