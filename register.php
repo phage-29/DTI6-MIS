@@ -24,7 +24,7 @@
                   <p class="text-center small">Enter your personal details to create account</p>
                 </div>
 
-                <form id="registrationForm" class="row g-3">
+                <form class="row g-3 needs-validation" novalidate>
 
                   <div class="col-12">
                     <label for="first_name" class="form-label">First Name</label>
@@ -70,7 +70,7 @@
                     <label for="password" class="form-label">Password</label>
                     <div class="input-group">
                       <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-shield-lock"></i></span>
-                      <input type="password" name="password" class="form-control" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" autocomplete="off" required />
+                      <input type="password" name="password" class="form-control" id="password" pattern="(?=.{8,}" title="Must contain at least 8 or more characters" autocomplete="off" required />
                     </div>
                   </div>
 
@@ -140,62 +140,6 @@
                     <p class="small mb-0">Already have an account? <a href="login.php">Log in</a></p>
                   </div>
                 </form>
-                <script>
-                  $(document).ready(function() {
-                    $("#registrationForm").submit(function(e) {
-                      e.preventDefault();
-                      Swal.fire({
-                        title: "Loading",
-                        html: "Please wait...",
-                        allowOutsideClick: false,
-                        didOpen: function() {
-                          Swal.showLoading();
-                        }
-                      });
-
-                      var formData = $(this).serialize();
-
-                      $.ajax({
-                        type: "POST",
-                        url: "assets/components/includes/process.php",
-                        data: formData,
-                        dataType: 'json',
-                        success: function(response) {
-                          setTimeout(function() {
-                            Swal.fire({
-                              icon: response.status,
-                              title: response.message,
-                              showConfirmButton: false,
-                              timer: 1000
-                            }).then(function() {
-                              if (response.redirect) {
-                                window.location.href = response.redirect
-                              }
-                            })
-                          }, 1000)
-                        },
-                        error: function(error) {
-                          // Handle errors here
-                          console.log("Error:", error);
-                          setTimeout(function() {
-                            Swal.fire({
-                              icon: 'error',
-                              title: 'Something went wrong',
-                              showConfirmButton: false,
-                              timer: 750
-                            }).then(function() {
-                              if (response.redirect) {
-                                window.location.href = response.redirect
-                              }
-                            })
-                          }, 1000)
-                        },
-                      });
-                    });
-                  });
-                </script>
-
-
               </div>
             </div>
 

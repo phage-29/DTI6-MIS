@@ -1,4 +1,4 @@
-<?php $page="Login" ?>
+<?php $page = "Login" ?>
 <?php require_once "assets/components/templates/header.php"; ?>
 <main>
   <div class="container">
@@ -24,13 +24,13 @@
                   <p class="text-center small">Enter your username & password to login</p>
                 </div>
 
-                <form class="row g-3">
+                <form class="row g-3 needs-validation" novalidate>
 
                   <div class="col-12">
                     <label for="username" class="form-label">Username</label>
                     <div class="input-group">
                       <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-person"></i></span>
-                      <input type="text" name="username" class="form-control" id="username" required>
+                      <input type="text" name="username" class="form-control" id="username" autocomplete="off" required />
                     </div>
                   </div>
 
@@ -38,7 +38,7 @@
                     <label for="password" class="form-label">Password</label>
                     <div class="input-group">
                       <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-shield-lock"></i></span>
-                      <input type="password" name="password" class="form-control" id="password" required>
+                      <input type="password" name="password" class="form-control" id="password" autocomplete="off" required />
                     </div>
                   </div>
 
@@ -49,6 +49,7 @@
                     </div>
                   </div>
                   <div class="col-12">
+                    <input type="hidden" name="login" />
                     <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"></i> Login</button>
                   </div>
                   <div class="col-12">

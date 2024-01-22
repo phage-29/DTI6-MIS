@@ -1,112 +1,181 @@
-(function() {
-  "use strict";
-
-  /**
-   * Easy selector helper function
-   */
-  const select = (el, all = false) => {
-    el = el.trim()
-    if (all) {
-      return [...document.querySelectorAll(el)]
-    } else {
-      return document.querySelector(el)
-    }
-  }
-
-  /**
-   * Easy event listener function
-   */
-  const on = (type, el, listener, all = false) => {
-    if (all) {
-      select(el, all).forEach(e => e.addEventListener(type, listener))
-    } else {
-      select(el, all).addEventListener(type, listener)
-    }
-  }
-
-  /**
-   * Easy on scroll event listener 
-   */
-  const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
-  }
-
+$(document).ready(function () {
   /**
    * Sidebar toggle
    */
-  if (select('.toggle-sidebar-btn')) {
-    on('click', '.toggle-sidebar-btn', function(e) {
-      select('body').classList.toggle('toggle-sidebar')
-    })
+  if ($(".toggle-sidebar-btn").length) {
+    $(".toggle-sidebar-btn").on("click", function (e) {
+      $("body").toggleClass("toggle-sidebar");
+    });
   }
 
   /**
    * Search bar toggle
    */
-  if (select('.search-bar-toggle')) {
-    on('click', '.search-bar-toggle', function(e) {
-      select('.search-bar').classList.toggle('search-bar-show')
-    })
+  if ($(".search-bar-toggle").length) {
+    $(".search-bar-toggle").on("click", function (e) {
+      $(".search-bar").toggleClass("search-bar-show");
+    });
   }
 
   /**
    * Navbar links active state on scroll
    */
-  let navbarlinks = select('#navbar .scrollto', true)
+  let navbarlinks = $("#navbar .scrollto");
   const navbarlinksActive = () => {
-    let position = window.scrollY + 200
-    navbarlinks.forEach(navbarlink => {
-      if (!navbarlink.hash) return
-      let section = select(navbarlink.hash)
-      if (!section) return
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        navbarlink.classList.add('active')
+    let position = window.scrollY + 200;
+    navbarlinks.each(function () {
+      let navbarlink = $(this);
+      if (!navbarlink.prop("hash")) return;
+      let section = $(navbarlink.prop("hash"));
+      if (!section.length) return;
+      if (
+        position >= section.offset().top &&
+        position <= section.offset().top + section.outerHeight()
+      ) {
+        navbarlink.addClass("active");
       } else {
-        navbarlink.classList.remove('active')
+        navbarlink.removeClass("active");
       }
-    })
-  }
-  window.addEventListener('load', navbarlinksActive)
-  onscroll(document, navbarlinksActive)
+    });
+  };
+
+  $(window).on("load", navbarlinksActive);
+  $(document).on("scroll", navbarlinksActive);
 
   /**
    * Toggle .header-scrolled class to #header when page is scrolled
    */
-  let selectHeader = select('#header')
-  if (selectHeader) {
+  let selectHeader = $("#header");
+  if (selectHeader.length) {
     const headerScrolled = () => {
       if (window.scrollY > 100) {
-        selectHeader.classList.add('header-scrolled')
+        selectHeader.addClass("header-scrolled");
       } else {
-        selectHeader.classList.remove('header-scrolled')
+        selectHeader.removeClass("header-scrolled");
       }
-    }
-    window.addEventListener('load', headerScrolled)
-    onscroll(document, headerScrolled)
+    };
+
+    $(window).on("load", headerScrolled);
+    $(document).on("scroll", headerScrolled);
   }
 
   /**
    * Back to top button
    */
-  let backtotop = select('.back-to-top')
-  if (backtotop) {
+  let backtotop = $(".back-to-top");
+  if (backtotop.length) {
     const toggleBacktotop = () => {
       if (window.scrollY > 100) {
-        backtotop.classList.add('active')
+        backtotop.addClass("active");
       } else {
-        backtotop.classList.remove('active')
+        backtotop.removeClass("active");
       }
-    }
-    window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
+    };
+
+    $(window).on("load", toggleBacktotop);
+    $(document).on("scroll", toggleBacktotop);
   }
 
   /**
    * Initiate tooltips
    */
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-  })
+  $('[data-bs-toggle="tooltip"]').tooltip();
 
-})();
+  /**
+   * Toggle Sidebar
+   */
+  var currentLocation = window.location.pathname.split("/").pop(); // gets the current path
+
+  // Loop through each anchor tag inside #sidebar-nav
+  $("#sidebar-nav a").each(function () {
+    var href = $(this).attr("href");
+
+    // Check if href matches the current location
+    if (href === currentLocation) {
+      $(this).removeClass("collapsed"); // Remove the 'collapsed' class
+    }
+  });
+
+  /**
+   * form validation
+   */
+  var forms = $(".needs-validation");
+
+  // Loop over them and prevent submission
+  forms.each(function () {
+    var form = $(this);
+
+    form.on("submit", function (e) {
+      // Use checkValidity method on the form elements
+      if (!form[0].checkValidity()) {
+        e.preventDefault();
+        e.stopPropagation();
+        form.addClass("was-validated");
+        return;
+      }
+
+      e.preventDefault();
+      Swal.fire({
+        title: "Loading",
+        html: "Please wait...",
+        allowOutsideClick: false,
+        didOpen: function () {
+          Swal.showLoading();
+        },
+      });
+
+      var formData = form.serialize();
+
+      $.ajax({
+        type: "POST",
+        url: "assets/components/includes/process.php",
+        data: formData,
+        dataType: "json",
+        success: function (response) {
+          setTimeout(function () {
+            Swal.fire({
+              icon: response.status,
+              title: response.message,
+              showConfirmButton: false,
+              timer: 1000,
+            }).then(function () {
+              if (response.redirect) {
+                window.location.href = response.redirect;
+              } else {
+                location.reload();
+              }
+            });
+          }, 1000);
+        },
+      });
+    });
+  });
+
+  /**
+   * Logout button
+   */
+  $(".logout").click(function (e) {
+    e.preventDefault();
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          title: "See you again!",
+          showConfirmButton: false,
+          timer: 1000,
+        }).then(function () {
+          window.location.href = "assets/components/includes/logout.php";
+        });
+      }
+    });
+  });
+});

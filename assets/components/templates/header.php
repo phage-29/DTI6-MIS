@@ -1,5 +1,5 @@
 <?php
-require_once "assets/components/includes/conn.php";
+require_once "assets/components/includes/session.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +28,7 @@ require_once "assets/components/includes/conn.php";
   <script src="assets/vendor/jquery.min.js"></script>
   <script src="assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
   <script src="assets/vendor/fullcalendar/index.global.min.js"></script>
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
 
 </head>
 
