@@ -1,20 +1,8 @@
-<?php $page="Profile" ?>
+<?php $page = "Profile" ?>
 <?php require_once "assets/components/templates/header.php"; ?>
 <?php require_once "assets/components/templates/topbar.php"; ?>
 <?php require_once "assets/components/templates/sidebar.php"; ?>
 <main id="main" class="main">
-
-  <div class="pagetitle">
-    <h1>Profile</h1>
-    <nav>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item">Users</li>
-        <li class="breadcrumb-item active">Profile</li>
-      </ol>
-    </nav>
-  </div><!-- End Page Title -->
-
   <section class="section profile">
     <div class="row">
       <div class="col-xl-4">
@@ -293,6 +281,5 @@
       </div>
     </div>
   </section>
-
 </main><!-- End #main -->
 <?php require_once "assets/components/templates/footer.php"; ?>

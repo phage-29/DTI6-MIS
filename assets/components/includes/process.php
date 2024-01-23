@@ -2,6 +2,7 @@
 
 // get connection
 require_once 'conn.php';
+require_once 'sendmail.php';
 
 session_start();
 
@@ -138,6 +139,125 @@ if (isset($_POST['delete_user'])) {
     $result = $conn->execute_query($query, [$id]);
     $response['status'] = 'success';
     $response['message'] = 'User deleted successful!';
+}
+
+if (isset($_POST['request_helpdesk'])) {
+
+    $requested_by = $conn->real_escape_string(isset($_POST['request_by']) ? $_POST['request_by'] : $_SESSION['id']);
+    $request_type_id = $conn->real_escape_string($_POST['request_type_id']);
+    $category_id = $conn->real_escape_string($_POST['category_id']);
+    $sub_category_id = $conn->real_escape_string($_POST['sub_category_id']);
+    $complaint = $conn->real_escape_string($_POST['complaint']);
+    $datetime_preferred = $conn->real_escape_string($_POST['datetime_preferred']);
+    $date_requested = $conn->real_escape_string($_POST['date_requested']);
+
+    $Ym = date_format(date_create($date_requested), "Y-m");
+    $result = $conn->query("SELECT * FROM helpdesks WHERE DATE_FORMAT(date_requested, '%Y-%m') = '$Ym'");
+    $request_number = 'REQ-' . $Ym . '-' . str_pad($result->num_rows + 1, 3, '0', STR_PAD_LEFT);
+
+    $query = "INSERT INTO helpdesks (`request_number`,`requested_by`,`date_requested`, `request_type_id`, `category_id`, `sub_category_id`, `complaint`, `datetime_preferred`) VALUES (?,?,?,?,?,?,?,?)";
+    try {
+        $result = $conn->execute_query($query, [$request_number, $requested_by, $date_requested, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred]);
+
+        if (isset($_FILES['files'])) {
+            $fileCount = count($_FILES['files']['name']);
+
+            for ($i = 0; $i < $fileCount; $i++) {
+                $file_name = $_FILES['files']['name'][$i];
+                $file_name = explode('.', $file_name);
+                $file_name = md5(uniqid(rand(), true)) . '.' . end($file_name);
+                $file_temp_name = $_FILES['files']['tmp_name'][$i];
+                $file_size = $_FILES['files']['size'][$i];
+                $file_type = $_FILES['files']['type'][$i];
+                $file_error = $_FILES['files']['error'][$i];
+
+                $fileExt = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+                $allowedExtensions = ["pdf", "doc", "docx", "txt", "jpg", "jpeg", "png", "gif"];
+
+                if (in_array($fileExt, $allowedExtensions)) {
+                    $uploadDir = "uploads/";
+                    $destination = $uploadDir . $file_name;
+
+                    if (move_uploaded_file($file_temp_name, $destination)) {
+                        $query = "INSERT INTO files (reference_id, file_name, file_path, file_mime) VALUES (?, ?, ?, ?)";
+                        $result = $conn->execute_query($query, [$requested_by, $file_name, $destination, $file_type]);
+                    }
+                }
+            }
+        }
+        if ($_SESSION['role'] == 'Employee') {
+            $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$requested_by]);
+            $row = $query->fetch_object();
+
+            $Subject = "DTI6 MIS | " . $request_number;
+
+            $Message = "";
+            $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
+            $Message .= "<hr>";
+            $Message .= "<div>";
+            $Message .= "<div>Dear " . $row->first_name . " " . $row->last_name . ",</div>";
+            $Message .= "<br>";
+            $Message .= "<div>We acknowledge and appreciate your report related to IT/ICT Issue.</div>";
+            $Message .= "<br>";
+            $Message .= "<br>";
+            $Message .= "<div>Here are the details of your ticket:</div>";
+            $Message .= "<br>";
+            $Message .= "<div>Ticket Number: " . $request_number . "</div>";
+            $Message .= "<div>Date Submitted: " . date_format(date_create($date_requested), "d M, Y") . "</div>";
+            $Message .= "<div>Description of Issue: " . $complaint . "</div>";
+            $Message .= "<br>";
+            $Message .= "<br>";
+            $Message .= "<div>Our support team will reach out to you with updates.</div>";
+            $Message .= "<div>Thank you.</div>";
+            $Message .= "<br>";
+            $Message .= "<br>";
+            $Message .= "<div>Best Regards,</div>";
+            $Message .= "<br>";
+            $Message .= "<div>DTI6 MIS Administrator</div>";
+            $Message .= "<div>DTI Region VI</div>";
+            $Message .= "<br>";
+            $Message .= "<hr>";
+            $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
+            $Message .= "</div>";
+
+            sendEmail($row->email, $Subject, $Message);
+        }
+
+        $response['status'] = 'success';
+        $response['message'] = 'Request submit successful!';
+    } catch (Exception $e) {
+        $response['status'] = 'error';
+        $response['message'] = $e->getMessage();
+    }
+}
+
+if (isset($_POST['edit_helpdesk'])) {
+    $id = $conn->real_escape_string($_POST['id']);
+    $requested_by = $conn->real_escape_string(isset($_POST['request_by']) ? $_POST['request_by'] : $_SESSION['id']);
+    $request_type_id = $conn->real_escape_string($_POST['request_type_id']);
+    $category_id = $conn->real_escape_string($_POST['category_id']);
+    $sub_category_id = $conn->real_escape_string($_POST['sub_category_id']);
+    $complaint = $conn->real_escape_string($_POST['complaint']);
+    $datetime_preferred = $conn->real_escape_string($_POST['datetime_preferred']);
+    $date_requested = $conn->real_escape_string($_POST['date_requested']);
+
+    $query = "UPDATE helpdesks
+    SET requested_by = ?, request_type_id = ?, category_id = ?, sub_category_id = ?, complaint = ?, datetime_preferred = ?, date_requested = ?
+    WHERE id = ?";
+
+    $result = $conn->execute_query($query, [$requested_by, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $date_requested, $id]);
+    $response['status'] = 'success';
+    $response['message'] = 'Helpdesk updated successful!';
+}
+
+if (isset($_POST['delete_helpdesk'])) {
+    $id = $conn->real_escape_string($_POST['id']);
+
+    $query = "DELETE FROM helpdesks WHERE id = ?";
+
+    $result = $conn->execute_query($query, [$id]);
+    $response['status'] = 'success';
+    $response['message'] = 'Helpdesk deleted successful!';
 }
 
 $responseJSON = json_encode($response);

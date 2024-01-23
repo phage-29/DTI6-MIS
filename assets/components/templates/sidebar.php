@@ -9,14 +9,22 @@
                 <span>Dashboard</span>
             </a>
         </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="users.php">
-                <i class="bi bi-people"></i>
-                <span>User Management</span>
-            </a>
-        </li>
-
+        <?php
+        switch ($_SESSION['role']) {
+            case 'Admin':
+            case 'Officer':
+            case 'Staff':
+        ?>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="users.php">
+                        <i class="bi bi-people"></i>
+                        <span>User Management</span>
+                    </a>
+                </li>
+        <?php
+                break;
+        }
+        ?>
         <li class="nav-item">
             <a class="nav-link collapsed" href="helpdesks.php">
                 <i class="bi bi-window-dock"></i>

@@ -142,7 +142,61 @@ $(document).ready(function () {
               if (response.redirect) {
                 window.location.href = response.redirect;
               } else {
-                location.reload();
+                history.go(0);
+              }
+            });
+          }, 1000);
+        },
+      });
+    });
+  });
+
+  var forms = $(".enctype-validation");
+
+  // Loop over them and prevent submission
+  forms.each(function () {
+    var form = $(this);
+
+    form.on("submit", function (e) {
+      // Use checkValidity method on the form elements
+      if (!form[0].checkValidity()) {
+        e.preventDefault();
+        e.stopPropagation();
+        form.addClass("was-validated");
+        return;
+      }
+
+      e.preventDefault();
+      Swal.fire({
+        title: "Loading",
+        html: "Please wait...",
+        allowOutsideClick: false,
+        didOpen: function () {
+          Swal.showLoading();
+        },
+      });
+
+      var formData = new FormData($(".enctype-validation")[0]);
+
+      $.ajax({
+        type: "POST",
+        url: "assets/components/includes/process.php",
+        data: formData,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          setTimeout(function () {
+            Swal.fire({
+              icon: response.status,
+              title: response.message,
+              showConfirmButton: false,
+              timer: 1000,
+            }).then(function () {
+              if (response.redirect) {
+                window.location.href = response.redirect;
+              } else {
+                history.go(0);
               }
             });
           }, 1000);
