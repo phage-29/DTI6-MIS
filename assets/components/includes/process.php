@@ -11,9 +11,18 @@ $response = array();
 $response['status'] = 'error';
 $response['message'] = 'Something went wrong!';
 
+function validate($key, $conn)
+{
+    if (isset($_POST[$key]) && is_string($_POST[$key]) && trim($_POST[$key]) !== '') {
+        return $conn->real_escape_string($_POST[$key]);
+    } else {
+        return null;
+    }
+}
+
 if (isset($_POST['login'])) {
-    $username = $conn->real_escape_string($_POST['username']);
-    $password = $conn->real_escape_string($_POST['password']);
+    $username = validate('username', $conn);
+    $password = validate('password', $conn);
 
     $query = "SELECT * 
     FROM users 
@@ -57,70 +66,214 @@ if (isset($_POST['login'])) {
 }
 
 if (isset($_POST['register'])) {
-    $first_name = $conn->real_escape_string($_POST['first_name']);
-    $middle_name = $conn->real_escape_string($_POST['middle_name']);
-    $last_name = $conn->real_escape_string($_POST['last_name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $username = $conn->real_escape_string($_POST['username']);
-    $password = $conn->real_escape_string($_POST['password']);
+    $first_name = validate('first_name', $conn);
+    $middle_name = validate('middle_name', $conn);
+    $last_name = validate('last_name', $conn);
+    $email = validate('email', $conn);
+    $username = validate('username', $conn);
+    $password = validate('password', $conn);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     $query = "SELECT * 
     FROM users 
-    WHERE username = ?";
-    $result = $conn->execute_query($query, [$username]);
+    WHERE id_number = ?";
+
+    $result = $conn->execute_query($query, [$id_number]);
+
     if (!$result->num_rows) {
-        $query = "SELECT * FROM users WHERE email = ?";
-        $result = $conn->execute_query($query, [$email]);
+        $query = "SELECT * 
+        FROM users 
+        WHERE username = ?";
+
+        $result = $conn->execute_query($query, [$username]);
+
         if (!$result->num_rows) {
-            $query = "INSERT 
-            INTO users(`first_name`,`middle_name`,`last_name`,`email`,`username`,`password`) 
-            VALUES(?,?,?,?,?,?)";
-            $result = $conn->execute_query($query, [$first_name, $middle_name, $last_name, $email, $username, $hashed_password]);
+            $query = "SELECT * 
+            FROM users 
+            WHERE email = ?";
 
-            $_SESSION['id'] = $conn->insert_id;
+            $result = $conn->execute_query($query, [$email]);
 
-            $response['status'] = 'success';
-            $response['message'] = 'registered successfully!';
-            $response['redirect'] = 'dashboard.php';
+            if (!$result->num_rows) {
+                $query = "INSERT 
+                INTO users(`first_name`,`middle_name`,`last_name`,`email`,`username`,`password`) 
+                VALUES(?,?,?,?,?,?)";
+
+                $result = $conn->execute_query($query, [$first_name, $middle_name, $last_name, $email, $username, $hashed_password]);
+
+                $_SESSION['id'] = $conn->insert_id;
+
+                $response['status'] = 'success';
+                $response['message'] = 'registered successfully!';
+                $response['redirect'] = 'dashboard.php';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = $email . ' already exist!';
+            }
         } else {
             $response['status'] = 'error';
-            $response['message'] = $email . ' already exist!';
+            $response['message'] = $username . ' already exist!';
+        }
+    }
+}
+
+if (isset($_POST['add_user'])) {
+    $id_number = validate('id_number', $conn);
+    $first_name = validate('first_name', $conn);
+    $middle_name = validate('middle_name', $conn);
+    $last_name = validate('last_name', $conn);
+    $position = validate('position', $conn);
+    $division_id = validate('division_id', $conn);
+    $client_type_id = validate('client_type_id', $conn);
+    $date_birth = validate('date_birth', $conn);
+    $phone = validate('phone', $conn);
+    $email = validate('email', $conn);
+    $sex = validate('sex', $conn);
+    $address = validate('address', $conn);
+    $role_id = validate('role_id', $conn);
+    $pwd = isset($_POST['pwd']) ? 1 : 0;
+    $active = isset($_POST['active']) ? 1 : 0;
+    $username = $id_number;
+    $temp_password = substr(str_replace('.', '', uniqid('', true)), 0, 8);
+    $hashed_password = password_hash($temp_password, PASSWORD_DEFAULT);
+
+    $query = "SELECT * 
+    FROM users 
+    WHERE id_number = ?";
+
+    $result = $conn->execute_query($query, [$id_number]);
+
+    if (!$result->num_rows) {
+        $query = "SELECT * 
+        FROM users 
+        WHERE username = ?";
+
+        $result = $conn->execute_query($query, [$username]);
+
+        if (!$result->num_rows) {
+            $query = "SELECT * 
+            FROM users 
+            WHERE email = ?";
+
+            $result = $conn->execute_query($query, [$email]);
+
+            if (!$result->num_rows) {
+                $query = "INSERT 
+                INTO users(id_number, first_name, middle_name, last_name, position, division_id, client_type_id, date_birth, phone, email, sex, address, username, password, temp_password, role_id, pwd, active)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                $result = $conn->execute_query($query, [$id_number, $first_name, $middle_name, $last_name, $position, $division_id, $client_type_id, $date_birth, $phone, $email, $sex, $address, $username, $hashed_password, $temp_password, $role_id, $pwd, $active]);
+
+                $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$conn->insert_id]);
+                $row = $query->fetch_object();
+
+                $Subject = "DTI6 MIS | Account Credentials";
+
+                $Message = "";
+                $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
+                $Message .= "<hr>";
+                $Message .= "<div>";
+                $Message .= "<div>Dear " . $row->first_name . " " . $row->last_name . ",</div>";
+                $Message .= "<br>";
+                $Message .= "<div>Your account has been successfully created. Below are the login credentials for your account:</div>";
+                $Message .= "<br><br>";
+                $Message .= "<div>Username: " . $id_number . "</div>";
+                $Message .= "<div>Password: " . $temp_password . "</div>";
+                $Message .= "<br><br>";
+                $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
+                $Message .= "<div>To access your account, please visit <a href='http://localhost/DTI6-MIS/'>http://localhost/DTI6-MIS/</a>. Thank you.</div>";
+                $Message .= "<br><br>";
+                $Message .= "<div>Best Regards,</div>";
+                $Message .= "<br>";
+                $Message .= "<div>DTI6 MIS Administrator</div>";
+                $Message .= "<div>IT Support Staff</div>";
+                $Message .= "<div>DTI Region VI</div>";
+                $Message .= "<br><hr>";
+                $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
+                $Message .= "</div>";
+
+                sendEmail($row->email, $Subject, $Message);
+
+                $response['status'] = 'success';
+                $response['message'] = 'User inserted successful!';
+                $response['redirect'] = 'users.php';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = $email . ' already exist!';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = $username . ' already exist!';
         }
     } else {
         $response['status'] = 'error';
-        $response['message'] = $username . ' already exist!';
+        $response['message'] = $id_number . ' already exist!';
     }
 }
 
 if (isset($_POST['edit_user'])) {
-    $id = $conn->real_escape_string($_POST['id']);
-    $id_number = $conn->real_escape_string($_POST['id_number']);
-    $first_name = $conn->real_escape_string($_POST['first_name']);
-    $middle_name = $conn->real_escape_string($_POST['middle_name']);
-    $last_name = $conn->real_escape_string($_POST['last_name']);
-    $position = $conn->real_escape_string($_POST['position']);
-    $division_id = $conn->real_escape_string($_POST['division_id']);
-    $client_type_id = $conn->real_escape_string($_POST['client_type_id']);
-    $date_birth = $conn->real_escape_string($_POST['date_birth']);
-    $phone = $conn->real_escape_string($_POST['phone']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $sex = $conn->real_escape_string($_POST['sex']);
-    $address = $conn->real_escape_string($_POST['address']);
-    $role_id = $conn->real_escape_string($_POST['role_id']);
-    $edit_user = $conn->real_escape_string($_POST['edit_user']);
+    $id = validate('id', $conn);
+    $id_number = validate('id_number', $conn);
+    $first_name = validate('first_name', $conn);
+    $middle_name = validate('middle_name', $conn);
+    $last_name = validate('last_name', $conn);
+    $position = validate('position', $conn);
+    $division_id = validate('division_id', $conn);
+    $client_type_id = validate('client_type_id', $conn);
+    $date_birth = validate('date_birth', $conn);
+    $phone = validate('phone', $conn);
+    $email = validate('email', $conn);
+    $sex = validate('sex', $conn);
+    $address = validate('address', $conn);
+    $role_id = validate('role_id', $conn);
+    $pwd = isset($_POST['pwd']) ? 1 : 0;
+    $active = isset($_POST['active']) ? 1 : 0;
 
-    $query = "UPDATE users
-    SET id_number = ?, first_name = ?, middle_name = ?, last_name = ?, position = ?, division_id = ?, client_type_id = ?, date_birth = ?, phone = ?, email = ?, sex = ?, address = ?, role_id = ?
-    WHERE id = ?";
+    $query = "SELECT * 
+    FROM users 
+    WHERE id_number = ? AND id != ?";
 
-    $result = $conn->execute_query($query, [$id_number, $first_name, $middle_name, $last_name, $position, $division_id, $client_type_id, $date_birth, $phone, $email, $sex, $address, $role_id, $id]);
-    $response['status'] = 'success';
-    $response['message'] = 'User updated successful!';
+    $result = $conn->execute_query($query, [$id_number, $id]);
+
+    if (!$result->num_rows) {
+        $query = "SELECT * 
+        FROM users 
+        WHERE username = ? AND id != ?";
+
+        $result = $conn->execute_query($query, [$username, $id]);
+
+        if (!$result->num_rows) {
+            $query = "SELECT * 
+            FROM users 
+            WHERE email = ? AND id != ?";
+
+            $result = $conn->execute_query($query, [$email, $id]);
+
+            if (!$result->num_rows) {
+                $query = "UPDATE users
+                SET id_number = ?, first_name = ?, middle_name = ?, last_name = ?, position = ?, division_id = ?, client_type_id = ?, date_birth = ?, phone = ?, email = ?, sex = ?, address = ?, role_id = ?, pwd = ?, active = ?
+                WHERE id = ?";
+
+                $result = $conn->execute_query($query, [$id_number, $first_name, $middle_name, $last_name, $position, $division_id, $client_type_id, $date_birth, $phone, $email, $sex, $address, $role_id, $pwd, $active, $id]);
+                $response['status'] = 'success';
+                $response['message'] = 'User updated successful!';
+                $response['redirect'] = 'users.php';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = $email . ' already exist!';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = $username . ' already exist!';
+        }
+    } else {
+        $response['status'] = 'error';
+        $response['message'] = $id_number . ' already exist!';
+    }
 }
 
 if (isset($_POST['reset_pwd'])) {
-    $id = $conn->real_escape_string($_POST['id']);
+    $id = validate('id', $conn);
 
     $query = "UPDATE users 
     SET password = ?, temp_password = ?, temp_password_expiry = ?
@@ -129,35 +282,51 @@ if (isset($_POST['reset_pwd'])) {
     $result = $conn->execute_query($query, [$id]);
     $response['status'] = 'success';
     $response['message'] = 'User deleted successful!';
+    $response['redirect'] = 'users.php';
 }
 
 if (isset($_POST['delete_user'])) {
-    $id = $conn->real_escape_string($_POST['id']);
+    $id = validate('id', $conn);
 
     $query = "DELETE FROM users WHERE id = ?";
 
     $result = $conn->execute_query($query, [$id]);
     $response['status'] = 'success';
     $response['message'] = 'User deleted successful!';
+    $response['redirect'] = 'users.php';
 }
 
 if (isset($_POST['request_helpdesk'])) {
 
-    $requested_by = $conn->real_escape_string(isset($_POST['request_by']) ? $_POST['request_by'] : $_SESSION['id']);
-    $request_type_id = $conn->real_escape_string($_POST['request_type_id']);
-    $category_id = $conn->real_escape_string($_POST['category_id']);
-    $sub_category_id = $conn->real_escape_string($_POST['sub_category_id']);
-    $complaint = $conn->real_escape_string($_POST['complaint']);
-    $datetime_preferred = $conn->real_escape_string($_POST['datetime_preferred']);
-    $date_requested = $conn->real_escape_string($_POST['date_requested']);
+    $requested_by = $conn->real_escape_string(isset($_POST['requested_by']) ? $_POST['requested_by'] : $_SESSION['id']);
+    $request_type_id = validate('request_type_id', $conn);
+    $category_id = validate('category_id', $conn);
+    $sub_category_id = validate('sub_category_id', $conn);
+    $complaint = validate('complaint', $conn);
+    $datetime_preferred = validate('datetime_preferred', $conn);
+    $date_requested = validate('date_requested', $conn);
+    $status_id = validate('status_id', $conn);
+    $priority_level_id = validate('priority_level_id', $conn);
+    $repair_type_id = validate('repair_type_id', $conn);
+    $repair_class_id = validate('repair_class_id', $conn);
+    $medium_id = validate('medium_id', $conn);
+    $assigned_to = validate('assigned_to', $conn);
+    $serviced_by = validate('serviced_by', $conn);
+    $approved_by = validate('approved_by', $conn);
+    $datetime_start = validate('datetime_start', $conn);
+    $datetime_end = validate('datetime_end', $conn);
+    $diagnosis = validate('diagnosis', $conn);
+    $remarks = validate('remarks', $conn);
 
     $Ym = date_format(date_create($date_requested), "Y-m");
     $result = $conn->query("SELECT * FROM helpdesks WHERE DATE_FORMAT(date_requested, '%Y-%m') = '$Ym'");
     $request_number = 'REQ-' . $Ym . '-' . str_pad($result->num_rows + 1, 3, '0', STR_PAD_LEFT);
 
-    $query = "INSERT INTO helpdesks (`request_number`,`requested_by`,`date_requested`, `request_type_id`, `category_id`, `sub_category_id`, `complaint`, `datetime_preferred`) VALUES (?,?,?,?,?,?,?,?)";
+    $query = "INSERT 
+    INTO helpdesks (`request_number`,`requested_by`,`date_requested`, `request_type_id`, `category_id`, `sub_category_id`, `complaint`, `datetime_preferred`,`status_id`,`priority_level_id`,`repair_type_id`,`repair_class_id`,`medium_id`,`assigned_to`,`serviced_by`,`approved_by`,`datetime_start`,`datetime_end`,`diagnosis`,`remarks`) 
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     try {
-        $result = $conn->execute_query($query, [$request_number, $requested_by, $date_requested, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred]);
+        $result = $conn->execute_query($query, [$request_number, $requested_by, $date_requested, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $datetime_end, $diagnosis, $remarks]);
 
         if (isset($_FILES['files'])) {
             $fileCount = count($_FILES['files']['name']);
@@ -225,6 +394,7 @@ if (isset($_POST['request_helpdesk'])) {
 
         $response['status'] = 'success';
         $response['message'] = 'Request submit successful!';
+        $response['redirect'] = 'helpdesks.php';
     } catch (Exception $e) {
         $response['status'] = 'error';
         $response['message'] = $e->getMessage();
@@ -232,32 +402,252 @@ if (isset($_POST['request_helpdesk'])) {
 }
 
 if (isset($_POST['edit_helpdesk'])) {
-    $id = $conn->real_escape_string($_POST['id']);
-    $requested_by = $conn->real_escape_string(isset($_POST['request_by']) ? $_POST['request_by'] : $_SESSION['id']);
-    $request_type_id = $conn->real_escape_string($_POST['request_type_id']);
-    $category_id = $conn->real_escape_string($_POST['category_id']);
-    $sub_category_id = $conn->real_escape_string($_POST['sub_category_id']);
-    $complaint = $conn->real_escape_string($_POST['complaint']);
-    $datetime_preferred = $conn->real_escape_string($_POST['datetime_preferred']);
-    $date_requested = $conn->real_escape_string($_POST['date_requested']);
+    $id = validate('id', $conn);
+    $requested_by = $conn->real_escape_string(isset($_POST['requested_by']) ? $_POST['requested_by'] : $_SESSION['id']);
+    $request_type_id = validate('request_type_id', $conn);
+    $category_id = validate('category_id', $conn);
+    $sub_category_id = validate('sub_category_id', $conn);
+    $complaint = validate('complaint', $conn);
+    $datetime_preferred = validate('datetime_preferred', $conn);
+    $date_requested = validate('date_requested', $conn);
+    $status_id = validate('status_id', $conn);
+    $priority_level_id = validate('priority_level_id', $conn);
+    $repair_type_id = validate('repair_type_id', $conn);
+    $repair_class_id = validate('repair_class_id', $conn);
+    $medium_id = validate('medium_id', $conn);
+    $assigned_to = validate('assigned_to', $conn);
+    $serviced_by = validate('serviced_by', $conn);
+    $approved_by = validate('approved_by', $conn);
+    $datetime_start = validate('datetime_start', $conn);
+    $datetime_end = validate('datetime_end', $conn);
+    $diagnosis = validate('diagnosis', $conn);
+    $remarks = validate('remarks', $conn);
 
     $query = "UPDATE helpdesks
-    SET requested_by = ?, request_type_id = ?, category_id = ?, sub_category_id = ?, complaint = ?, datetime_preferred = ?, date_requested = ?
+    SET requested_by = ?, request_type_id = ?, category_id = ?, sub_category_id = ?, complaint = ?, datetime_preferred = ?, status_id = ?, priority_level_id = ?, repair_type_id = ?, repair_class_id = ?, medium_id = ?, assigned_to = ?, serviced_by = ?, approved_by = ?, datetime_start = ?, datetime_end = ?, diagnosis = ?, remarks = ?
     WHERE id = ?";
+    try {
+        $result = $conn->execute_query($query, [$requested_by, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $datetime_end, $diagnosis, $remarks, $id]);
 
-    $result = $conn->execute_query($query, [$requested_by, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $date_requested, $id]);
-    $response['status'] = 'success';
-    $response['message'] = 'Helpdesk updated successful!';
+        $query = $conn->execute_query("SELECT
+            h.id,
+            h.request_number,
+            CONCAT(
+                u1.first_name, ' ', u1.last_name
+            ) AS requested_by,
+            u1.email,
+            h.date_requested,
+            rt.request_type,
+            c.category,
+            sc.sub_category,
+            h.complaint,
+            h.datetime_preferred,
+            h.status_id,
+            h.sent_id,
+            hs.status,
+            pl.priority_level,
+            rtype.repair_type,
+            rclass.repair_class,
+            m.medium,
+            CONCAT(
+                u2.first_name, ' ', u2.last_name
+            ) AS assigned_to,
+            CONCAT(
+                u3.first_name, ' ', u3.last_name
+            ) AS serviced_by,
+            CONCAT(
+                u4.first_name, ' ', u4.last_name
+            ) AS approved_by
+        FROM
+            helpdesks h
+            LEFT JOIN users u1 ON h.requested_by = u1.id
+            LEFT JOIN request_types rt ON h.request_type_id = rt.id
+            LEFT JOIN categories c ON h.category_id = c.id
+            LEFT JOIN sub_categories sc ON h.sub_category_id = sc.id
+            LEFT JOIN helpdesks_statuses hs ON h.status_id = hs.id
+            LEFT JOIN priority_levels pl ON h.priority_level_id = pl.id
+            LEFT JOIN repair_types rtype ON h.repair_type_id = rtype.id
+            LEFT JOIN repair_classes rclass ON h.repair_class_id = rclass.id
+            LEFT JOIN mediums m ON h.medium_id = m.id
+            LEFT JOIN users u2 ON h.assigned_to = u2.id
+            LEFT JOIN users u3 ON h.serviced_by = u3.id
+            LEFT JOIN users u4 ON h.approved_by = u4.id
+        WHERE 
+            h.id = ?", [$id]);
+        $row = $query->fetch_object();
+
+        if ($row->status_id > $row->sent_id) {
+            $Subject = "DTI6 MIS | " . $row->request_number . '(' . $row->status . ')';
+
+            $Message = "";
+            $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
+            $Message .= "<hr>";
+            $Message .= "<div>";
+            $Message .= "<div>Dear " . $row->requested_by . ",</div>";
+            $Message .= "<br>";
+            $Message .= "<div>We would like to inform you that your request " . $row->request_number . " is currently in a " . $row->status . " status.</div>";
+            $Message .= "<br>";
+            $Message .= "<br>";
+            $Message .= "<div>Here are the details of your ticket:</div>";
+            $Message .= "<br>";
+            $Message .= "<div>Ticket Number: " . $row->request_number . "</div>";
+            $Message .= "<div>Date Submitted: " . date_format(date_create($row->date_requested), "d M, Y") . "</div>";
+            $Message .= "<div>Description of Issue: " . $row->complaint . "</div>";
+            $Message .= "--------------------------------------------------------";
+            $Message .= "<br>";
+            $Message .= "<br>";
+            $Message .= "<div>Our support team will reach out to you with updates.</div>";
+            $Message .= "<div>Thank you.</div>";
+            $Message .= "<br>";
+            $Message .= "<br>";
+            $Message .= "<div>Best Regards,</div>";
+            $Message .= "<br>";
+            $Message .= "<div>DTI6 MIS Administrator</div>";
+            $Message .= "<div>DTI Region VI</div>";
+            $Message .= "<br>";
+            $Message .= "<hr>";
+            $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
+            $Message .= "</div>";
+
+            sendEmail($row->email, $Subject, $Message);
+
+            $query = $conn->execute_query("UPDATE helpdesks SET sent_id = ?
+        WHERE 
+            id = ?", [$row->status_id, $row->id]);
+        }
+
+
+        $response['status'] = 'success';
+        $response['message'] = 'Helpdesk updated successful!';
+        $response['redirect'] = 'helpdesks.php';
+    } catch (Exception $e) {
+        $response['status'] = 'error';
+        $response['message'] = $e->getMessage();
+    }
 }
 
-if (isset($_POST['delete_helpdesk'])) {
-    $id = $conn->real_escape_string($_POST['id']);
+if (isset($_POST['cancel_helpdesk'])) {
+    $id = validate('id', $conn);
 
-    $query = "DELETE FROM helpdesks WHERE id = ?";
+    $query = "UPDATE helpdesks SET status_id = 6 WHERE id = ?";
 
     $result = $conn->execute_query($query, [$id]);
     $response['status'] = 'success';
-    $response['message'] = 'Helpdesk deleted successful!';
+    $response['message'] = 'Helpdesk cancelled successful!';
+    $response['redirect'] = 'helpdesks.php';
+}
+
+if (isset($_POST['request_meeting'])) {
+
+    $requested_by = $conn->real_escape_string(isset($_POST['requested_by']) ? $_POST['requested_by'] : $_SESSION['id']);
+    $date_requested = validate('date_requested', $conn);
+    $topic = validate('topic', $conn);
+    $date_scheduled = validate('date_scheduled', $conn);
+    $time_start = validate('time_start', $conn);
+    $time_end = validate('time_end', $conn);
+    $status_id = validate('status_id', $conn);
+    $host_id = validate('host_id', $conn);
+    $meetingid = validate('meetingid', $conn);
+    $passcode = validate('passcode', $conn);
+    $join_link = validate('join_link', $conn);
+    $start_link = validate('start_link', $conn);
+    $remarks = validate('remarks', $conn);
+    $generated_by = validate('generated_by', $conn);
+    $approved_by = validate('approved_by', $conn);
+
+    $Ym = date_format(date_create($date_requested), "Y-m");
+    $result = $conn->query("SELECT * FROM meetings WHERE DATE_FORMAT(date_requested, '%Y-%m') = '$Ym'");
+    $meeting_number = 'MTG-' . $Ym . '-' . str_pad($result->num_rows + 1, 3, '0', STR_PAD_LEFT);
+    $query = "SELECT h.id
+    FROM hosts h
+        LEFT JOIN (
+            SELECT *
+            FROM meetings
+            WHERE
+                status_id = 2
+                AND date_scheduled = ?
+                AND (
+                    (
+                        time_start BETWEEN ? AND ?
+                    )
+                    OR (
+                        time_end BETWEEN ? AND ?
+                    )
+                    OR (
+                        ? BETWEEN time_start AND time_end
+                    )
+                    OR (
+                        ? BETWEEN time_start AND time_end
+                    )
+                )
+        ) m ON m.host_id = h.id
+    GROUP BY
+        h.id
+    HAVING
+        COUNT(m.id) = 0";
+
+    try {
+        $result = $conn->execute_query($query, [$date_scheduled, $time_start, $time_end, $time_start, $time_end, $time_start, $time_end]);
+        if ($result->num_rows) {
+
+            $query = "INSERT INTO
+                meetings (
+                    meeting_number, requested_by, date_requested, topic, date_scheduled, time_start, time_end, status_id, host_id, meetingid, passcode, join_link, start_link, remarks, generated_by, approved_by
+                )
+            VALUES (
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                )";
+            $result = $conn->execute_query($query, [$meeting_number, $requested_by, $date_requested, $topic, $date_scheduled, $time_start, $time_end, $status_id, $host_id, $meetingid, $passcode, $join_link, $start_link, $remarks, $generated_by, $approved_by]);
+
+            if ($_SESSION['role'] == 'Employee') {
+                $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$requested_by]);
+                $row = $query->fetch_object();
+
+                $Subject = "DTI6 MIS | " . $request_number;
+
+                $Message = "";
+                $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
+                $Message .= "<hr>";
+                $Message .= "<div>";
+                $Message .= "<div>Dear " . $row->first_name . " " . $row->last_name . ",</div>";
+                $Message .= "<br>";
+                $Message .= "<div>We acknowledge and appreciate your report related to IT/ICT Issue.</div>";
+                $Message .= "<br>";
+                $Message .= "<br>";
+                $Message .= "<div>Here are the details of your ticket:</div>";
+                $Message .= "<br>";
+                $Message .= "<div>Ticket Number: " . $request_number . "</div>";
+                $Message .= "<div>Date Submitted: " . date_format(date_create($date_requested), "d M, Y") . "</div>";
+                $Message .= "<div>Description of Issue: " . $complaint . "</div>";
+                $Message .= "<br>";
+                $Message .= "<br>";
+                $Message .= "<div>Our support team will reach out to you with updates.</div>";
+                $Message .= "<div>Thank you.</div>";
+                $Message .= "<br>";
+                $Message .= "<br>";
+                $Message .= "<div>Best Regards,</div>";
+                $Message .= "<br>";
+                $Message .= "<div>DTI6 MIS Administrator</div>";
+                $Message .= "<div>DTI Region VI</div>";
+                $Message .= "<br>";
+                $Message .= "<hr>";
+                $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
+                $Message .= "</div>";
+
+                sendEmail($row->email, $Subject, $Message);
+            }
+
+            $response['status'] = 'success';
+            $response['message'] = 'Schedule submit successful!';
+            $response['redirect'] = 'meetings.php';
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'There is a scheduling overlap with other meetings.';
+        }
+    } catch (Exception $e) {
+        $response['status'] = 'error';
+        $response['message'] = $e->getMessage();
+    }
 }
 
 $responseJSON = json_encode($response);

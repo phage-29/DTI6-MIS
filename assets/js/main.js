@@ -141,8 +141,6 @@ $(document).ready(function () {
             }).then(function () {
               if (response.redirect) {
                 window.location.href = response.redirect;
-              } else {
-                history.go(0);
               }
             });
           }, 1000);
@@ -195,8 +193,6 @@ $(document).ready(function () {
             }).then(function () {
               if (response.redirect) {
                 window.location.href = response.redirect;
-              } else {
-                history.go(0);
               }
             });
           }, 1000);
