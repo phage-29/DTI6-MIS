@@ -274,12 +274,13 @@
                 <table id="admintblhelpdesks" class="display" style="width:100%;display:none;">
                   <thead>
                     <tr>
-                      <th>Requestor</th>
+                      <th>Date</th>
                       <th>Request No</th>
+                      <th>Status</th>
+                      <th>Requestor</th>
                       <th>Request Type</th>
                       <th>Category</th>
                       <th>Sub Category</th>
-                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -795,7 +796,7 @@
                         ?>
                       </select>
                     </div>
-                    
+
                     <div class="text-end">
                       <input type="hidden" name="id" id="id" />
                       <input type="hidden" name="edit_helpdesk" />
@@ -820,182 +821,191 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <p class="small"><strong>PART I. RATINGS</strong></p>
-                  <hr>
-                  <div class="row mb-2 crit1">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>RESPONSIVENESS, ASSURANCE, AND INTEGRITY</strong></p>
-                      <p>Delivery of services are on time, friendly, courteous, fair and in a professional manner.</p>
+                  <form class="needs-validation">
+                    <p class="small"><strong class="small">PART I. Our office is committed to continually improve our services to our external clients. Please answer this Form for us to know your feedback on the different aspects of our services. Your feedback and impressions will help us in improving our services in order to better serve our clients. Rest assured all information you will provide shall be treated with strict confidentiality. </strong></p>
+                    <hr>
+                    <div class="row mb-2 crit1">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>RESPONSIVENESS, ASSURANCE, AND INTEGRITY</strong></p>
+                        <p>Delivery of services are on time, friendly, courteous, fair and in a professional manner.</p>
+                      </div>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit1-4" onclick="updateRating('crit1', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit1-3" onclick="updateRating('crit1', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit1-2" onclick="updateRating('crit1', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit1-1" onclick="updateRating('crit1', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <input type="hidden" name="crit1" id="crit1" />
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('crit1', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
+                    <div class="row mb-2 crit2">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>RELIABILITY AND OUTCOME</strong></p>
+                        <p>Actual services are acted upon immediately. Delivery of service are complete, accurate and corresponds to requirement.</p>
                       </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('crit1', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit2-4" onclick="updateRating('crit2', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit2-3" onclick="updateRating('crit2', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit2-2" onclick="updateRating('crit2', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit2-1" onclick="updateRating('crit2', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
                       </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('crit1', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('crit1', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
+                      <input type="hidden" name="crit2" id="crit2" />
                     </div>
-                    <input type="hidden" id="crit1" />
-                  </div>
-                  <div class="row mb-2 crit2">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>RELIABILITY AND OUTCOME</strong></p>
-                      <p>Actual services are acted upon immediately. Delivery of service are complete, accurate and corresponds to requirement.</p>
+                    <div class="row mb-2 crit3">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>ACCESS AND FACILITIES</strong></p>
+                        <p>Computer and Technology facilities and services are sustainable and available when needed.</p>
+                      </div>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit3-4" onclick="updateRating('crit3', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit3-3" onclick="updateRating('crit3', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit3-2" onclick="updateRating('crit3', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit3-1" onclick="updateRating('crit3', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <input type="hidden" name="crit3" id="crit3" />
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('crit2', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
+                    <div class="row mb-2 crit4">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>COMMUNICATION</strong></p>
+                        <p>The requirements and process for the service requests system is properly communicated.</p>
                       </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('crit2', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit4-4" onclick="updateRating('crit4', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit4-3" onclick="updateRating('crit4', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit4-2" onclick="updateRating('crit4', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit4-1" onclick="updateRating('crit4', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
                       </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('crit2', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('crit2', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
+                      <input type="hidden" name="crit4" id="crit4" />
                     </div>
-                    <input type="hidden" id="crit2" />
-                  </div>
-                  <div class="row mb-2 crit3">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>ACCESS AND FACILITIES</strong></p>
-                      <p>Computer and Technology facilities and services are sustainable and available when needed.</p>
+                    <hr>
+                    <div class="row mb-2 overall">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>OVERALL SATISFACTION RATING</strong></p>
+                        <p>Overall, how satisfied are you with the technology facilities and services available?</p>
+                      </div>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="overall-4" onclick="updateRating('overall', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="overall-3" onclick="updateRating('overall', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="overall-2" onclick="updateRating('overall', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="overall-1" onclick="updateRating('overall', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <input type="hidden" name="overall" id="overall" />
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('crit3', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('crit3', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('crit3', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('crit3', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <input type="hidden" id="crit3" />
-                  </div>
-                  <div class="row mb-2 crit4">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>COMMUNICATION</strong></p>
-                      <p>The requirements and process for the service requests system is properly communicated.</p>
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('crit4', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('crit4', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('crit4', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('crit4', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <input type="hidden" id="crit4" />
-                  </div>
-                  <hr>
-                  <div class="row mb-2 overall">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>OVERALL SATISFACTION RATING</strong></p>
-                      <p>Overall, how satisfied are you with the technology facilities and services available?</p>
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('overall', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('overall', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('overall', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('overall', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <input type="hidden" id="overall" />
-                  </div>
 
-                  <script>
-                    function updateRating(elementId, value, button) {
-                      $('#' + elementId).val(value);
-                      // Remove the 'selected' class from all buttons
-                      $('.' + elementId + ' .rating-button').removeClass('text-warning');
-                      // Add the 'selected' class to the clicked button
-                      $(button).addClass('text-warning');
-                    }
-                  </script>
-                  <hr>
-                  <hr>
-                  <p class="small"><strong>PART II. COMMENTS AND SUGGESTIONS</strong></p>
-                  <hr>
-                  <div class="mb-2">
-                    <label for="reasons" class="small">Please write in the space below your reason/s for your "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to improve.</label>
-                    <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150" required></textarea>
-                  </div>
-                  <div class="mb-2">
-                    <label for="comments" class="small">Please give comments/suggestions to help us improve our service/s:</label>
-                    <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150" required></textarea>
-                  </div>
-                  <hr>
-                  <hr>
-                  <p class="m-0 p-0 text-center"><strong>THANK YOU!!!</strong></p>
+                    <script>
+                      function updateRating(elementId, value, button) {
+                        $('#' + elementId).val(value);
+                        // Remove the 'selected' class from all buttons
+                        $('.' + elementId + ' .rating-button').removeClass('text-warning');
+                        // Add the 'selected' class to the clicked button
+                        $(button).addClass('text-warning');
+                      }
+                    </script>
+                    <hr>
+                    <hr>
+                    <p class="small"><strong>PART II. COMMENTS AND SUGGESTIONS</strong></p>
+                    <hr>
+                    <div class="mb-2">
+                      <label for="reasons" class="small">Please write in the space below your reason/s for your "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to improve.</label>
+                      <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150" required></textarea>
+                    </div>
+                    <div class="mb-2">
+                      <label for="comments" class="small">Please give comments/suggestions to help us improve our service/s:</label>
+                      <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150" required></textarea>
+                    </div>
+                    <hr>
+                    <hr>
+                    <p class="m-0 p-0 text-center"><strong>THANK YOU!!!</strong></p>
+                    <input type="hidden" name="helpdesks_id" id="helpdesks_id" />
+                    <input type="hidden" name="id" id="id" />
+
+                    <input name="add_csf" id="add_csf" disabled hidden />
+                    <input name="edit_csf" id="edit_csf" disabled hidden />
+                    <button id="csfbtn" hidden></button>
+                  </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="csfbtn.click();">Save Changes</button>
                 </div>
               </div>
             </div>
@@ -1010,14 +1020,14 @@
                 "ajax": "assets/components/includes/datatables.php?helpdesks1",
                 "columnDefs": [{
                   "className": "dt-nowrap",
-                  "targets": [0, 1, 2, 3, 4, 5, 6]
+                  "targets": [0, 1, 2, 3, 4, 5, 6, 7]
                 }, {
-                  "target": 7,
+                  "target": 8,
                   "visible": false,
                   "searchable": false
                 }],
                 "order": [
-                  [7, 'asc'],
+                  [8, 'asc'],
                   [0, 'desc']
                 ],
                 "initComplete": function(settings, json) {
@@ -1151,6 +1161,38 @@
                   $('#editModal').modal('show');
                   break;
                 case 'csf':
+                  $.ajax({
+                    type: "POST",
+                    url: "assets/components/includes/fetch.php",
+                    data: {
+                      'edit_helpdesk': '',
+                      'id': id
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                      console.log(response);
+                      $('#csfModalLabel').html(response.request_number + ' (<span class="text-' + response.color + '">' + response.status + '</span>)');
+                      $('#helpdesks_id').val(response.id);
+
+                      if (response.csf_id) {
+                        $('#crit1').val(response.crit1);
+                        $('#crit1-' + response.crit1).addClass('text-warning');
+                        $('#crit2').val(response.crit2);
+                        $('#crit2-' + response.crit2).addClass('text-warning');
+                        $('#crit3').val(response.crit3);
+                        $('#crit3-' + response.crit3).addClass('text-warning');
+                        $('#crit4').val(response.crit4);
+                        $('#crit4-' + response.crit4).addClass('text-warning');
+                        $('#overall').val(response.overall);
+                        $('#overall-' + response.overall).addClass('text-warning');
+                        $('#reasons').html(response.reasons);
+                        $('#comments').html(response.comments);
+                        $('#edit_csf').prop('disabled', false);
+                      } else {
+                        $('#add_csf').prop('disabled', false);
+                      }
+                    }
+                  });
                   $('#csfModal').modal('show');
                   break;
               }
@@ -1567,183 +1609,192 @@
                   <h1 class="modal-title fs-5" id="csfModalLabel">csf</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                  <p class="small"><strong>PART I. RATINGS</strong></p>
-                  <hr>
-                  <div class="row mb-2 crit1">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>RESPONSIVENESS, ASSURANCE, AND INTEGRITY</strong></p>
-                      <p>Delivery of services are on time, friendly, courteous, fair and in a professional manner.</p>
+                <div class="modal-body" id="csfModalBody">
+                  <form class="needs-validation">
+                    <p class="small"><strong class="small">PART I. Our office is committed to continually improve our services to our external clients. Please answer this Form for us to know your feedback on the different aspects of our services. Your feedback and impressions will help us in improving our services in order to better serve our clients. Rest assured all information you will provide shall be treated with strict confidentiality. </strong></p>
+                    <hr>
+                    <div class="row mb-2 crit1">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>RESPONSIVENESS, ASSURANCE, AND INTEGRITY</strong></p>
+                        <p>Delivery of services are on time, friendly, courteous, fair and in a professional manner.</p>
+                      </div>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit1-4" onclick="updateRating('crit1', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit1-3" onclick="updateRating('crit1', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit1-2" onclick="updateRating('crit1', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit1-1" onclick="updateRating('crit1', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <input type="hidden" name="crit1" id="crit1" />
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('crit1', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
+                    <div class="row mb-2 crit2">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>RELIABILITY AND OUTCOME</strong></p>
+                        <p>Actual services are acted upon immediately. Delivery of service are complete, accurate and corresponds to requirement.</p>
                       </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('crit1', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit2-4" onclick="updateRating('crit2', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit2-3" onclick="updateRating('crit2', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit2-2" onclick="updateRating('crit2', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit2-1" onclick="updateRating('crit2', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
                       </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('crit1', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('crit1', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
+                      <input type="hidden" name="crit2" id="crit2" />
                     </div>
-                    <input type="hidden" id="crit1" />
-                  </div>
-                  <div class="row mb-2 crit2">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>RELIABILITY AND OUTCOME</strong></p>
-                      <p>Actual services are acted upon immediately. Delivery of service are complete, accurate and corresponds to requirement.</p>
+                    <div class="row mb-2 crit3">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>ACCESS AND FACILITIES</strong></p>
+                        <p>Computer and Technology facilities and services are sustainable and available when needed.</p>
+                      </div>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit3-4" onclick="updateRating('crit3', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit3-3" onclick="updateRating('crit3', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit3-2" onclick="updateRating('crit3', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit3-1" onclick="updateRating('crit3', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <input type="hidden" name="crit3" id="crit3" />
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('crit2', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
+                    <div class="row mb-2 crit4">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>COMMUNICATION</strong></p>
+                        <p>The requirements and process for the service requests system is properly communicated.</p>
                       </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('crit2', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit4-4" onclick="updateRating('crit4', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit4-3" onclick="updateRating('crit4', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit4-2" onclick="updateRating('crit4', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit4-1" onclick="updateRating('crit4', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
                       </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('crit2', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('crit2', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
+                      <input type="hidden" name="crit4" id="crit4" />
                     </div>
-                    <input type="hidden" id="crit2" />
-                  </div>
-                  <div class="row mb-2 crit3">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>ACCESS AND FACILITIES</strong></p>
-                      <p>Computer and Technology facilities and services are sustainable and available when needed.</p>
+                    <hr>
+                    <div class="row mb-2 overall">
+                      <div class="col-lg-6 col-md-12 col-sm-12 small">
+                        <p><strong>OVERALL SATISFACTION RATING</strong></p>
+                        <p>Overall, how satisfied are you with the technology facilities and services available?</p>
+                      </div>
+                      <div class="col-lg-6 col-md-12 col-sm-12 row">
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="4" id="overall-4" onclick="updateRating('overall', 4, this)" title="Excellent">
+                            <i class="fs-3 bi bi-emoji-laughing"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="3" id="overall-3" onclick="updateRating('overall', 3, this)" title="Good">
+                            <i class="fs-3 bi bi-emoji-smile"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="2" id="overall-2" onclick="updateRating('overall', 2, this)" title="Average">
+                            <i class="fs-3 bi bi-emoji-frown"></i>
+                          </button>
+                        </div>
+                        <div class="col-3 small text-center">
+                          <button type="button" class="btn rating-button" data-value="1" id="overall-1" onclick="updateRating('overall', 1, this)" title="Poor">
+                            <i class="fs-3 bi bi-emoji-angry"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <input type="hidden" name="overall" id="overall" />
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('crit3', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('crit3', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('crit3', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('crit3', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <input type="hidden" id="crit3" />
-                  </div>
-                  <div class="row mb-2 crit4">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>COMMUNICATION</strong></p>
-                      <p>The requirements and process for the service requests system is properly communicated.</p>
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('crit4', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('crit4', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('crit4', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('crit4', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <input type="hidden" id="crit4" />
-                  </div>
-                  <hr>
-                  <div class="row mb-2 overall">
-                    <div class="col-lg-6 col-md-12 col-sm-12 small">
-                      <p><strong>OVERALL SATISFACTION RATING</strong></p>
-                      <p>Overall, how satisfied are you with the technology facilities and services available?</p>
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 row">
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="4" onclick="updateRating('overall', 4, this)" title="Excellent">
-                          <i class="fs-3 bi bi-emoji-laughing"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="3" onclick="updateRating('overall', 3, this)" title="Good">
-                          <i class="fs-3 bi bi-emoji-smile"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="2" onclick="updateRating('overall', 2, this)" title="Average">
-                          <i class="fs-3 bi bi-emoji-frown"></i>
-                        </button>
-                      </div>
-                      <div class="col-3 small text-center">
-                        <button class="btn rating-button" data-value="1" onclick="updateRating('overall', 1, this)" title="Poor">
-                          <i class="fs-3 bi bi-emoji-angry"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <input type="hidden" id="overall" />
-                  </div>
 
-                  <script>
-                    function updateRating(elementId, value, button) {
-                      $('#' + elementId).val(value);
-                      // Remove the 'selected' class from all buttons
-                      $('.' + elementId + ' .rating-button').removeClass('text-warning');
-                      // Add the 'selected' class to the clicked button
-                      $(button).addClass('text-warning');
-                    }
-                  </script>
-                  <hr>
-                  <hr>
-                  <p class="small"><strong>PART II. COMMENTS AND SUGGESTIONS</strong></p>
-                  <hr>
-                  <div class="mb-2">
-                    <label for="reasons" class="small">Please write in the space below your reason/s for your "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to improve.</label>
-                    <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150" required></textarea>
-                  </div>
-                  <div class="mb-2">
-                    <label for="comments" class="small">Please give comments/suggestions to help us improve our service/s:</label>
-                    <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150" required></textarea>
-                  </div>
-                  <hr>
-                  <hr>
-                  <p class="m-0 p-0 text-center"><strong>THANK YOU!!!</strong></p>
+                    <script>
+                      function updateRating(elementId, value, button) {
+                        $('#' + elementId).val(value);
+                        // Remove the 'selected' class from all buttons
+                        $('.' + elementId + ' .rating-button').removeClass('text-warning');
+                        // Add the 'selected' class to the clicked button
+                        $(button).addClass('text-warning');
+                      }
+                    </script>
+                    <hr>
+                    <hr>
+                    <p class="small"><strong>PART II. COMMENTS AND SUGGESTIONS</strong></p>
+                    <hr>
+                    <div class="mb-2">
+                      <label for="reasons" class="small">Please write in the space below your reason/s for your "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to improve.</label>
+                      <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150" required></textarea>
+                    </div>
+                    <div class="mb-2">
+                      <label for="comments" class="small">Please give comments/suggestions to help us improve our service/s:</label>
+                      <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150" required></textarea>
+                    </div>
+                    <hr>
+                    <hr>
+                    <p class="m-0 p-0 text-center"><strong>THANK YOU!!!</strong></p>
+                    <input type="hidden" name="helpdesks_id" id="helpdesks_id" />
+                    <input type="hidden" name="id" id="id" />
+
+                    <input name="add_csf" id="add_csf" disabled hidden />
+                    <input name="edit_csf" id="edit_csf" disabled hidden />
+                    <button id="csfbtn" hidden></button>
+                  </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" id="savebtn" onclick="csfbtn.click();">Save Changes</button>
                 </div>
               </div>
             </div>
@@ -1774,7 +1825,7 @@
               });
               setInterval(function() {
                 admintblhelpdesks.ajax.reload()
-              }, 3000);
+              }, 60000);
             });
 
             function useraction(action, id) {
@@ -1833,6 +1884,41 @@
                   $('#editModal').modal('show');
                   break;
                 case 'csf':
+                  $.ajax({
+                    type: "POST",
+                    url: "assets/components/includes/fetch.php",
+                    data: {
+                      'edit_helpdesk': '',
+                      'id': id
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                      console.log(response);
+                      $('#csfModalLabel').html(response.request_number + ' (<span class="text-' + response.color + '">' + response.status + '</span>)');
+                      $('#helpdesks_id').val(response.id);
+
+                      if (response.csf_id) {
+                        $('#crit1').val(response.crit1);
+                        $('#crit1-' + response.crit1).addClass('text-warning');
+                        $('#crit2').val(response.crit2);
+                        $('#crit2-' + response.crit2).addClass('text-warning');
+                        $('#crit3').val(response.crit3);
+                        $('#crit3-' + response.crit3).addClass('text-warning');
+                        $('#crit4').val(response.crit4);
+                        $('#crit4-' + response.crit4).addClass('text-warning');
+                        $('#overall').val(response.overall);
+                        $('#overall-' + response.overall).addClass('text-warning');
+                        $('#reasons').html(response.reasons);
+                        $('#comments').html(response.comments);
+                        $('#edit_csf').prop('disabled', false);
+                        $('#csfModalBody button').prop('disabled', true);
+                        $('#csfModalBody textarea').prop('disabled', true);
+                        $('#savebtn').attr('hidden', true);
+                      } else {
+                        $('#add_csf').prop('disabled', false);
+                      }
+                    }
+                  });
                   $('#csfModal').modal('show');
                   break;
               }

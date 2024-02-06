@@ -154,6 +154,15 @@
               </div>
             </div>
           </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Zoom Request List</h5>
+                <div id='zoom-calendar'></div>
+              </div>
+            </div>
+          </div>
           <!-- Modal -->
           <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -313,15 +322,6 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-8">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Zoom Request List</h5>
-                <div id='zoom-calendar'></div>
-              </div>
-            </div>
-          </div>
-          
           <script>
             jQuery(document).ready(function() {
               var calendarEl = $("#zoom-calendar")[0];

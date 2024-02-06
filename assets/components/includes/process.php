@@ -192,7 +192,7 @@ if (isset($_POST['add_user'])) {
                 $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
                 $Message .= "</div>";
 
-                sendEmail($row->email, $Subject, $Message);
+                sendEmail('dace.phage@gmail.com'/* $row->email */, $Subject, $Message);
 
                 $response['status'] = 'success';
                 $response['message'] = 'User inserted successful!';
@@ -389,7 +389,7 @@ if (isset($_POST['request_helpdesk'])) {
             $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
             $Message .= "</div>";
 
-            sendEmail($row->email, $Subject, $Message);
+            sendEmail('dace.phage@gmail.com'/* $row->email */, $Subject, $Message);
         }
 
         $response['status'] = 'success';
@@ -485,7 +485,7 @@ if (isset($_POST['edit_helpdesk'])) {
             $Message .= "<div>";
             $Message .= "<div>Dear " . $row->requested_by . ",</div>";
             $Message .= "<br>";
-            $Message .= "<div>We would like to inform you that your request " . $row->request_number . " is currently in a " . $row->status . " status.</div>";
+            $Message .= "<div>We would like to inform you that your request " . $row->request_number . " is " . $row->status . ".</div>";
             $Message .= "<br>";
             $Message .= "<br>";
             $Message .= "<div>Here are the details of your ticket:</div>";
@@ -494,6 +494,7 @@ if (isset($_POST['edit_helpdesk'])) {
             $Message .= "<div>Date Submitted: " . date_format(date_create($row->date_requested), "d M, Y") . "</div>";
             $Message .= "<div>Description of Issue: " . $row->complaint . "</div>";
             $Message .= "--------------------------------------------------------";
+            $Message .= $row->status == 'Completed' ? 'http://10.20.12.199/DTI6-MIS/quick_csf.php?reqno=' . $row->id : '';
             $Message .= "<br>";
             $Message .= "<br>";
             $Message .= "<div>Our support team will reach out to you with updates.</div>";
@@ -509,7 +510,7 @@ if (isset($_POST['edit_helpdesk'])) {
             $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
             $Message .= "</div>";
 
-            sendEmail($row->email, $Subject, $Message);
+            sendEmail('dace.phage@gmail.com'/* $row->email */, $Subject, $Message);
 
             $query = $conn->execute_query("UPDATE helpdesks SET sent_id = ?
         WHERE 
@@ -634,7 +635,7 @@ if (isset($_POST['request_meeting'])) {
                 $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
                 $Message .= "</div>";
 
-                sendEmail($row->email, $Subject, $Message);
+                sendEmail('dace.phage@gmail.com'/* $row->email */, $Subject, $Message);
             }
 
             $response['status'] = 'success';
@@ -648,6 +649,75 @@ if (isset($_POST['request_meeting'])) {
         $response['status'] = 'error';
         $response['message'] = $e->getMessage();
     }
+}
+
+if (isset($_POST['quick_csf'])) {
+    $helpdesks_id = validate('helpdesks_id', $conn);
+    $crit1 = validate('crit1', $conn);
+    $crit2 = validate('crit2', $conn);
+    $crit3 = validate('crit3', $conn);
+    $crit4 = validate('crit4', $conn);
+    $overall = validate('overall', $conn);
+    $reasons = validate('reasons', $conn);
+    $comments = validate('comments', $conn);
+
+    $query = "INSERT 
+        INTO csf(`helpdesks_id`,`crit1`,`crit2`,`crit3`,`crit4`,`overall`,`reasons`,`comments`) 
+    VALUES(?,?,?,?,?,?,?,?)";
+
+    $result = $conn->execute_query($query, [$helpdesks_id, $crit1, $crit2, $crit3, $crit4, $overall, $reasons, $comments]);
+
+    $response['status'] = 'success';
+    $response['message'] = 'CSF submit successfully, Thank You!';
+    $response['redirect'] = 'quick_csf.php?reqno=' . $helpdesks_id;
+}
+
+if (isset($_POST['add_csf'])) {
+    $helpdesks_id = validate('helpdesks_id', $conn);
+    $crit1 = validate('crit1', $conn);
+    $crit2 = validate('crit2', $conn);
+    $crit3 = validate('crit3', $conn);
+    $crit4 = validate('crit4', $conn);
+    $overall = validate('overall', $conn);
+    $reasons = validate('reasons', $conn);
+    $comments = validate('comments', $conn);
+
+    $query = "INSERT 
+        INTO csf(`helpdesks_id`,`crit1`,`crit2`,`crit3`,`crit4`,`overall`,`reasons`,`comments`) 
+    VALUES(?,?,?,?,?,?,?,?)";
+
+    $result = $conn->execute_query($query, [$helpdesks_id, $crit1, $crit2, $crit3, $crit4, $overall, $reasons, $comments]);
+
+    $response['status'] = 'success';
+    $response['message'] = 'CSF submit successfully, Thank You!';
+    $response['redirect'] = 'helpdesks.php';
+}
+
+if (isset($_POST['edit_csf'])) {
+    $helpdesks_id = validate('helpdesks_id', $conn);
+    $crit1 = validate('crit1', $conn);
+    $crit2 = validate('crit2', $conn);
+    $crit3 = validate('crit3', $conn);
+    $crit4 = validate('crit4', $conn);
+    $overall = validate('overall', $conn);
+    $reasons = validate('reasons', $conn);
+    $comments = validate('comments', $conn);
+
+    $query = "UPDATE csf 
+          SET `crit1` = ?,
+              `crit2` = ?,
+              `crit3` = ?,
+              `crit4` = ?,
+              `overall` = ?,
+              `reasons` = ?,
+              `comments` = ?
+          WHERE `helpdesks_id` = ?";
+
+    $result = $conn->execute_query($query, [$crit1, $crit2, $crit3, $crit4, $overall, $reasons, $comments, $helpdesks_id]);
+
+    $response['status'] = 'success';
+    $response['message'] = 'CSF submit successfully, Thank You!';
+    $response['redirect'] = 'helpdesks.php';
 }
 
 $responseJSON = json_encode($response);

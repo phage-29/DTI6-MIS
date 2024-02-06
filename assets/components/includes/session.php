@@ -32,7 +32,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
         exit();
     }
 } else {
-    $public = ['login.php', 'register.php'];
+    $public = ['login.php', 'register.php', 'quick_csf.php'];
     $cur_page = basename($_SERVER['REQUEST_URI']);
     if (!in_array($cur_page, $public)) {
         header('Location: assets/components/includes/logout.php');
