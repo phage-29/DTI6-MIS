@@ -1,5 +1,7 @@
 <?php $page = "Quick CSF" ?>
-<?php require_once "assets/components/includes/conn.php" ?>
+<?php
+require_once "assets/components/includes/conn.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,12 +20,13 @@
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="assets/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 
     <script src="assets/vendor/jquery.min.js"></script>
-
+    <script src="assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
 </head>
 
 <body>

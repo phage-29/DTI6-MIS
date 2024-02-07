@@ -19,7 +19,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
         LEFT JOIN divisions d ON u.division_id = d.id
         LEFT JOIN client_types ct ON u.client_type_id = ct.id
         LEFT JOIN roles r ON u.role_id = r.id
-        WHERE u.id = ? AND u.active = ?;
+        WHERE u.id = ? AND u.active = ?
     ";
 
     $result = $conn->execute_query($query, [$_SESSION['id'], '1']);

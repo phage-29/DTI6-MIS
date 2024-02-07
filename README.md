@@ -1,8 +1,8 @@
-# Integrated MSG-IT System README
+# Integrated MIS System README
 
 ## Overview
 
-Welcome to the Integrated MSG-IT System! This system is a comprehensive solution designed to streamline various tasks, including managing ICT helpdesk queries, handling Zoom requests, and maintaining equipment records. This README file provides essential information to help you understand and use the system effectively.
+Welcome to the Integrated MIS System! This system is a comprehensive solution designed to streamline various tasks, including managing ICT helpdesk queries, handling Zoom requests, and maintaining equipment records. This README file provides essential information to help you understand and use the system effectively.
 
 ## Features
 
@@ -23,7 +23,7 @@ Welcome to the Integrated MSG-IT System! This system is a comprehensive solution
 
 ## Getting Started
 
-To get started with the Integrated MSG-IT System, follow these steps:
+To get started with the Integrated MIS System, follow these steps:
 
 1. **Installation:**
    - Clone the repository to your local machine.
@@ -55,10 +55,10 @@ We welcome contributions from the community. If you have ideas for improvements,
 
 ## Support
 
-For any issues, questions, or feedback, please contact our support team at support@msg-it-system.com.
+For any issues, questions, or feedback, please contact our support team at support@MIS-system.com.
 
 ## License
 
-This Integrated MSG-IT System is licensed under the [MIT License](LICENSE).
+This Integrated MIS System is licensed under the [MIT License](LICENSE).
 
-Thank you for choosing the Integrated MSG-IT System. We hope it enhances your ICT management experience!
+Thank you for choosing the Integrated MIS System. We hope it enhances your ICT management experience!

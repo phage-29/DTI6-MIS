@@ -7,15 +7,17 @@
   switch ($_SESSION['role']) {
     case 'Admin':
   ?>
-      <div class="mb-3 text-end">
-        <?php
-        for ($i = date('Y') - 5; $i <= date('Y'); $i++) {
-        ?>
-          <button type="button" class="btn btn-primary btn-sm" onclick="location='?year=<?= $i ?>'"><?= $i ?></button>
-        <?php
-        }
-        ?>
-      </div>
+      <form>
+        <select name="year" onchange="this.form.submit()">
+          <?php
+          for ($i = 2023; $i <= date('Y'); $i++) {
+          ?>
+            <option value="<?= $i ?>" <?= isset($_GET['year']) && $_GET['year'] == $i ? 'selected' : '' ?>><?= $i ?></option>
+          <?php
+          }
+          ?>
+        </select>
+      </form>
       <section class="section dashboard">
         <div class="row">
           <div class="col-xxl-3 col-xl-12">
@@ -470,7 +472,7 @@
           var barChart = new ApexCharts(document.querySelector("#barChart"), {
             series: [{
               name: "Assistances",
-              data: data.map((item) => item.count_helpdesks),
+              data: data.map(item => parseInt(item.count_helpdesks)),
             }, ],
             chart: {
               type: "bar",
@@ -527,8 +529,9 @@
         }
 
         function donutChart(data) {
+          console.log(data.map(item => parseInt(item.count_helpdesks)));
           var donutChart = new ApexCharts(document.querySelector("#donutChart"), {
-            series: data.map((item) => item.count_helpdesks),
+            series: data.map(item => parseInt(item.count_helpdesks)),
             chart: {
               height: 350,
               type: "donut",
@@ -554,7 +557,7 @@
 
         function pieChart(data) {
           var pieChart = new ApexCharts(document.querySelector("#pieChart"), {
-            series: data.map((item) => item.count_helpdesks),
+            series: data.map(item => parseInt(item.count_helpdesks)),
             chart: {
               height: 350,
               type: "pie",
@@ -582,7 +585,7 @@
           var lineChart = new ApexCharts(document.querySelector("#lineChart"), {
             series: [{
               name: "Assistances",
-              data: data.map((item) => item.count_helpdesks),
+              data: data.map(item => parseInt(item.count_helpdesks)),
             }, ],
             chart: {
               height: 350,

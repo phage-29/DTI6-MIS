@@ -19,7 +19,7 @@ function sendEmail($sendTo, $subject, $content)
     $mail->Password = 'rodfdvywkirdtwnd';
     $mail->SMTPSecure = 'tls';
     $mail->isHTML(true);
-    $mail->setFrom('phpmailer720@gmail.com', 'MSG-IT Administrator');
+    $mail->setFrom('phpmailer720@gmail.com', 'MIS Administrator');
     $mail->addAddress($sendTo);
     // $mail->AddBCC('angelopatrimonio@dti.gov.ph');
     // $mail->AddBCC('bemyjohncollado@dti.gov.ph');
@@ -35,7 +35,7 @@ function sendEmail($sendTo, $subject, $content)
 }
 
 // $Email = 'dace.phage@gmail.com';
-// $Subject = "MSG-IT - " . $RequestNo;
+// $Subject = "MIS - " . $RequestNo;
 // $Message = "";
 // $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
 // $Message .= "<hr>";
@@ -49,10 +49,10 @@ function sendEmail($sendTo, $subject, $content)
 // $Message .= "<div>Please be assured that we are committed to resolving this matter at the earliest. Our support team will reach out to you with updates and, if necessary, additional information required to assist in the resolution.</div>";
 // $Message .= "<div>We appreciate your patience and understanding as we work to resolve this matter. Thank you.</div>";
 // $Message .= "<div>Best Regards,</div>";
-// $Message .= "<div>MSG-IT Administrator</div>";
+// $Message .= "<div>MIS Administrator</div>";
 // $Message .= "<div>IT Support Staff</div>";
 // $Message .= "<div>DTI Region VI</div>";
-// $Message .= "<div><hr>&copy; Copyright <strong>MSG-IT </strong>2024. All Rights Reserved</div>";
+// $Message .= "<div><hr>&copy; Copyright <strong>MIS </strong>2024. All Rights Reserved</div>";
 // $Message .= "</div>";
 // $result = sendEmail($Email, $Subject, $Message);
 // echo $result;

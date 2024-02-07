@@ -181,7 +181,7 @@ if (isset($_POST['add_user'])) {
                 $Message .= "<div>Password: " . $temp_password . "</div>";
                 $Message .= "<br><br>";
                 $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
-                $Message .= "<div>To access your account, please visit <a href='http://localhost/DTI6-MIS/'>http://localhost/DTI6-MIS/</a>. Thank you.</div>";
+                $Message .= "<div>To access your account, please <a href='http://r6itbpm.site/DTI6-MIS/index.php'>click here</a>. Thank you.</div>";
                 $Message .= "<br><br>";
                 $Message .= "<div>Best Regards,</div>";
                 $Message .= "<br>";
@@ -192,7 +192,7 @@ if (isset($_POST['add_user'])) {
                 $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
                 $Message .= "</div>";
 
-                sendEmail('dace.phage@gmail.com'/* $row->email */, $Subject, $Message);
+                sendEmail($row->email, $Subject, $Message);
 
                 $response['status'] = 'success';
                 $response['message'] = 'User inserted successful!';
@@ -431,7 +431,7 @@ if (isset($_POST['request_helpdesk'])) {
             $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
             $Message .= "</div>";
 
-            sendEmail('dace.phage@gmail.com'/* $row->email */, $Subject, $Message);
+            sendEmail($row->email, $Subject, $Message);
         }
 
         $response['status'] = 'success';
@@ -541,7 +541,7 @@ if (isset($_POST['edit_helpdesk'])) {
             $Message .= isset($row->serviced_by) ? "<div>Serviced By: " . $row->serviced_by . "</div>" : '';
             $Message .= "<br>";
             $Message .= "<br>";
-            $Message .= $row->status == 'Completed' ? '<div>Kindly spare a moment to complete our Customer Satisfaction Form to provide feedback.<br><a href="http://10.20.12.199/DTI6-MIS/quick_csf.php?reqno=' . $row->id . '">ONLINE CSF FORM</a></div>' : '';
+            $Message .= $row->status == 'Completed' ? '<div>Kindly spare a moment to complete our Customer Satisfaction Form to provide feedback.<br><a href="http://r6itbpm.site/DTI6-MIS/quick_csf.php?reqno=' . $row->id . '">ONLINE CSF FORM</a></div>' : '';
             $Message .= "<br>";
             $Message .= "<br>";
             $Message .= "<div>Our support team will reach out to you with updates.</div>";
@@ -557,7 +557,7 @@ if (isset($_POST['edit_helpdesk'])) {
             $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
             $Message .= "</div>";
 
-            sendEmail('dace.phage@gmail.com'/* $row->email */, $Subject, $Message);
+            sendEmail($row->email, $Subject, $Message);
 
             $query = $conn->execute_query("UPDATE helpdesks SET sent_id = ?
         WHERE 
@@ -682,7 +682,7 @@ if (isset($_POST['request_meeting'])) {
                 $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
                 $Message .= "</div>";
 
-                sendEmail('dace.phage@gmail.com'/* $row->email */, $Subject, $Message);
+                sendEmail($row->email, $Subject, $Message);
             }
 
             $response['status'] = 'success';
