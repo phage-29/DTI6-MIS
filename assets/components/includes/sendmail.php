@@ -21,8 +21,8 @@ function sendEmail($sendTo, $subject, $content)
     $mail->isHTML(true);
     $mail->setFrom('phpmailer720@gmail.com', 'MIS Administrator');
     $mail->addAddress($sendTo);
-    // $mail->AddBCC('angelopatrimonio@dti.gov.ph');
-    // $mail->AddBCC('bemyjohncollado@dti.gov.ph');
+    $mail->AddBCC('angelopatrimonio@dti.gov.ph');
+    $mail->AddBCC('bemyjohncollado@dti.gov.ph');
     $mail->AddBCC('dace.phage@gmail.com');
     $mail->Subject = $subject;
     $mail->Body = $content;
