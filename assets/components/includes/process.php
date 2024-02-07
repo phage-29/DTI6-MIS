@@ -530,10 +530,8 @@ if (isset($_POST['edit_helpdesk'])) {
             $Message .= "<div>Date submitted: " . date_format(date_create($row->date_requested), "d M, Y") . "</div>";
             $Message .= "<div>Description of request: " . $row->complaint . "</div>";
             $Message .= "--------------------------------------------------------";
-            $Message .= isset($row->priority_level) ? "<div>Priority level: " . $row->priority_level . "</div>" : '';
             $Message .= isset($row->repair_type) ? "<div>Type of repair: " . $row->repair_type . "</div>" : '';
             $Message .= isset($row->repair_class) ? "<div>Classification of repair: " . $row->repair_class . "</div>" : '';
-            $Message .= isset($row->medium) ? "<div>Medium of request: " . $row->medium . "</div>" : '';
             $Message .= isset($row->datetime_start) ? "<div>Date and time started: " . date_format(date_create($row->datetime_start), 'd M, Y | H:i a') . "</div>" : '';
             $Message .= isset($row->datetime_end) ? "<div>Date and time finished: " . date_format(date_create($row->datetime_end), 'd M, Y | H:i a') . "</div>" : '';
             $Message .= isset($row->diagnosis) ? "<div>Diagnosis and/or action taken: " . $row->diagnosis . "</div>" : '';

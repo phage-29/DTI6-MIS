@@ -193,12 +193,12 @@ require_once "assets/components/templates/header.php";
                                     <!-- Comments and Suggestions Section -->
                                     <div class="mb-2">
                                         <label for="reasons" class="small">Please write in the space below your reason/s for your "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to improve.</label>
-                                        <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150" required></textarea>
+                                        <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150"></textarea>
                                     </div>
 
                                     <div class="mb-2">
                                         <label for="comments" class="small">Please give comments/suggestions to help us improve our service/s:</label>
-                                        <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150" required></textarea>
+                                        <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150"></textarea>
                                     </div>
                                     <input type="hidden" name="helpdesks_id" id="helpdesks_id" />
                                     <input type="hidden" name="quick_csf" />
@@ -237,7 +237,7 @@ require_once "assets/components/templates/header.php";
                             if (response.csf_id) {
                                 Swal.fire({
                                     icon: 'warning',
-                                    title: 'You already submitted a feedback, Thank You!!!',
+                                    title: 'Feedback submitted, Thank You!!!',
                                     showConfirmButton: false,
                                     timer: 1000,
                                 }).then(function() {
