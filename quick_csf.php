@@ -1,35 +1,7 @@
 <?php $page = "Quick CSF" ?>
 <?php
-require_once "assets/components/includes/conn.php";
+require_once "assets/components/templates/header.php";
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
-    <title><?= $website ?> | <?= $page ?></title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
-
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
-
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-    <link href="assets/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
-
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
-
-    <script src="assets/vendor/jquery.min.js"></script>
-    <script src="assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
-</head>
-
-<body>
     <main>
         <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
             <div class="container">
