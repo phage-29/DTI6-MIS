@@ -274,7 +274,6 @@
                 <table id="admintblhelpdesks" class="display" style="width:100%;display:none;">
                   <thead>
                     <tr>
-                      <th>Date</th>
                       <th>Request No</th>
                       <th>Status</th>
                       <th>Requestor</th>
@@ -282,6 +281,7 @@
                       <th>Category</th>
                       <th>Sub Category</th>
                       <th>Action</th>
+                      <th>Date</th>
                     </tr>
                   </thead>
                 </table>
@@ -1335,10 +1335,10 @@
                   <thead>
                     <tr>
                       <th>Request No</th>
+                      <th>Status</th>
                       <th>Request Type</th>
                       <th>Category</th>
                       <th>Sub Category</th>
-                      <th>Status</th>
                       <th>Action</th>
                       <th>Status ID</th>
                     </tr>

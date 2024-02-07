@@ -38,18 +38,17 @@ if (isset($_GET['helpdesks1'])) {
         h.id) gethelpdesks";
 
     $columns = array(
-        array('db' => 'date_requested', 'dt' => 0, function ($data, $row) {
-            return '<strong>' . date_format(date_create($row['date_requested']), 'd/m/Y') . '</strong>';
+        array('db' => 'request_number', 'dt' => 0),
+        array('db' => 'status', 'dt' => 1,'formatter' => function ($data, $row) {
+            return '<p class="text-'.$row['color'].' text-center">'.$row['status'].'</p>';
         }),
-        array('db' => 'request_number', 'dt' => 1),
-        array('db' => 'status', 'dt' => 2),
-        array('db' => 'requestor', 'dt' => 3),
-        array('db' => 'request_type', 'dt' => 4),
-        array('db' => 'category', 'dt' => 5),
-        array('db' => 'sub_category', 'dt' => 6),
+        array('db' => 'requestor', 'dt' => 2),
+        array('db' => 'request_type', 'dt' => 3),
+        array('db' => 'category', 'dt' => 4),
+        array('db' => 'sub_category', 'dt' => 5),
         array(
             'db' => 'id',
-            'dt' => 7,
+            'dt' => 6,
             'formatter' => function ($data, $row) {
                 $buttons = '<span class="text-nowrap">' .
                     ($row['status'] == 'Cancelled' ? '<button onclick="return useraction(\'view\', ' . $row['id'] . ')" class="btn btn-primary btn-sm mx-1"><i class="bi bi-eye"></i></button><button onclick="return useraction(\'edit\', ' . $row['id'] . ')" class="btn btn-success btn-sm mx-1"><i class="bi bi-pencil-square"></i></button>' : '') .
@@ -62,6 +61,9 @@ if (isset($_GET['helpdesks1'])) {
                 return $buttons;
             }
         ),
+        array('db' => 'date_requested', 'dt' => 7, function ($data, $row) {
+            return '<strong>' . date_format(date_create($row['date_requested']), 'd/m/Y') . '</strong>';
+        }),
         array('db' => 's_id', 'dt' => 8),
         array('db' => 'is_csf', 'dt' => 9),
         array('db' => 'color', 'dt' => 10)
@@ -97,10 +99,12 @@ if (isset($_GET['helpdesks4'])) {
 
     $columns = array(
         array('db' => 'request_number', 'dt' => 0),
-        array('db' => 'request_type', 'dt' => 1),
-        array('db' => 'category', 'dt' => 2),
-        array('db' => 'sub_category', 'dt' => 3),
-        array('db' => 'status', 'dt' => 4),
+        array('db' => 'status', 'dt' => 1,'formatter' => function ($data, $row) {
+            return '<p class="text-'.$row['color'].' text-center">'.$row['status'].'</p>';
+        }),
+        array('db' => 'request_type', 'dt' => 2),
+        array('db' => 'category', 'dt' => 3),
+        array('db' => 'sub_category', 'dt' => 4),
         array(
             'db' => 'id',
             'dt' => 5,
@@ -117,7 +121,8 @@ if (isset($_GET['helpdesks4'])) {
             }
         ),
         array('db' => 's_id', 'dt' => 6),
-        array('db' => 'is_csf', 'dt' => 7)
+        array('db' => 'is_csf', 'dt' => 7),
+        array('db' => 'color', 'dt' => 8)
     );
 }
 

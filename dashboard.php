@@ -623,6 +623,13 @@
       </script>
     <?php
       break;
+    case 'Employee';
+    ?>
+      <script>
+        window.location.href = 'helpdesks.php';
+      </script>
+    <?php
+      break;
     default:
     ?>
       <section class="section">

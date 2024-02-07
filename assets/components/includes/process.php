@@ -355,25 +355,67 @@ if (isset($_POST['request_helpdesk'])) {
             }
         }
         if ($_SESSION['role'] == 'Employee') {
-            $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$requested_by]);
+            $query = $conn->execute_query("SELECT
+            h.*,
+            CONCAT(
+                u1.first_name, ' ', u1.last_name
+            ) AS requested_by,
+            u1.email,
+            rt.request_type,
+            c.category,
+            sc.sub_category,
+            hs.status,
+            pl.priority_level,
+            rtype.repair_type,
+            rclass.repair_class,
+            m.medium,
+            CONCAT(
+                u2.first_name, ' ', u2.last_name
+            ) AS assigned_to,
+            CONCAT(
+                u3.first_name, ' ', u3.last_name
+            ) AS serviced_by,
+            CONCAT(
+                u4.first_name, ' ', u4.last_name
+            ) AS approved_by
+        FROM
+            helpdesks h
+            LEFT JOIN users u1 ON h.requested_by = u1.id
+            LEFT JOIN request_types rt ON h.request_type_id = rt.id
+            LEFT JOIN categories c ON h.category_id = c.id
+            LEFT JOIN sub_categories sc ON h.sub_category_id = sc.id
+            LEFT JOIN helpdesks_statuses hs ON h.status_id = hs.id
+            LEFT JOIN priority_levels pl ON h.priority_level_id = pl.id
+            LEFT JOIN repair_types rtype ON h.repair_type_id = rtype.id
+            LEFT JOIN repair_classes rclass ON h.repair_class_id = rclass.id
+            LEFT JOIN mediums m ON h.medium_id = m.id
+            LEFT JOIN users u2 ON h.assigned_to = u2.id
+            LEFT JOIN users u3 ON h.serviced_by = u3.id
+            LEFT JOIN users u4 ON h.approved_by = u4.id
+        WHERE 
+            h.id = ?", [$conn->insert_id]);
             $row = $query->fetch_object();
 
-            $Subject = "DTI6 MIS | " . $request_number;
+            $Subject = "DTI6 MIS | " . $row->request_number;
 
             $Message = "";
             $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
             $Message .= "<hr>";
             $Message .= "<div>";
-            $Message .= "<div>Dear " . $row->first_name . " " . $row->last_name . ",</div>";
+            $Message .= "<div>Dear " . $row->requested_by . ",</div>";
             $Message .= "<br>";
             $Message .= "<div>We acknowledge and appreciate your report related to IT/ICT Issue.</div>";
             $Message .= "<br>";
             $Message .= "<br>";
-            $Message .= "<div>Here are the details of your ticket:</div>";
+            $Message .= "<strong>Here are the details of your ticket:</strong>";
             $Message .= "<br>";
-            $Message .= "<div>Ticket Number: " . $request_number . "</div>";
-            $Message .= "<div>Date Submitted: " . date_format(date_create($date_requested), "d M, Y") . "</div>";
-            $Message .= "<div>Description of Issue: " . $complaint . "</div>";
+            $Message .= "<div><strong>Ticket number:</strong> " . $row->request_number . "</div>";
+            $Message .= "<div><strong>Date submitted:</strong> " . date_format(date_create($row->date_requested), "d M, Y") . "</div>";
+            $Message .= "<div><strong>Type of request:</strong> " . $row->request_type . "</div>";
+            $Message .= "<div><strong>Category of request:</strong> " . $row->category . "</div>";
+            $Message .= "<div><strong>Sub category of request:</strong> " . $row->sub_category . "</div>";
+            $Message .= "<div><strong>Defect, complaint, or request.:</strong> " . $complaint . "</div>";
+            $Message .= "<div><strong>Preferred date of schedule:</strong> " . date_format(date_create($datetime_preferred), "d M, Y | H:i a") . "</div>";
             $Message .= "<br>";
             $Message .= "<br>";
             $Message .= "<div>Our support team will reach out to you with updates.</div>";
@@ -430,20 +472,14 @@ if (isset($_POST['edit_helpdesk'])) {
         $result = $conn->execute_query($query, [$requested_by, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $datetime_end, $diagnosis, $remarks, $id]);
 
         $query = $conn->execute_query("SELECT
-            h.id,
-            h.request_number,
+            h.*,
             CONCAT(
                 u1.first_name, ' ', u1.last_name
             ) AS requested_by,
             u1.email,
-            h.date_requested,
             rt.request_type,
             c.category,
             sc.sub_category,
-            h.complaint,
-            h.datetime_preferred,
-            h.status_id,
-            h.sent_id,
             hs.status,
             pl.priority_level,
             rtype.repair_type,
@@ -490,11 +526,22 @@ if (isset($_POST['edit_helpdesk'])) {
             $Message .= "<br>";
             $Message .= "<div>Here are the details of your ticket:</div>";
             $Message .= "<br>";
-            $Message .= "<div>Ticket Number: " . $row->request_number . "</div>";
-            $Message .= "<div>Date Submitted: " . date_format(date_create($row->date_requested), "d M, Y") . "</div>";
-            $Message .= "<div>Description of Issue: " . $row->complaint . "</div>";
+            $Message .= "<div>Ticket number: " . $row->request_number . "</div>";
+            $Message .= "<div>Date submitted: " . date_format(date_create($row->date_requested), "d M, Y") . "</div>";
+            $Message .= "<div>Description of request: " . $row->complaint . "</div>";
             $Message .= "--------------------------------------------------------";
-            $Message .= $row->status == 'Completed' ? 'http://10.20.12.199/DTI6-MIS/quick_csf.php?reqno=' . $row->id : '';
+            $Message .= isset($row->priority_level) ? "<div>Priority level: " . $row->priority_level . "</div>" : '';
+            $Message .= isset($row->repair_type) ? "<div>Type of repair: " . $row->repair_type . "</div>" : '';
+            $Message .= isset($row->repair_class) ? "<div>Classification of repair: " . $row->repair_class . "</div>" : '';
+            $Message .= isset($row->medium) ? "<div>Medium of request: " . $row->medium . "</div>" : '';
+            $Message .= isset($row->datetime_start) ? "<div>Date and time started: " . date_format(date_create($row->datetime_start), 'd M, Y | H:i a') . "</div>" : '';
+            $Message .= isset($row->datetime_end) ? "<div>Date and time finished: " . date_format(date_create($row->datetime_end), 'd M, Y | H:i a') . "</div>" : '';
+            $Message .= isset($row->diagnosis) ? "<div>Diagnosis and/or action taken: " . $row->diagnosis . "</div>" : '';
+            $Message .= isset($row->remarks) ? "<div>Remarks and/or recommendation: " . $row->remarks . "</div>" : '';
+            $Message .= isset($row->serviced_by) ? "<div>Serviced By: " . $row->serviced_by . "</div>" : '';
+            $Message .= "<br>";
+            $Message .= "<br>";
+            $Message .= $row->status == 'Completed' ? '<div>Kindly spare a moment to complete our Customer Satisfaction Form to provide feedback.<br><a href="http://10.20.12.199/DTI6-MIS/quick_csf.php?reqno=' . $row->id . '">ONLINE CSF FORM</a></div>' : '';
             $Message .= "<br>";
             $Message .= "<br>";
             $Message .= "<div>Our support team will reach out to you with updates.</div>";

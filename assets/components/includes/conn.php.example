@@ -1,10 +1,11 @@
 <?php
 
 // Database credential
-$servername = "";
+$servername = "localhost";
 $username = "";
 $password = "";
-$dbname = "";
+$dbname = "misdb";
+$website = "DTI6-MIS";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
