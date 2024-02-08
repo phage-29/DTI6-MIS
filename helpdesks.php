@@ -1189,6 +1189,18 @@
                         $('#comments').html(response.comments);
                         $('#edit_csf').prop('disabled', false);
                       } else {
+                        $('#crit1').val('');
+                        $('#crit1-' + response.crit1).removeClass('text-warning');
+                        $('#crit2').val('');
+                        $('#crit2-' + response.crit2).removeClass('text-warning');
+                        $('#crit3').val('');
+                        $('#crit3-' + response.crit3).removeClass('text-warning');
+                        $('#crit4').val('');
+                        $('#crit4-' + response.crit4).removeClass('text-warning');
+                        $('#overall').val('');
+                        $('#overall-' + response.overall).removeClass('text-warning');
+                        $('#reasons').html('');
+                        $('#comments').html('');
                         $('#add_csf').prop('disabled', false);
                       }
                     }
