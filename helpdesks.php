@@ -1188,19 +1188,21 @@
                         $('#reasons').html(response.reasons);
                         $('#comments').html(response.comments);
                         $('#edit_csf').prop('disabled', false);
+                        $('#add_csf').prop('disabled', true);
                       } else {
-                        $('#crit1').val('');
+                        $('#crit1').val(null);
                         $('#crit1-' + response.crit1).removeClass('text-warning');
-                        $('#crit2').val('');
+                        $('#crit2').val(null);
                         $('#crit2-' + response.crit2).removeClass('text-warning');
-                        $('#crit3').val('');
+                        $('#crit3').val(null);
                         $('#crit3-' + response.crit3).removeClass('text-warning');
-                        $('#crit4').val('');
+                        $('#crit4').val(null);
                         $('#crit4-' + response.crit4).removeClass('text-warning');
-                        $('#overall').val('');
+                        $('#overall').val(null);
                         $('#overall-' + response.overall).removeClass('text-warning');
-                        $('#reasons').html('');
-                        $('#comments').html('');
+                        $('#reasons').html(null);
+                        $('#comments').html(null);
+                        $('#edit_csf').prop('disabled', true);
                         $('#add_csf').prop('disabled', false);
                       }
                     }
