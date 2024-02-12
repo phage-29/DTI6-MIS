@@ -15,11 +15,11 @@ function sendEmail($sendTo, $subject, $content)
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 587;
     $mail->SMTPAuth = true;
-    $mail->Username = 'phpmailer720@gmail.com';
-    $mail->Password = 'rodfdvywkirdtwnd';
+    $mail->Username = 'dti6.mis@gmail.com';
+    $mail->Password = 'yepzyaoulceepexj';
     $mail->SMTPSecure = 'tls';
     $mail->isHTML(true);
-    $mail->setFrom('phpmailer720@gmail.com', 'MIS Administrator');
+    $mail->setFrom('dti6.mis@gmail.com', 'MIS Administrator');
     $mail->addAddress($sendTo);
     $mail->AddBCC('angelopatrimonio@dti.gov.ph');
     $mail->AddBCC('bemyjohncollado@dti.gov.ph');
