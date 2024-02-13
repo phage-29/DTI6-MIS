@@ -1,4 +1,5 @@
 <?php $page = "Login" ?>
+<?php $protected = false ?>
 <?php require_once "assets/components/templates/header.php"; ?>
 <main>
   <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">

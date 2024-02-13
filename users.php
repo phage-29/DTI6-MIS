@@ -1,4 +1,5 @@
 <?php $page = "User Management" ?>
+<?php $protected = true ?>
 <?php require_once "assets/components/templates/header.php"; ?>
 <?php require_once "assets/components/templates/topbar.php"; ?>
 <?php require_once "assets/components/templates/sidebar.php"; ?>
@@ -86,27 +87,27 @@
                       <form class="row g-3 needs-validation" novalidate>
                         <div class="mb-2 col-lg-6">
                           <label for="id_number" class="form-label">id_number</label>
-                          <input type="text" class="form-control form-control-sm" id="id_number" name="id_number" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="id_number" name="id_number" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="first_name" class="form-label">first_name</label>
-                          <input type="text" class="form-control form-control-sm" id="first_name" name="first_name" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="first_name" name="first_name" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="middle_name" class="form-label">middle_name</label>
-                          <input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="last_name" class="form-label">last_name</label>
-                          <input type="text" class="form-control form-control-sm" id="last_name" name="last_name" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="last_name" name="last_name" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="position" class="form-label">position</label>
-                          <input type="text" class="form-control form-control-sm" id="position" name="position" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="position" name="position" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="division_id" class="form-label">division_id</label>
-                          <select class="form-select form-select-sm" id="division_id" name="division_id" required>
+                          <select class="form-select form-select-sm" id="division_id" name="division_id">
                             <option selected disabled>--</option>
                             <?php
                             $query = $conn->execute_query("SELECT * FROM divisions");
@@ -120,7 +121,7 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="client_type_id" class="form-label">client_type_id</label>
-                          <select class="form-select form-select-sm" id="client_type_id" name="client_type_id" required>
+                          <select class="form-select form-select-sm" id="client_type_id" name="client_type_id">
                             <option selected disabled>--</option>
                             <?php
                             $query = $conn->execute_query("SELECT * FROM client_types");
@@ -134,19 +135,19 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="date_birth" class="form-label">date_birth</label>
-                          <input type="date" class="form-control form-control-sm" id="date_birth" name="date_birth" autocomplete="off" required />
+                          <input type="date" class="form-control form-control-sm" id="date_birth" name="date_birth" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="phone" class="form-label">phone</label>
-                          <input type="text" class="form-control form-control-sm" id="phone" name="phone" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="phone" name="phone" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="email" class="form-label">email</label>
-                          <input type="text" class="form-control form-control-sm" id="email" name="email" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="email" name="email" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label class="form-label">sex</label>
-                          <select class="form-select form-select-sm" id="sex" name="sex" required>
+                          <select class="form-select form-select-sm" id="sex" name="sex">
                             <option selected disabled>--</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -154,7 +155,7 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="address" class="form-label">address</label>
-                          <textarea type="text" class="form-control form-control-sm" id="address" name="address" autocomplete="off" required></textarea>
+                          <textarea type="text" class="form-control form-control-sm" id="address" name="address" autocomplete="off"></textarea>
                         </div>
                         <div class="mb-2 col-lg-12">
                           <label for="role_id" class="form-label">role_id</label>
@@ -213,27 +214,27 @@
                       <form class="row g-3 needs-validation" novalidate>
                         <div class="mb-2 col-lg-6">
                           <label for="id_number" class="form-label">id_number</label>
-                          <input type="text" class="form-control form-control-sm" id="id_number" name="id_number" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="id_number" name="id_number" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="first_name" class="form-label">first_name</label>
-                          <input type="text" class="form-control form-control-sm" id="first_name" name="first_name" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="first_name" name="first_name" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="middle_name" class="form-label">middle_name</label>
-                          <input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="last_name" class="form-label">last_name</label>
-                          <input type="text" class="form-control form-control-sm" id="last_name" name="last_name" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="last_name" name="last_name" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="position" class="form-label">position</label>
-                          <input type="text" class="form-control form-control-sm" id="position" name="position" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="position" name="position" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="division_id" class="form-label">division_id</label>
-                          <select class="form-select form-select-sm" id="division_id" name="division_id" required>
+                          <select class="form-select form-select-sm" id="division_id" name="division_id">
                             <option selected disabled>--</option>
                             <?php
                             $query = $conn->execute_query("SELECT * FROM divisions");
@@ -247,7 +248,7 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="client_type_id" class="form-label">client_type_id</label>
-                          <select class="form-select form-select-sm" id="client_type_id" name="client_type_id" required>
+                          <select class="form-select form-select-sm" id="client_type_id" name="client_type_id">
                             <option selected disabled>--</option>
                             <?php
                             $query = $conn->execute_query("SELECT * FROM client_types");
@@ -261,19 +262,19 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="date_birth" class="form-label">date_birth</label>
-                          <input type="date" class="form-control form-control-sm" id="date_birth" name="date_birth" autocomplete="off" required />
+                          <input type="date" class="form-control form-control-sm" id="date_birth" name="date_birth" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="phone" class="form-label">phone</label>
-                          <input type="text" class="form-control form-control-sm" id="phone" name="phone" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="phone" name="phone" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="email" class="form-label">email</label>
-                          <input type="text" class="form-control form-control-sm" id="email" name="email" autocomplete="off" required />
+                          <input type="text" class="form-control form-control-sm" id="email" name="email" autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label class="form-label">sex</label>
-                          <select class="form-select form-select-sm" id="sex" name="sex" required>
+                          <select class="form-select form-select-sm" id="sex" name="sex">
                             <option selected disabled>--</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -281,7 +282,7 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="address" class="form-label">address</label>
-                          <textarea type="text" class="form-control form-control-sm" id="address" name="address" autocomplete="off" required></textarea>
+                          <textarea type="text" class="form-control form-control-sm" id="address" name="address" autocomplete="off"></textarea>
                         </div>
                         <div class="mb-2 col-lg-12">
                           <label for="role_id" class="form-label">role_id</label>
@@ -299,7 +300,7 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label class="form-label">PWD</label>
-                          <select class="form-select form-select-sm" id="pwd" name="pwd" required>
+                          <select class="form-select form-select-sm" id="pwd" name="pwd">
                             <option selected disabled>--</option>
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -307,7 +308,7 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label class="form-label">Active</label>
-                          <select class="form-select form-select-sm" id="active" name="active" required>
+                          <select class="form-select form-select-sm" id="active" name="active">
                             <option selected disabled>--</option>
                             <option value="1">Yes</option>
                             <option value="0">No</option>

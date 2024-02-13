@@ -21,6 +21,7 @@ require_once "assets/components/includes/session.php";
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
   <link href="assets/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+  <link href="assets/vendor/print-js/dist/print.css" rel="stylesheet" />
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -29,6 +30,7 @@ require_once "assets/components/includes/session.php";
   <script src="assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
   <script src="assets/vendor/fullcalendar/index.global.min.js"></script>
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/print-js/dist/print.js"></script>
 
 </head>
 

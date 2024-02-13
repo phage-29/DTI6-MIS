@@ -696,6 +696,72 @@ if (isset($_POST['request_meeting'])) {
     }
 }
 
+if (isset($_POST['edit_meeting'])) {
+    $id = validate('id', $conn);
+    $requested_by = $conn->real_escape_string(isset($_POST['requested_by']) ? $_POST['requested_by'] : $_SESSION['id']);
+    $date_requested = validate('date_requested', $conn);
+    $topic = validate('topic', $conn);
+    $date_scheduled = validate('date_scheduled', $conn);
+    $time_start = validate('time_start', $conn);
+    $time_end = validate('time_end', $conn);
+    $status_id = validate('status_id', $conn);
+    $host_id = validate('host_id', $conn);
+    $meetingid = validate('meetingid', $conn);
+    $passcode = validate('passcode', $conn);
+    $join_link = validate('join_link', $conn);
+    $start_link = validate('start_link', $conn);
+    $remarks = validate('remarks', $conn);
+    $generated_by = validate('generated_by', $conn);
+    $approved_by = validate('approved_by', $conn);
+
+    $query = "UPDATE `meetings` SET
+        `requested_by` = ?,
+        `date_requested` = ?,
+        `topic` = ?,
+        `date_scheduled` = ?,
+        `time_start` = ?,
+        `time_end` = ?,
+        `status_id` = ?,
+        `host_id` = ?,
+        `meetingid` = ?,
+        `passcode` = ?,
+        `join_link` = ?,
+        `start_link` = ?,
+        `remarks` = ?,
+        `generated_by` = ?,
+        `approved_by` = ?
+    WHERE `id` = ?";
+
+    try {
+        $result = $conn->execute_query($query, [
+            $requested_by,
+            $date_requested,
+            $topic,
+            $date_scheduled,
+            $time_start,
+            $time_end,
+            $status_id,
+            $host_id,
+            $meetingid,
+            $passcode,
+            $join_link,
+            $start_link,
+            $remarks,
+            $generated_by,
+            $approved_by,
+            $id
+        ]);
+
+        $response['status'] = 'success';
+        $response['message'] = 'Schedule update successful!';
+        $response['redirect'] = 'meetings.php';
+    } catch (Exception $e) {
+        $response['status'] = 'error';
+        $response['message'] = $e->getMessage();
+    }
+}
+
+
 if (isset($_POST['quick_csf'])) {
     $helpdesks_id = validate('helpdesks_id', $conn);
     $crit1 = validate('crit1', $conn);

@@ -1,4 +1,5 @@
 <?php $page = "Dashboard" ?>
+<?php $protected = true ?>
 <?php require_once "assets/components/templates/header.php"; ?>
 <?php require_once "assets/components/templates/topbar.php"; ?>
 <?php require_once "assets/components/templates/sidebar.php"; ?>
@@ -6,17 +7,25 @@
   <?php
   switch ($_SESSION['role']) {
     case 'Admin':
+      $year = $_GET['year'] ?? date('Y');
   ?>
-      <form>
-        <select name="year" onchange="this.form.submit()">
-          <?php
-          for ($i = 2023; $i <= date('Y'); $i++) {
-          ?>
-            <option value="<?= $i ?>" <?= isset($_GET['year']) && $_GET['year'] == $i ? 'selected' : '' ?>><?= $i ?></option>
-          <?php
-          }
-          ?>
-        </select>
+      <form class="">
+        <div class="row">
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-default">Year</span>
+              <select name="year" onchange="this.form.submit()" class="form-select">
+                <?php
+                for ($i = date('Y'); $i >= 2023; $i--) {
+                ?>
+                  <option value="<?= $i ?>" <?= isset($year) && $year == $i ? 'selected' : '' ?>><?= $i ?></option>
+                <?php
+                }
+                ?>
+              </select>
+            </div>
+          </div>
+        </div>
       </form>
       <section class="section dashboard">
         <div class="row">
@@ -342,7 +351,6 @@
             },
             displayEventEnd: true,
             eventClick: function(info) {
-              console.log(info);
               $('#editmeeting #date_requested').val(info.event.extendedProps.date_requested);
               $('#editmeeting #topic').val(info.event.extendedProps.topic);
               $('#editmeeting #date_scheduled').val(info.event.extendedProps.date_scheduled);
@@ -367,11 +375,10 @@
             url: "assets/components/includes/fetch.php",
             data: {
               count_users: "",
-              year: "<?= $_GET['year'] ?? date('Y') ?>",
+              year: "<?= $year ?? date('Y') ?>",
             },
             dataType: "json",
             success: function(response) {
-              console.log(response);
               $("#count_users").html(response.counts);
             },
           });
@@ -380,11 +387,10 @@
             url: "assets/components/includes/fetch.php",
             data: {
               count_meetings: "",
-              year: "<?= $_GET['year'] ?? date('Y') ?>",
+              year: "<?= $year ?? date('Y') ?>",
             },
             dataType: "json",
             success: function(response) {
-              console.log(response);
               $("#count_meetings").html(response.counts);
             },
           });
@@ -393,11 +399,10 @@
             url: "assets/components/includes/fetch.php",
             data: {
               count_helpdesks: "",
-              year: "<?= $_GET['year'] ?? date('Y') ?>",
+              year: "<?= $year ?? date('Y') ?>",
             },
             dataType: "json",
             success: function(response) {
-              console.log(response);
               $("#count_helpdesks").html(response.counts);
             },
           });
@@ -406,18 +411,17 @@
             url: "assets/components/includes/fetch.php",
             data: {
               count_equipment: "",
-              year: "<?= $_GET['year'] ?? date('Y') ?>",
+              year: "<?= $year ?? date('Y') ?>",
             },
             dataType: "json",
             success: function(response) {
-              console.log(response);
               $("#count_equipment").html(response.counts);
             },
           });
           $.ajax({
             url: "assets/components/includes/charts.php?bar1",
             data: {
-              year: "<?= $_GET['year'] ?? date('Y') ?>",
+              year: "<?= $year ?? date('Y') ?>",
             },
             type: "GET",
             dataType: "json",
@@ -428,7 +432,7 @@
           $.ajax({
             url: "assets/components/includes/charts.php?donut1",
             data: {
-              year: "<?= $_GET['year'] ?? date('Y') ?>",
+              year: "<?= $year ?? date('Y') ?>",
             },
             type: "GET",
             dataType: "json",
@@ -439,7 +443,7 @@
           $.ajax({
             url: "assets/components/includes/charts.php?pie1",
             data: {
-              year: "<?= $_GET['year'] ?? date('Y') ?>",
+              year: "<?= $year ?? date('Y') ?>",
             },
             type: "GET",
             dataType: "json",
@@ -450,7 +454,7 @@
           $.ajax({
             url: "assets/components/includes/charts.php?line1",
             data: {
-              year: "<?= $_GET['year'] ?? date('Y') ?>",
+              year: "<?= $year ?? date('Y') ?>",
             },
             type: "GET",
             dataType: "json",
@@ -529,7 +533,6 @@
         }
 
         function donutChart(data) {
-          console.log(data.map(item => parseInt(item.count_helpdesks)));
           var donutChart = new ApexCharts(document.querySelector("#donutChart"), {
             series: data.map(item => parseInt(item.count_helpdesks)),
             chart: {

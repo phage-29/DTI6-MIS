@@ -4,7 +4,7 @@ session_start();
 
 $responses = array();
 
-$query = "SELECT m.*, s.color_hex
+$query = "SELECT m.*, s.status, s.color, s.color_hex
 FROM meetings m 
 LEFT JOIN meetings_statuses s 
 ON m.status_id = s.id";
@@ -27,6 +27,9 @@ while ($row = $result->fetch_object()) {
     $response['extendedProps']['time_end'] = $row->time_end;
     $response['extendedProps']['host_id'] = $row->host_id;
     $response['extendedProps']['status_id'] = $row->status_id;
+    $response['extendedProps']['status'] = $row->status;
+    $response['extendedProps']['color'] = $row->color;
+    $response['extendedProps']['color_hex'] = $row->color_hex;
     $response['extendedProps']['meetingid'] = $row->meetingid;
     $response['extendedProps']['passcode'] = $row->passcode;
     $response['extendedProps']['join_link'] = $row->join_link;

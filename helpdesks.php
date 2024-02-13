@@ -1,4 +1,5 @@
 <?php $page = "ICT Helpdesks" ?>
+<?php $protected = true ?>
 <?php require_once "assets/components/templates/header.php"; ?>
 <?php require_once "assets/components/templates/topbar.php"; ?>
 <?php require_once "assets/components/templates/sidebar.php"; ?>
@@ -6,7 +7,7 @@
   <?php
   switch ($_SESSION['role']) {
     case 'Admin':
-  ?>
+      ?>
       <section class="section">
         <div class="row">
 
@@ -18,7 +19,8 @@
 
                   <div class="mb-1">
                     <label for="date_requested">Request date</label>
-                    <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested" value="<?= date('Y-m-d') ?>" required />
+                    <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested"
+                      value="<?= date('Y-m-d') ?>" required />
                   </div>
 
                   <div class="mb-1">
@@ -28,9 +30,12 @@
                       <?php
                       $query = $conn->query("SELECT * FROM users WHERE role_id = 4");
                       while ($row = $query->fetch_object()) {
-                      ?>
-                        <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                      <?php
+                        ?>
+                        <option value="<?= $row->id ?>">
+                          <?= $row->first_name ?>
+                          <?= $row->last_name ?>
+                        </option>
+                        <?php
                       }
                       ?>
                     </select>
@@ -43,9 +48,11 @@
                       <?php
                       $query = $conn->query("SELECT * FROM request_types");
                       while ($row = $query->fetch_object()) {
-                      ?>
-                        <option value="<?= $row->id ?>"><?= $row->request_type ?></option>
-                      <?php
+                        ?>
+                        <option value="<?= $row->id ?>">
+                          <?= $row->request_type ?>
+                        </option>
+                        <?php
                       }
                       ?>
                     </select>
@@ -58,9 +65,11 @@
                       <?php
                       $query = $conn->query("SELECT * FROM categories");
                       while ($row = $query->fetch_object()) {
-                      ?>
-                        <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>"><?= $row->category ?></option>
-                      <?php
+                        ?>
+                        <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>">
+                          <?= $row->category ?>
+                        </option>
+                        <?php
                       }
                       ?>
                     </select>
@@ -73,19 +82,21 @@
                       <?php
                       $query = $conn->query("SELECT * FROM sub_categories");
                       while ($row = $query->fetch_object()) {
-                      ?>
-                        <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>"><?= $row->sub_category ?></option>
-                      <?php
+                        ?>
+                        <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>">
+                          <?= $row->sub_category ?>
+                        </option>
+                        <?php
                       }
                       ?>
                     </select>
                   </div>
 
                   <script>
-                    $(document).ready(function() {
+                    $(document).ready(function () {
 
                       function filterOptions(selectElement, filterKey, filterValue) {
-                        $(selectElement + ' option').each(function() {
+                        $(selectElement + ' option').each(function () {
                           if ($(this).data(filterKey) == filterValue || filterValue == "") {
                             $(this).show();
                           } else {
@@ -95,12 +106,12 @@
                         $(selectElement).val('');
                       }
 
-                      $('#requesthelpdesks #request_type_id').change(function() {
+                      $('#requesthelpdesks #request_type_id').change(function () {
                         filterOptions('#requesthelpdesks #category_id', 'reqtype', $(this).val());
                         $('#requesthelpdesks #sub_category_id').val('');
                       }).trigger('change');
 
-                      $('#requesthelpdesks #category_id').change(function() {
+                      $('#requesthelpdesks #category_id').change(function () {
                         filterOptions('#requesthelpdesks #sub_category_id', 'cat', $(this).val());
                       }).trigger('change');
 
@@ -110,23 +121,28 @@
                   <div class="mb-1">
                     <label for="complaint">Defect, complaint, or request.</label>
                     <div class="text-end">
-                      <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150" required></textarea>
+                      <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150"
+                        required></textarea>
                     </div>
                   </div>
 
                   <div class="mb-1">
                     <label for="datetime_preferred">Preffered date of schedule</label>
-                    <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm" id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
+                    <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm"
+                      id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
                   </div>
 
                   <div class="mb-1 d-none">
                     <label for="files">Additional files(Optional)</label>
-                    <input name="files[]" type="file" class="form-control form-control-sm" id="files" accept=".pdf,.doc,.docx,.txt,image/*" multiple />
+                    <input name="files[]" type="file" class="form-control form-control-sm" id="files"
+                      accept=".pdf,.doc,.docx,.txt,image/*" multiple />
                   </div>
-                  <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="ShowFields" onclick="ShowFields.style.display = 'none';HideFields.style.display = ''">
+                  <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="ShowFields"
+                    onclick="ShowFields.style.display = 'none';HideFields.style.display = ''">
                     Show other fields
                   </a>
-                  <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="HideFields" onclick="HideFields.style.display = 'none';ShowFields.style.display = ''" style="display: none;">
+                  <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="HideFields"
+                    onclick="HideFields.style.display = 'none';ShowFields.style.display = ''" style="display: none;">
                     Hide other fields
                   </a>
                   <div class="collapse" id="collapseExample">
@@ -136,9 +152,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM helpdesks_statuses where id != 6");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->status ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->status ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -150,9 +168,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM priority_levels");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->priority_level ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->priority_level ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -164,9 +184,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM repair_types");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->repair_type ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->repair_type ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -178,9 +200,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM repair_classes");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->repair_class ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->repair_class ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -192,20 +216,24 @@
                         <?php
                         $query = $conn->query("SELECT * FROM mediums");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->medium ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->medium ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
                     </div>
                     <div class="mb-1">
                       <label for="datetime_start">Date and time started</label>
-                      <input name="datetime_start" type="datetime-local" class="form-control form-control-sm" id="datetime_start" />
+                      <input name="datetime_start" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_start" />
                     </div>
                     <div class="mb-1">
                       <label for="datetime_end">Date and time ended</label>
-                      <input name="datetime_end" type="datetime-local" class="form-control form-control-sm" id="datetime_end" />
+                      <input name="datetime_end" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_end" />
                     </div>
                     <div class="mb-1">
                       <label for="diagnosis">Diagnosis and/or action taken</label>
@@ -222,9 +250,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id != 4");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -236,9 +267,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id != 4");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -250,9 +284,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id = 1");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -302,7 +339,8 @@
 
                     <div class="mb-1">
                       <label for="date_requested">Request date</label>
-                      <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested" value="<?= date('Y-m-d') ?>" disabled />
+                      <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested"
+                        value="<?= date('Y-m-d') ?>" disabled />
                     </div>
 
                     <div class="mb-1">
@@ -312,9 +350,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id = 4");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -327,9 +368,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM request_types");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->request_type ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->request_type ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -342,9 +385,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM categories");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>"><?= $row->category ?></option>
-                        <?php
+                          ?>
+                          <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>">
+                            <?= $row->category ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -357,19 +402,21 @@
                         <?php
                         $query = $conn->query("SELECT * FROM sub_categories");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>"><?= $row->sub_category ?></option>
-                        <?php
+                          ?>
+                          <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>">
+                            <?= $row->sub_category ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
                     </div>
 
                     <script>
-                      $(document).ready(function() {
+                      $(document).ready(function () {
 
                         function filterOptions(selectElement, filterKey, filterValue) {
-                          $(selectElement + ' option').each(function() {
+                          $(selectElement + ' option').each(function () {
                             if ($(this).data(filterKey) == filterValue || filterValue == "") {
                               $(this).show();
                             } else {
@@ -379,12 +426,12 @@
                           $(selectElement).val('');
                         }
 
-                        $('#requesthelpdesks #request_type_id').change(function() {
+                        $('#requesthelpdesks #request_type_id').change(function () {
                           filterOptions('#requesthelpdesks #category_id', 'reqtype', $(this).val());
                           $('#requesthelpdesks #sub_category_id').val('');
                         }).trigger('change');
 
-                        $('#requesthelpdesks #category_id').change(function() {
+                        $('#requesthelpdesks #category_id').change(function () {
                           filterOptions('#requesthelpdesks #sub_category_id', 'cat', $(this).val());
                         }).trigger('change');
 
@@ -394,18 +441,21 @@
                     <div class="mb-1">
                       <label for="complaint">Defect, complaint, or request.</label>
                       <div class="text-end">
-                        <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150" disabled></textarea>
+                        <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150"
+                          disabled></textarea>
                       </div>
                     </div>
 
                     <div class="mb-1">
                       <label for="datetime_preferred">Preffered date of schedule</label>
-                      <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm" id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" disabled />
+                      <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" disabled />
                     </div>
 
                     <div class="mb-1 d-none">
                       <label for="files">Additional files(Optional)</label>
-                      <input name="files[]" type="file" class="form-control form-control-sm" id="files" accept=".pdf,.doc,.docx,.txt,image/*" multiple />
+                      <input name="files[]" type="file" class="form-control form-control-sm" id="files"
+                        accept=".pdf,.doc,.docx,.txt,image/*" multiple />
                     </div>
                     <hr>
                     <div class="mb-1">
@@ -414,9 +464,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM helpdesks_statuses where id != 6");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->status ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->status ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -428,9 +480,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM priority_levels");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->priority_level ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->priority_level ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -442,9 +496,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM repair_types");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->repair_type ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->repair_type ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -456,9 +512,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM repair_classes");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->repair_class ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->repair_class ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -470,28 +528,34 @@
                         <?php
                         $query = $conn->query("SELECT * FROM mediums");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->medium ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->medium ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
                     </div>
                     <div class="mb-1">
                       <label for="datetime_start">Date and time started</label>
-                      <input name="datetime_start" type="datetime-local" class="form-control form-control-sm" id="datetime_start" disabled />
+                      <input name="datetime_start" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_start" disabled />
                     </div>
                     <div class="mb-1">
                       <label for="datetime_end">Date and time ended</label>
-                      <input name="datetime_end" type="datetime-local" class="form-control form-control-sm" id="datetime_end" disabled />
+                      <input name="datetime_end" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_end" disabled />
                     </div>
                     <div class="mb-1">
                       <label for="diagnosis">Diagnosis and/or action taken</label>
-                      <textarea name="diagnosis" type="date" class="form-control form-control-sm" id="diagnosis" disabled></textarea>
+                      <textarea name="diagnosis" type="date" class="form-control form-control-sm" id="diagnosis"
+                        disabled></textarea>
                     </div>
                     <div class="mb-1">
                       <label for="remarks">Remarks and/or reccomendation</label>
-                      <textarea name="remarks" type="date" class="form-control form-control-sm" id="remarks" disabled></textarea>
+                      <textarea name="remarks" type="date" class="form-control form-control-sm" id="remarks"
+                        disabled></textarea>
                     </div>
                     <div class="mb-1">
                       <label for="assigned_to">Assigned to</label>
@@ -500,9 +564,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id != 4");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -514,9 +581,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id != 4");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -528,9 +598,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id = 1");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -557,7 +630,8 @@
 
                     <div class="mb-1">
                       <label for="date_requested">Request date</label>
-                      <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested" value="<?= date('Y-m-d') ?>" required />
+                      <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested"
+                        value="<?= date('Y-m-d') ?>" required />
                     </div>
 
                     <div class="mb-1">
@@ -567,9 +641,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id = 4");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -582,9 +659,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM request_types");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->request_type ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->request_type ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -597,9 +676,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM categories");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>"><?= $row->category ?></option>
-                        <?php
+                          ?>
+                          <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>">
+                            <?= $row->category ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -612,19 +693,21 @@
                         <?php
                         $query = $conn->query("SELECT * FROM sub_categories");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>"><?= $row->sub_category ?></option>
-                        <?php
+                          ?>
+                          <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>">
+                            <?= $row->sub_category ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
                     </div>
 
                     <script>
-                      $(document).ready(function() {
+                      $(document).ready(function () {
 
                         function filterOptions(selectElement, filterKey, filterValue) {
-                          $(selectElement + ' option').each(function() {
+                          $(selectElement + ' option').each(function () {
                             if ($(this).data(filterKey) == filterValue || filterValue == "") {
                               $(this).show();
                             } else {
@@ -634,12 +717,12 @@
                           $(selectElement).val('');
                         }
 
-                        $('#requesthelpdesks #request_type_id').change(function() {
+                        $('#requesthelpdesks #request_type_id').change(function () {
                           filterOptions('#requesthelpdesks #category_id', 'reqtype', $(this).val());
                           $('#requesthelpdesks #sub_category_id').val('');
                         }).trigger('change');
 
-                        $('#requesthelpdesks #category_id').change(function() {
+                        $('#requesthelpdesks #category_id').change(function () {
                           filterOptions('#requesthelpdesks #sub_category_id', 'cat', $(this).val());
                         }).trigger('change');
 
@@ -649,13 +732,15 @@
                     <div class="mb-1">
                       <label for="complaint">Defect, complaint, or request.</label>
                       <div class="text-end">
-                        <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150" required></textarea>
+                        <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150"
+                          required></textarea>
                       </div>
                     </div>
 
                     <div class="mb-1">
                       <label for="datetime_preferred">Preffered date of schedule</label>
-                      <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm" id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
+                      <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
                     </div>
 
                     <div class="mb-1">
@@ -664,9 +749,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM helpdesks_statuses where id != 6");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->status ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->status ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -679,9 +766,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM priority_levels");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->priority_level ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->priority_level ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -694,9 +783,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM repair_types");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->repair_type ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->repair_type ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -709,9 +800,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM repair_classes");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->repair_class ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->repair_class ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -724,9 +817,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM mediums");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->medium ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->medium ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -734,12 +829,14 @@
 
                     <div class="mb-1">
                       <label for="datetime_start">Date and time started</label>
-                      <input name="datetime_start" type="datetime-local" class="form-control form-control-sm" id="datetime_start" />
+                      <input name="datetime_start" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_start" />
                     </div>
 
                     <div class="mb-1">
                       <label for="datetime_end">Date and time ended</label>
-                      <input name="datetime_end" type="datetime-local" class="form-control form-control-sm" id="datetime_end" />
+                      <input name="datetime_end" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_end" />
                     </div>
 
                     <div class="mb-1">
@@ -759,9 +856,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id != 4");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -774,9 +874,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id != 4");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -789,9 +892,12 @@
                         <?php
                         $query = $conn->query("SELECT * FROM users WHERE role_id = 1");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -822,7 +928,11 @@
                 </div>
                 <div class="modal-body">
                   <form class="needs-validation">
-                    <p class="small"><strong class="small">PART I. Our office is committed to continually improve our services to our external clients. Please answer this Form for us to know your feedback on the different aspects of our services. Your feedback and impressions will help us in improving our services in order to better serve our clients. Rest assured all information you will provide shall be treated with strict confidentiality. </strong></p>
+                    <p class="small"><strong class="small">PART I. Our office is committed to continually improve our
+                        services to our external clients. Please answer this Form for us to know your feedback on the
+                        different aspects of our services. Your feedback and impressions will help us in improving our
+                        services in order to better serve our clients. Rest assured all information you will provide shall
+                        be treated with strict confidentiality. </strong></p>
                     <hr>
                     <div class="row mb-2 crit1">
                       <div class="col-lg-6 col-md-12 col-sm-12 small">
@@ -831,22 +941,26 @@
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="crit1-4" onclick="updateRating('crit1', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit1-4"
+                            onclick="updateRating('crit1', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="crit1-3" onclick="updateRating('crit1', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit1-3"
+                            onclick="updateRating('crit1', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="crit1-2" onclick="updateRating('crit1', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit1-2"
+                            onclick="updateRating('crit1', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="crit1-1" onclick="updateRating('crit1', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit1-1"
+                            onclick="updateRating('crit1', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -856,26 +970,31 @@
                     <div class="row mb-2 crit2">
                       <div class="col-lg-6 col-md-12 col-sm-12 small">
                         <p><strong>RELIABILITY AND OUTCOME</strong></p>
-                        <p>Actual services are acted upon immediately. Delivery of service are complete, accurate and corresponds to requirement.</p>
+                        <p>Actual services are acted upon immediately. Delivery of service are complete, accurate and
+                          corresponds to requirement.</p>
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="crit2-4" onclick="updateRating('crit2', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit2-4"
+                            onclick="updateRating('crit2', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="crit2-3" onclick="updateRating('crit2', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit2-3"
+                            onclick="updateRating('crit2', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="crit2-2" onclick="updateRating('crit2', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit2-2"
+                            onclick="updateRating('crit2', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="crit2-1" onclick="updateRating('crit2', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit2-1"
+                            onclick="updateRating('crit2', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -889,22 +1008,26 @@
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="crit3-4" onclick="updateRating('crit3', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit3-4"
+                            onclick="updateRating('crit3', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="crit3-3" onclick="updateRating('crit3', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit3-3"
+                            onclick="updateRating('crit3', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="crit3-2" onclick="updateRating('crit3', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit3-2"
+                            onclick="updateRating('crit3', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="crit3-1" onclick="updateRating('crit3', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit3-1"
+                            onclick="updateRating('crit3', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -918,22 +1041,26 @@
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="crit4-4" onclick="updateRating('crit4', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit4-4"
+                            onclick="updateRating('crit4', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="crit4-3" onclick="updateRating('crit4', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit4-3"
+                            onclick="updateRating('crit4', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="crit4-2" onclick="updateRating('crit4', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit4-2"
+                            onclick="updateRating('crit4', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="crit4-1" onclick="updateRating('crit4', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit4-1"
+                            onclick="updateRating('crit4', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -948,22 +1075,26 @@
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="overall-4" onclick="updateRating('overall', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="overall-4"
+                            onclick="updateRating('overall', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="overall-3" onclick="updateRating('overall', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="overall-3"
+                            onclick="updateRating('overall', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="overall-2" onclick="updateRating('overall', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="overall-2"
+                            onclick="updateRating('overall', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="overall-1" onclick="updateRating('overall', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="overall-1"
+                            onclick="updateRating('overall', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -985,12 +1116,17 @@
                     <p class="small"><strong>PART II. COMMENTS AND SUGGESTIONS</strong></p>
                     <hr>
                     <div class="mb-2">
-                      <label for="reasons" class="small">Please write in the space below your reason/s for your "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to improve.</label>
-                      <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150" required></textarea>
+                      <label for="reasons" class="small">Please write in the space below your reason/s for your
+                        "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to
+                        improve.</label>
+                      <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150"
+                        required></textarea>
                     </div>
                     <div class="mb-2">
-                      <label for="comments" class="small">Please give comments/suggestions to help us improve our service/s:</label>
-                      <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150" required></textarea>
+                      <label for="comments" class="small">Please give comments/suggestions to help us improve our
+                        service/s:</label>
+                      <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150"
+                        required></textarea>
                     </div>
                     <hr>
                     <hr>
@@ -1012,7 +1148,7 @@
           </div>
 
           <script>
-            jQuery(document).ready(function() {
+            jQuery(document).ready(function () {
               var admintblhelpdesks = $('#admintblhelpdesks').DataTable({
                 "processing": true,
                 "serverSide": true,
@@ -1030,13 +1166,14 @@
                   [8, 'asc'],
                   [0, 'desc']
                 ],
-                "initComplete": function(settings, json) {
+                "initComplete": function (settings, json) {
                   $('#admintblhelpdesks').show();
                 }
               });
-              setInterval(function() {
+              setInterval(function () {
                 admintblhelpdesks.ajax.reload()
               }, 30000);
+
             });
 
             function useraction(action, id) {
@@ -1056,7 +1193,7 @@
                         title: "Loading",
                         html: "Please wait...",
                         allowOutsideClick: false,
-                        didOpen: function() {
+                        didOpen: function () {
                           Swal.showLoading();
                         },
                       });
@@ -1068,14 +1205,14 @@
                           'id': id
                         },
                         dataType: "json",
-                        success: function(response) {
-                          setTimeout(function() {
+                        success: function (response) {
+                          setTimeout(function () {
                             Swal.fire({
                               icon: response.status,
                               title: response.message,
                               showConfirmButton: false,
                               timer: 1000,
-                            }).then(function() {
+                            }).then(function () {
                               if (response.redirect) {
                                 window.location.href = response.redirect;
                               } else {
@@ -1097,7 +1234,7 @@
                       'id': id
                     },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                       console.log(response);
                       $('#viewModal #id').val(response.id);
                       $('#viewModal #requested_by').val(response.requested_by);
@@ -1133,7 +1270,7 @@
                       'id': id
                     },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                       console.log(response);
                       $('#editModal #id').val(response.id);
                       $('#editModal #requested_by').val(response.requested_by);
@@ -1169,7 +1306,7 @@
                       'id': id
                     },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                       console.log(response);
                       $('#csfModalLabel').html(response.request_number + ' (<span class="text-' + response.color + '">' + response.status + '</span>)');
                       $('#helpdesks_id').val(response.id);
@@ -1190,18 +1327,10 @@
                         $('#edit_csf').prop('disabled', false);
                         $('#add_csf').prop('disabled', true);
                       } else {
-                        $('#crit1').val(null);
-                        $('#crit1-' + response.crit1).removeClass('text-warning');
-                        $('#crit2').val(null);
-                        $('#crit2-' + response.crit2).removeClass('text-warning');
-                        $('#crit3').val(null);
-                        $('#crit3-' + response.crit3).removeClass('text-warning');
-                        $('#crit4').val(null);
-                        $('#crit4-' + response.crit4).removeClass('text-warning');
-                        $('#overall').val(null);
-                        $('#overall-' + response.overall).removeClass('text-warning');
-                        $('#reasons').html(null);
-                        $('#comments').html(null);
+                        $('#crit1').val('');
+                        $('.rating-button').removeClass('text-warning');
+                        $('#reasons').html('');
+                        $('#comments').html('');
                         $('#edit_csf').prop('disabled', true);
                         $('#add_csf').prop('disabled', false);
                       }
@@ -1209,17 +1338,30 @@
                   });
                   $('#csfModal').modal('show');
                   break;
+                case 'print':
+                  $.ajax({
+                    type: 'POST',
+                    url: 'print.php',
+                    data: { 'id': id },
+                    success: function (response) {
+                      var iframe = $('<iframe>');
+                      $('body').append(iframe);
+                      var doc = iframe[0].contentDocument || iframe[0].contentWindow.document;
+                      doc.write(response);
+                      doc.close();
+                      iframe[0].contentWindow.print();
+                      iframe.remove();
+                    }
+                  });
               }
-
-
             }
           </script>
         </div>
       </section>
-    <?php
+      <?php
       break;
     case 'Employee':
-    ?>
+      ?>
       <section class="section">
         <div class="row">
 
@@ -1236,9 +1378,11 @@
                       <?php
                       $query = $conn->query("SELECT * FROM request_types");
                       while ($row = $query->fetch_object()) {
-                      ?>
-                        <option value="<?= $row->id ?>"><?= $row->request_type ?></option>
-                      <?php
+                        ?>
+                        <option value="<?= $row->id ?>">
+                          <?= $row->request_type ?>
+                        </option>
+                        <?php
                       }
                       ?>
                     </select>
@@ -1251,9 +1395,11 @@
                       <?php
                       $query = $conn->query("SELECT * FROM categories");
                       while ($row = $query->fetch_object()) {
-                      ?>
-                        <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>"><?= $row->category ?></option>
-                      <?php
+                        ?>
+                        <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>">
+                          <?= $row->category ?>
+                        </option>
+                        <?php
                       }
                       ?>
                     </select>
@@ -1266,19 +1412,21 @@
                       <?php
                       $query = $conn->query("SELECT * FROM sub_categories");
                       while ($row = $query->fetch_object()) {
-                      ?>
-                        <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>"><?= $row->sub_category ?></option>
-                      <?php
+                        ?>
+                        <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>">
+                          <?= $row->sub_category ?>
+                        </option>
+                        <?php
                       }
                       ?>
                     </select>
                   </div>
 
                   <script>
-                    $(document).ready(function() {
+                    $(document).ready(function () {
 
                       function filterOptions(selectElement, filterKey, filterValue) {
-                        $(selectElement + ' option').each(function() {
+                        $(selectElement + ' option').each(function () {
                           if ($(this).data(filterKey) == filterValue || filterValue == "") {
                             $(this).show();
                           } else {
@@ -1288,12 +1436,12 @@
                         $(selectElement).val('');
                       }
 
-                      $('#requesthelpdesks #request_type_id').change(function() {
+                      $('#requesthelpdesks #request_type_id').change(function () {
                         filterOptions('#requesthelpdesks #category_id', 'reqtype', $(this).val());
                         $('#requesthelpdesks #sub_category_id').val('');
                       }).trigger('change');
 
-                      $('#requesthelpdesks #category_id').change(function() {
+                      $('#requesthelpdesks #category_id').change(function () {
                         filterOptions('#requesthelpdesks #sub_category_id', 'cat', $(this).val());
                       }).trigger('change');
 
@@ -1303,15 +1451,16 @@
                   <div class="mb-1">
                     <label for="complaint">Defect, complaint, or request.</label>
                     <div class="text-end">
-                      <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150" required></textarea>
+                      <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150"
+                        required></textarea>
                       <div id="the-count">
                         <span id="current">0</span>
                         <span id="maximum">/ 150</span>
                       </div>
 
                       <script>
-                        $(document).ready(function() {
-                          $('#requesthelpdesks #complaint').on('keyup', function() {
+                        $(document).ready(function () {
+                          $('#requesthelpdesks #complaint').on('keyup', function () {
                             var currentLength = $(this).val().length;
                             $('#requesthelpdesks #current').text(currentLength);
                           });
@@ -1322,12 +1471,14 @@
 
                   <div class="mb-1">
                     <label for="datetime_preferred">Preffered date of schedule</label>
-                    <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm" id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
+                    <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm"
+                      id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
                   </div>
 
                   <div class="mb-1 d-none">
                     <label for="files">Additional files(Optional)</label>
-                    <input name="files[]" type="file" class="form-control form-control-sm" id="files" accept=".pdf,.doc,.docx,.txt,image/*" multiple />
+                    <input name="files[]" type="file" class="form-control form-control-sm" id="files"
+                      accept=".pdf,.doc,.docx,.txt,image/*" multiple />
                   </div>
                   <div class="text-end">
                     <input type="hidden" name="date_requested" value="<?= date('Y-m-d') ?>" />
@@ -1380,9 +1531,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM request_types");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->request_type ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->request_type ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -1395,9 +1548,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM categories");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>"><?= $row->category ?></option>
-                        <?php
+                          ?>
+                          <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>">
+                            <?= $row->category ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -1410,19 +1565,21 @@
                         <?php
                         $query = $conn->query("SELECT * FROM sub_categories");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>"><?= $row->sub_category ?></option>
-                        <?php
+                          ?>
+                          <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>">
+                            <?= $row->sub_category ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
                     </div>
 
                     <script>
-                      $(document).ready(function() {
+                      $(document).ready(function () {
 
                         function filterOptions(selectElement, filterKey, filterValue) {
-                          $(selectElement + ' option').each(function() {
+                          $(selectElement + ' option').each(function () {
                             if ($(this).data(filterKey) == filterValue || filterValue == "") {
                               $(this).show();
                             } else {
@@ -1432,12 +1589,12 @@
                           $(selectElement).val('');
                         }
 
-                        $('#requesthelpdesks #request_type_id').change(function() {
+                        $('#requesthelpdesks #request_type_id').change(function () {
                           filterOptions('#requesthelpdesks #category_id', 'reqtype', $(this).val());
                           $('#requesthelpdesks #sub_category_id').val('');
                         }).trigger('change');
 
-                        $('#requesthelpdesks #category_id').change(function() {
+                        $('#requesthelpdesks #category_id').change(function () {
                           filterOptions('#requesthelpdesks #sub_category_id', 'cat', $(this).val());
                         }).trigger('change');
 
@@ -1447,15 +1604,16 @@
                     <div class="mb-1">
                       <label for="complaint">Defect, complaint, or request.</label>
                       <div class="text-end">
-                        <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150" required></textarea>
+                        <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150"
+                          required></textarea>
                         <div id="the-count">
                           <span id="current">0</span>
                           <span id="maximum">/ 150</span>
                         </div>
 
                         <script>
-                          $(document).ready(function() {
-                            $('#requesthelpdesks #complaint').on('keyup', function() {
+                          $(document).ready(function () {
+                            $('#requesthelpdesks #complaint').on('keyup', function () {
                               var currentLength = $(this).val().length;
                               $('#requesthelpdesks #current').text(currentLength);
                             });
@@ -1466,12 +1624,14 @@
 
                     <div class="mb-1">
                       <label for="datetime_preferred">Preffered date of schedule</label>
-                      <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm" id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
+                      <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
                     </div>
 
                     <div class="mb-1 d-none">
                       <label for="files">Additional files(Optional)</label>
-                      <input name="files[]" type="file" class="form-control form-control-sm" id="files" accept=".pdf,.doc,.docx,.txt,image/*" multiple />
+                      <input name="files[]" type="file" class="form-control form-control-sm" id="files"
+                        accept=".pdf,.doc,.docx,.txt,image/*" multiple />
                     </div>
 
                     <div class="text-end">
@@ -1506,9 +1666,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM request_types");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option value="<?= $row->id ?>"><?= $row->request_type ?></option>
-                        <?php
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->request_type ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -1521,9 +1683,11 @@
                         <?php
                         $query = $conn->query("SELECT * FROM categories");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>"><?= $row->category ?></option>
-                        <?php
+                          ?>
+                          <option data-reqtype="<?= $row->request_type_id ?>" value="<?= $row->id ?>">
+                            <?= $row->category ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
@@ -1536,19 +1700,21 @@
                         <?php
                         $query = $conn->query("SELECT * FROM sub_categories");
                         while ($row = $query->fetch_object()) {
-                        ?>
-                          <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>"><?= $row->sub_category ?></option>
-                        <?php
+                          ?>
+                          <option data-cat="<?= $row->category_id ?>" value="<?= $row->id ?>">
+                            <?= $row->sub_category ?>
+                          </option>
+                          <?php
                         }
                         ?>
                       </select>
                     </div>
 
                     <script>
-                      $(document).ready(function() {
+                      $(document).ready(function () {
 
                         function filterOptions(selectElement, filterKey, filterValue) {
-                          $(selectElement + ' option').each(function() {
+                          $(selectElement + ' option').each(function () {
                             if ($(this).data(filterKey) == filterValue || filterValue == "") {
                               $(this).show();
                             } else {
@@ -1558,12 +1724,12 @@
                           $(selectElement).val('');
                         }
 
-                        $('#requesthelpdesks #request_type_id').change(function() {
+                        $('#requesthelpdesks #request_type_id').change(function () {
                           filterOptions('#requesthelpdesks #category_id', 'reqtype', $(this).val());
                           $('#requesthelpdesks #sub_category_id').val('');
                         }).trigger('change');
 
-                        $('#requesthelpdesks #category_id').change(function() {
+                        $('#requesthelpdesks #category_id').change(function () {
                           filterOptions('#requesthelpdesks #sub_category_id', 'cat', $(this).val());
                         }).trigger('change');
 
@@ -1573,15 +1739,16 @@
                     <div class="mb-1">
                       <label for="complaint">Defect, complaint, or request.</label>
                       <div class="text-end">
-                        <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150" required></textarea>
+                        <textarea name="complaint" class="form-control form-control-sm" id="complaint" maxlength="150"
+                          required></textarea>
                         <div id="the-count">
                           <span id="current">0</span>
                           <span id="maximum">/ 150</span>
                         </div>
 
                         <script>
-                          $(document).ready(function() {
-                            $('#requesthelpdesks #complaint').on('keyup', function() {
+                          $(document).ready(function () {
+                            $('#requesthelpdesks #complaint').on('keyup', function () {
                               var currentLength = $(this).val().length;
                               $('#requesthelpdesks #current').text(currentLength);
                             });
@@ -1592,12 +1759,14 @@
 
                     <div class="mb-1">
                       <label for="datetime_preferred">Preffered date of schedule</label>
-                      <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm" id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
+                      <input name="datetime_preferred" type="datetime-local" class="form-control form-control-sm"
+                        id="datetime_preferred" value="<?= date('Y-m-d H:i') ?>" required />
                     </div>
 
                     <div class="mb-1 d-none">
                       <label for="files">Additional files(Optional)</label>
-                      <input name="files[]" type="file" class="form-control form-control-sm" id="files" accept=".pdf,.doc,.docx,.txt,image/*" multiple />
+                      <input name="files[]" type="file" class="form-control form-control-sm" id="files"
+                        accept=".pdf,.doc,.docx,.txt,image/*" multiple />
                     </div>
 
                     <div class="text-end">
@@ -1625,7 +1794,11 @@
                 </div>
                 <div class="modal-body" id="csfModalBody">
                   <form class="needs-validation">
-                    <p class="small"><strong class="small">PART I. Our office is committed to continually improve our services to our external clients. Please answer this Form for us to know your feedback on the different aspects of our services. Your feedback and impressions will help us in improving our services in order to better serve our clients. Rest assured all information you will provide shall be treated with strict confidentiality. </strong></p>
+                    <p class="small"><strong class="small">PART I. Our office is committed to continually improve our
+                        services to our external clients. Please answer this Form for us to know your feedback on the
+                        different aspects of our services. Your feedback and impressions will help us in improving our
+                        services in order to better serve our clients. Rest assured all information you will provide shall
+                        be treated with strict confidentiality. </strong></p>
                     <hr>
                     <div class="row mb-2 crit1">
                       <div class="col-lg-6 col-md-12 col-sm-12 small">
@@ -1634,22 +1807,26 @@
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="crit1-4" onclick="updateRating('crit1', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit1-4"
+                            onclick="updateRating('crit1', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="crit1-3" onclick="updateRating('crit1', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit1-3"
+                            onclick="updateRating('crit1', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="crit1-2" onclick="updateRating('crit1', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit1-2"
+                            onclick="updateRating('crit1', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="crit1-1" onclick="updateRating('crit1', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit1-1"
+                            onclick="updateRating('crit1', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -1659,26 +1836,31 @@
                     <div class="row mb-2 crit2">
                       <div class="col-lg-6 col-md-12 col-sm-12 small">
                         <p><strong>RELIABILITY AND OUTCOME</strong></p>
-                        <p>Actual services are acted upon immediately. Delivery of service are complete, accurate and corresponds to requirement.</p>
+                        <p>Actual services are acted upon immediately. Delivery of service are complete, accurate and
+                          corresponds to requirement.</p>
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="crit2-4" onclick="updateRating('crit2', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit2-4"
+                            onclick="updateRating('crit2', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="crit2-3" onclick="updateRating('crit2', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit2-3"
+                            onclick="updateRating('crit2', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="crit2-2" onclick="updateRating('crit2', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit2-2"
+                            onclick="updateRating('crit2', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="crit2-1" onclick="updateRating('crit2', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit2-1"
+                            onclick="updateRating('crit2', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -1692,22 +1874,26 @@
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="crit3-4" onclick="updateRating('crit3', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit3-4"
+                            onclick="updateRating('crit3', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="crit3-3" onclick="updateRating('crit3', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit3-3"
+                            onclick="updateRating('crit3', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="crit3-2" onclick="updateRating('crit3', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit3-2"
+                            onclick="updateRating('crit3', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="crit3-1" onclick="updateRating('crit3', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit3-1"
+                            onclick="updateRating('crit3', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -1721,22 +1907,26 @@
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="crit4-4" onclick="updateRating('crit4', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="crit4-4"
+                            onclick="updateRating('crit4', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="crit4-3" onclick="updateRating('crit4', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="crit4-3"
+                            onclick="updateRating('crit4', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="crit4-2" onclick="updateRating('crit4', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="crit4-2"
+                            onclick="updateRating('crit4', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="crit4-1" onclick="updateRating('crit4', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="crit4-1"
+                            onclick="updateRating('crit4', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -1751,22 +1941,26 @@
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 row">
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="4" id="overall-4" onclick="updateRating('overall', 4, this)" title="Excellent">
+                          <button type="button" class="btn rating-button" data-value="4" id="overall-4"
+                            onclick="updateRating('overall', 4, this)" title="Excellent">
                             <i class="fs-3 bi bi-emoji-laughing"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="3" id="overall-3" onclick="updateRating('overall', 3, this)" title="Good">
+                          <button type="button" class="btn rating-button" data-value="3" id="overall-3"
+                            onclick="updateRating('overall', 3, this)" title="Good">
                             <i class="fs-3 bi bi-emoji-smile"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="2" id="overall-2" onclick="updateRating('overall', 2, this)" title="Average">
+                          <button type="button" class="btn rating-button" data-value="2" id="overall-2"
+                            onclick="updateRating('overall', 2, this)" title="Average">
                             <i class="fs-3 bi bi-emoji-frown"></i>
                           </button>
                         </div>
                         <div class="col-3 small text-center">
-                          <button type="button" class="btn rating-button" data-value="1" id="overall-1" onclick="updateRating('overall', 1, this)" title="Poor">
+                          <button type="button" class="btn rating-button" data-value="1" id="overall-1"
+                            onclick="updateRating('overall', 1, this)" title="Poor">
                             <i class="fs-3 bi bi-emoji-angry"></i>
                           </button>
                         </div>
@@ -1788,12 +1982,17 @@
                     <p class="small"><strong>PART II. COMMENTS AND SUGGESTIONS</strong></p>
                     <hr>
                     <div class="mb-2">
-                      <label for="reasons" class="small">Please write in the space below your reason/s for your "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to improve.</label>
-                      <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150" required></textarea>
+                      <label for="reasons" class="small">Please write in the space below your reason/s for your
+                        "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to
+                        improve.</label>
+                      <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150"
+                        required></textarea>
                     </div>
                     <div class="mb-2">
-                      <label for="comments" class="small">Please give comments/suggestions to help us improve our service/s:</label>
-                      <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150" required></textarea>
+                      <label for="comments" class="small">Please give comments/suggestions to help us improve our
+                        service/s:</label>
+                      <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150"
+                        required></textarea>
                     </div>
                     <hr>
                     <hr>
@@ -1815,7 +2014,7 @@
           </div>
 
           <script>
-            jQuery(document).ready(function() {
+            jQuery(document).ready(function () {
               var admintblhelpdesks = $('#admintblhelpdesks').DataTable({
                 "processing": true,
                 "serverSide": true,
@@ -1833,11 +2032,11 @@
                   [6, 'asc'],
                   [1, 'asc']
                 ],
-                "initComplete": function(settings, json) {
+                "initComplete": function (settings, json) {
                   $('#admintblhelpdesks').show();
                 }
               });
-              setInterval(function() {
+              setInterval(function () {
                 admintblhelpdesks.ajax.reload()
               }, 60000);
             });
@@ -1859,7 +2058,7 @@
                         title: "Loading",
                         html: "Please wait...",
                         allowOutsideClick: false,
-                        didOpen: function() {
+                        didOpen: function () {
                           Swal.showLoading();
                         },
                       });
@@ -1871,14 +2070,14 @@
                           'id': id
                         },
                         dataType: "json",
-                        success: function(response) {
-                          setTimeout(function() {
+                        success: function (response) {
+                          setTimeout(function () {
                             Swal.fire({
                               icon: response.status,
                               title: response.message,
                               showConfirmButton: false,
                               timer: 1000,
-                            }).then(function() {
+                            }).then(function () {
                               if (response.redirect) {
                                 window.location.href = response.redirect;
                               } else {
@@ -1906,7 +2105,7 @@
                       'id': id
                     },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                       console.log(response);
                       $('#csfModalLabel').html(response.request_number + ' (<span class="text-' + response.color + '">' + response.status + '</span>)');
                       $('#helpdesks_id').val(response.id);
@@ -1942,10 +2141,10 @@
           </script>
         </div>
       </section>
-    <?php
+      <?php
       break;
     default:
-    ?>
+      ?>
       <section class="section">
         <div class="row">
           <div class="col-lg-12">
@@ -1960,7 +2159,7 @@
           </div>
         </div>
       </section>
-  <?php
+    <?php
   }
   ?>
 </main><!-- End #main -->

@@ -39,8 +39,8 @@ if (isset($_GET['helpdesks1'])) {
 
     $columns = array(
         array('db' => 'request_number', 'dt' => 0),
-        array('db' => 'status', 'dt' => 1,'formatter' => function ($data, $row) {
-            return '<p class="text-'.$row['color'].' text-center">'.$row['status'].'</p>';
+        array('db' => 'status', 'dt' => 1, 'formatter' => function ($data, $row) {
+            return '<p class="text-' . $row['color'] . ' text-center">' . $row['status'] . '</p>';
         }),
         array('db' => 'requestor', 'dt' => 2),
         array('db' => 'request_type', 'dt' => 3),
@@ -56,7 +56,7 @@ if (isset($_GET['helpdesks1'])) {
                     ($row['status'] == 'Pending' ? '<button onclick="return useraction(\'view\', ' . $row['id'] . ')" class="btn btn-primary btn-sm mx-1"><i class="bi bi-eye"></i></button><button onclick="return useraction(\'edit\', ' . $row['id'] . ')" class="btn btn-success btn-sm mx-1"><i class="bi bi-pencil-square"></i></button><button onclick="return useraction(\'cancel\', ' . $row['id'] . ')" class="btn btn-danger btn-sm mx-1"><i class="bi bi-x-circle"></i></button>' : '') .
                     ($row['status'] == 'Pre-repair' ? '<button onclick="return useraction(\'view\', ' . $row['id'] . ')" class="btn btn-primary btn-sm mx-1"><i class="bi bi-eye"></i></button><button onclick="return useraction(\'edit\', ' . $row['id'] . ')" class="btn btn-success btn-sm mx-1"><i class="bi bi-pencil-square"></i></button><button onclick="return useraction(\'cancel\', ' . $row['id'] . ')" class="btn btn-danger btn-sm mx-1"><i class="bi bi-x-circle"></i></button>' : '') .
                     ($row['status'] == 'Unserviceable' ? '<button onclick="return useraction(\'view\', ' . $row['id'] . ')" class="btn btn-primary btn-sm mx-1"><i class="bi bi-eye"></i></button><button onclick="return useraction(\'edit\', ' . $row['id'] . ')" class="btn btn-success btn-sm mx-1"><i class="bi bi-pencil-square"></i></button><button onclick="return useraction(\'cancel\', ' . $row['id'] . ')" class="btn btn-danger btn-sm mx-1"><i class="bi bi-x-circle"></i></button>' : '') .
-                    ($row['status'] == 'Completed' ? '<button onclick="return useraction(\'view\', ' . $row['id'] . ')" class="btn btn-primary btn-sm mx-1"><i class="bi bi-eye"></i></button><button onclick="return useraction(\'edit\', ' . $row['id'] . ')" class="btn btn-success btn-sm mx-1"><i class="bi bi-pencil-square"></i></button><button onclick="return useraction(\'csf\', ' . $row['id'] . ')" class="btn ' . ($row['is_csf'] ? 'btn-success' : 'btn-warning') . ' btn-sm mx-1"><i class="bi bi-list-check"></i></button>' : '') .
+                    ($row['status'] == 'Completed' ? '<button onclick="return useraction(\'view\', ' . $row['id'] . ')" class="btn btn-primary btn-sm mx-1"><i class="bi bi-eye"></i></button><button onclick="return useraction(\'edit\', ' . $row['id'] . ')" class="btn btn-success btn-sm mx-1"><i class="bi bi-pencil-square"></i></button><button onclick="return useraction(\'csf\', ' . $row['id'] . ')" class="btn ' . ($row['is_csf'] ? 'btn-success' : 'btn-warning') . ' btn-sm mx-1"><i class="bi bi-list-check"></i></button><button onclick="return useraction(\'print\', ' . $row['id'] . ')" class="btn btn-primary btn-sm mx-1"><i class="bi bi-printer"></i></button>' : '') .
                     '</span>';
                 return $buttons;
             }
@@ -99,8 +99,8 @@ if (isset($_GET['helpdesks4'])) {
 
     $columns = array(
         array('db' => 'request_number', 'dt' => 0),
-        array('db' => 'status', 'dt' => 1,'formatter' => function ($data, $row) {
-            return '<p class="text-'.$row['color'].' text-center">'.$row['status'].'</p>';
+        array('db' => 'status', 'dt' => 1, 'formatter' => function ($data, $row) {
+            return '<p class="text-' . $row['color'] . ' text-center">' . $row['status'] . '</p>';
         }),
         array('db' => 'request_type', 'dt' => 2),
         array('db' => 'category', 'dt' => 3),
