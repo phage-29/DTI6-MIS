@@ -2,23 +2,14 @@
 
 // get connection
 require_once 'conn.php';
-require_once 'sendmail.php';
+require_once 'common_functions.php';
 
 session_start();
 
 $response = array();
 
-$response['status'] = 'error';
+$response['status'] = 'warning';
 $response['message'] = 'Something went wrong!';
-
-function validate($key, $conn)
-{
-    if (isset($_POST[$key]) && is_string($_POST[$key]) && trim($_POST[$key]) !== '') {
-        return $conn->real_escape_string($_POST[$key]);
-    } else {
-        return null;
-    }
-}
 
 if (isset($_POST['login'])) {
     $username = validate('username', $conn);
@@ -46,17 +37,17 @@ if (isset($_POST['login'])) {
                     $response['redirect'] = 'dashboard.php';
                 } else {
 
-                    $response['status'] = 'error';
+                    $response['status'] = 'warning';
                     $response['message'] = 'Account not Activated!';
                 }
             } else {
 
-                $response['status'] = 'error';
+                $response['status'] = 'warning';
                 $response['message'] = 'Invalid password!';
             }
         } else {
 
-            $response['status'] = 'error';
+            $response['status'] = 'warning';
             $response['message'] = 'Username not found!';
         }
     } catch (Exception $e) {
@@ -107,11 +98,11 @@ if (isset($_POST['register'])) {
                 $response['message'] = 'registered successfully!';
                 $response['redirect'] = 'dashboard.php';
             } else {
-                $response['status'] = 'error';
+                $response['status'] = 'warning';
                 $response['message'] = $email . ' already exist!';
             }
         } else {
-            $response['status'] = 'error';
+            $response['status'] = 'warning';
             $response['message'] = $username . ' already exist!';
         }
     }
@@ -173,7 +164,7 @@ if (isset($_POST['add_user'])) {
                 $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
                 $Message .= "<hr>";
                 $Message .= "<div>";
-                $Message .= "<div>Dear " . $row->first_name . " " . $row->last_name . ",</div>";
+                $Message .= "<div>Good day!,</div>";
                 $Message .= "<br>";
                 $Message .= "<div>Your account has been successfully created. Below are the login credentials for your account:</div>";
                 $Message .= "<br><br>";
@@ -198,15 +189,15 @@ if (isset($_POST['add_user'])) {
                 $response['message'] = 'User inserted successful!';
                 $response['redirect'] = 'users.php';
             } else {
-                $response['status'] = 'error';
+                $response['status'] = 'warning';
                 $response['message'] = $email . ' already exist!';
             }
         } else {
-            $response['status'] = 'error';
+            $response['status'] = 'warning';
             $response['message'] = $username . ' already exist!';
         }
     } else {
-        $response['status'] = 'error';
+        $response['status'] = 'warning';
         $response['message'] = $id_number . ' already exist!';
     }
 }
@@ -259,15 +250,15 @@ if (isset($_POST['edit_user'])) {
                 $response['message'] = 'User updated successful!';
                 $response['redirect'] = 'users.php';
             } else {
-                $response['status'] = 'error';
+                $response['status'] = 'warning';
                 $response['message'] = $email . ' already exist!';
             }
         } else {
-            $response['status'] = 'error';
+            $response['status'] = 'warning';
             $response['message'] = $username . ' already exist!';
         }
     } else {
-        $response['status'] = 'error';
+        $response['status'] = 'warning';
         $response['message'] = $id_number . ' already exist!';
     }
 }
@@ -402,7 +393,7 @@ if (isset($_POST['request_helpdesk'])) {
             $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
             $Message .= "<hr>";
             $Message .= "<div>";
-            $Message .= "<div>Dear " . $row->requested_by . ",</div>";
+            $Message .= "<div>Good day!,</div>";
             $Message .= "<br>";
             $Message .= "<div>We acknowledge and appreciate your report related to IT/ICT Issue.</div>";
             $Message .= "<br>";
@@ -519,7 +510,7 @@ if (isset($_POST['edit_helpdesk'])) {
             $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
             $Message .= "<hr>";
             $Message .= "<div>";
-            $Message .= "<div>Dear " . $row->requested_by . ",</div>";
+            $Message .= "<div>Good day!,</div>";
             $Message .= "<br>";
             $Message .= "<div>We would like to inform you that your request " . $row->request_number . " is " . $row->status . ".</div>";
             $Message .= "<br>";
@@ -655,7 +646,7 @@ if (isset($_POST['request_meeting'])) {
                 $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
                 $Message .= "<hr>";
                 $Message .= "<div>";
-                $Message .= "<div>Dear " . $row->first_name . " " . $row->last_name . ",</div>";
+                $Message .= "<div>Good day!,</div>";
                 $Message .= "<br>";
                 $Message .= "<div>We acknowledge and appreciate your report related to IT/ICT Issue.</div>";
                 $Message .= "<br>";
@@ -687,7 +678,7 @@ if (isset($_POST['request_meeting'])) {
             $response['message'] = 'Schedule submit successful!';
             $response['redirect'] = 'meetings.php';
         } else {
-            $response['status'] = 'error';
+            $response['status'] = 'warning';
             $response['message'] = 'There is a scheduling overlap with other meetings.';
         }
     } catch (Exception $e) {
@@ -760,7 +751,6 @@ if (isset($_POST['edit_meeting'])) {
         $response['message'] = $e->getMessage();
     }
 }
-
 
 if (isset($_POST['quick_csf'])) {
     $helpdesks_id = validate('helpdesks_id', $conn);

@@ -342,7 +342,7 @@
 
           var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: "dayGridMonth",
-            events: 'assets/components/includes/calendars/meetings.php',
+            events: 'assets/components/includes/meetings.php',
             dayMaxEventRows: 1,
             eventTimeFormat: {
               hour: '2-digit',

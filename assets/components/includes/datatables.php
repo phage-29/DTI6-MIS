@@ -4,10 +4,10 @@ require_once "conn.php";
 session_start();
 
 $dbDetails = array(
-    'host' => $servername,
-    'user' => $username,
-    'pass' => $password,
-    'db'   => $dbname
+    'host' => servername,
+    'user' => username,
+    'pass' => password,
+    'db' => dbname
 );
 
 $primaryKey = 'id';
@@ -39,9 +39,13 @@ if (isset($_GET['helpdesks1'])) {
 
     $columns = array(
         array('db' => 'request_number', 'dt' => 0),
-        array('db' => 'status', 'dt' => 1, 'formatter' => function ($data, $row) {
-            return '<p class="text-' . $row['color'] . ' text-center">' . $row['status'] . '</p>';
-        }),
+        array(
+            'db' => 'status',
+            'dt' => 1,
+            'formatter' => function ($data, $row) {
+                return '<p class="text-' . $row['color'] . ' text-center">' . $row['status'] . '</p>';
+            }
+        ),
         array('db' => 'requestor', 'dt' => 2),
         array('db' => 'request_type', 'dt' => 3),
         array('db' => 'category', 'dt' => 4),
@@ -61,9 +65,13 @@ if (isset($_GET['helpdesks1'])) {
                 return $buttons;
             }
         ),
-        array('db' => 'date_requested', 'dt' => 7, function ($data, $row) {
-            return '<strong>' . date_format(date_create($row['date_requested']), 'd/m/Y') . '</strong>';
-        }),
+        array(
+            'db' => 'date_requested',
+            'dt' => 7,
+            function ($data, $row) {
+                return '<strong>' . date_format(date_create($row['date_requested']), 'd/m/Y') . '</strong>';
+            }
+        ),
         array('db' => 's_id', 'dt' => 8),
         array('db' => 'is_csf', 'dt' => 9),
         array('db' => 'color', 'dt' => 10)
@@ -99,9 +107,13 @@ if (isset($_GET['helpdesks4'])) {
 
     $columns = array(
         array('db' => 'request_number', 'dt' => 0),
-        array('db' => 'status', 'dt' => 1, 'formatter' => function ($data, $row) {
-            return '<p class="text-' . $row['color'] . ' text-center">' . $row['status'] . '</p>';
-        }),
+        array(
+            'db' => 'status',
+            'dt' => 1,
+            'formatter' => function ($data, $row) {
+                return '<p class="text-' . $row['color'] . ' text-center">' . $row['status'] . '</p>';
+            }
+        ),
         array('db' => 'request_type', 'dt' => 2),
         array('db' => 'category', 'dt' => 3),
         array('db' => 'sub_category', 'dt' => 4),
@@ -126,7 +138,7 @@ if (isset($_GET['helpdesks4'])) {
     );
 }
 
-if (isset($_GET['users4'])) {
+if (isset($_GET['users2'])) {
     $table = "(SELECT 
         u.id, 
         u.id_number,
@@ -140,7 +152,7 @@ if (isset($_GET['users4'])) {
         users AS u
         LEFT JOIN roles AS r ON u.role_id = r.id
         LEFT JOIN divisions AS d ON u.division_id = d.id
-    WHERE u.role_id = '4') getusers";
+    WHERE u.role_id = '2') getusers";
 
     $columns = array(
         array('db' => 'id_number', 'dt' => 0),
@@ -148,7 +160,13 @@ if (isset($_GET['users4'])) {
         array('db' => 'division', 'dt' => 2),
         array('db' => 'email', 'dt' => 3),
         array('db' => 'role', 'dt' => 4),
-        array('db' => 'active', 'dt' => 5),
+        array(
+            'db' => 'active',
+            'dt' => 5,
+            'formatter' => function ($data, $row) {
+                return $row['active'] == 1 ? 'active' : 'inactive';
+            }
+        ),
         array(
             'db' => 'id',
             'dt' => 6,
@@ -182,7 +200,13 @@ if (isset($_GET['users3'])) {
         array('db' => 'division', 'dt' => 2),
         array('db' => 'email', 'dt' => 3),
         array('db' => 'role', 'dt' => 4),
-        array('db' => 'active', 'dt' => 5),
+        array(
+            'db' => 'active',
+            'dt' => 5,
+            'formatter' => function ($data, $row) {
+                return $row['active'] == 1 ? 'active' : 'inactive';
+            }
+        ),
         array(
             'db' => 'id',
             'dt' => 6,
@@ -194,7 +218,7 @@ if (isset($_GET['users3'])) {
     );
 }
 
-if (isset($_GET['users2'])) {
+if (isset($_GET['users4'])) {
     $table = "(SELECT 
         u.id, 
         u.id_number,
@@ -208,7 +232,7 @@ if (isset($_GET['users2'])) {
         users AS u
         LEFT JOIN roles AS r ON u.role_id = r.id
         LEFT JOIN divisions AS d ON u.division_id = d.id
-    WHERE u.role_id = '2') getusers";
+    WHERE u.role_id = '4') getusers";
 
     $columns = array(
         array('db' => 'id_number', 'dt' => 0),
@@ -216,7 +240,13 @@ if (isset($_GET['users2'])) {
         array('db' => 'division', 'dt' => 2),
         array('db' => 'email', 'dt' => 3),
         array('db' => 'role', 'dt' => 4),
-        array('db' => 'active', 'dt' => 5),
+        array(
+            'db' => 'active',
+            'dt' => 5,
+            'formatter' => function ($data, $row) {
+                return $row['active'] == 1 ? 'active' : 'inactive';
+            }
+        ),
         array(
             'db' => 'id',
             'dt' => 6,

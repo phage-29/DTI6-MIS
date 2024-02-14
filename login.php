@@ -43,7 +43,7 @@
 
                 <div class="col-12">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" value="true" id="showpwd" onclick="password.type=password.type=='password'?'text':'password'">
+                    <input class="form-check-input" type="checkbox" id="showpwd" onclick="password.type=password.type=='password'?'text':'password'">
                     <label class="form-check-label" for="showpwd">Show password</label>
                   </div>
                 </div>

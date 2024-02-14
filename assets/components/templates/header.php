@@ -8,7 +8,10 @@ require_once "assets/components/includes/session.php";
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title><?= $website ?> | <?= $page ?></title>
+  <title>
+    <?= $website ?> |
+    <?= $page ?>
+  </title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 

@@ -7,23 +7,29 @@
   <?php
   switch ($_SESSION['role']) {
     case 'Admin':
-  ?>
+      ?>
       <section class="section">
         <div class="row">
           <div class="col-lg-12">
 
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Users List <button class="float-end btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add New User</button></h5>
+                <h5 class="card-title">Users List <button class="float-end btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#addModal">Add New User</button></h5>
                 <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-employees-tab" data-bs-toggle="tab" data-bs-target="#nav-employees" type="button" role="tab" aria-controls="nav-employees" aria-selected="true">employees</button>
-                    <button class="nav-link" id="nav-staffs-tab" data-bs-toggle="tab" data-bs-target="#nav-staffs" type="button" role="tab" aria-controls="nav-staffs" aria-selected="false">staffs</button>
-                    <button class="nav-link" id="nav-officers-tab" data-bs-toggle="tab" data-bs-target="#nav-officers" type="button" role="tab" aria-controls="nav-officers" aria-selected="false">officers</button>
+                    <button class="nav-link active" id="nav-employees-tab" data-bs-toggle="tab"
+                      data-bs-target="#nav-employees" type="button" role="tab" aria-controls="nav-employees"
+                      aria-selected="true">employees</button>
+                    <button class="nav-link" id="nav-staffs-tab" data-bs-toggle="tab" data-bs-target="#nav-staffs"
+                      type="button" role="tab" aria-controls="nav-staffs" aria-selected="false">staffs</button>
+                    <button class="nav-link" id="nav-officers-tab" data-bs-toggle="tab" data-bs-target="#nav-officers"
+                      type="button" role="tab" aria-controls="nav-officers" aria-selected="false">officers</button>
                   </div>
                 </nav>
                 <div class="tab-content pt-5" id="nav-tabContent">
-                  <div class="tab-pane fade show active" id="nav-employees" role="tabpanel" aria-labelledby="nav-employees-tab" tabindex="0">
+                  <div class="tab-pane fade show active" id="nav-employees" role="tabpanel"
+                    aria-labelledby="nav-employees-tab" tabindex="0">
                     <table id="users4" class="display" style="width:100%;display:none;">
                       <thead>
                         <tr>
@@ -53,7 +59,8 @@
                       </thead>
                     </table>
                   </div>
-                  <div class="tab-pane fade" id="nav-officers" role="tabpanel" aria-labelledby="nav-officers-tab" tabindex="0">
+                  <div class="tab-pane fade" id="nav-officers" role="tabpanel" aria-labelledby="nav-officers-tab"
+                    tabindex="0">
                     <table id="users2" class="display" style="width:100%;display:none;">
                       <thead>
                         <tr>
@@ -87,23 +94,28 @@
                       <form class="row g-3 needs-validation" novalidate>
                         <div class="mb-2 col-lg-6">
                           <label for="id_number" class="form-label">id_number</label>
-                          <input type="text" class="form-control form-control-sm" id="id_number" name="id_number" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="id_number" name="id_number"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="first_name" class="form-label">first_name</label>
-                          <input type="text" class="form-control form-control-sm" id="first_name" name="first_name" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="first_name" name="first_name"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="middle_name" class="form-label">middle_name</label>
-                          <input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="last_name" class="form-label">last_name</label>
-                          <input type="text" class="form-control form-control-sm" id="last_name" name="last_name" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="last_name" name="last_name"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="position" class="form-label">position</label>
-                          <input type="text" class="form-control form-control-sm" id="position" name="position" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="position" name="position"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="division_id" class="form-label">division_id</label>
@@ -112,9 +124,11 @@
                             <?php
                             $query = $conn->execute_query("SELECT * FROM divisions");
                             while ($row = $query->fetch_object()) {
-                            ?>
-                              <option value="<?= $row->id ?>"><?= $row->division ?></option>
-                            <?php
+                              ?>
+                              <option value="<?= $row->id ?>">
+                                <?= $row->division ?>
+                              </option>
+                              <?php
                             }
                             ?>
                           </select>
@@ -126,24 +140,29 @@
                             <?php
                             $query = $conn->execute_query("SELECT * FROM client_types");
                             while ($row = $query->fetch_object()) {
-                            ?>
-                              <option value="<?= $row->id ?>"><?= $row->client_type ?></option>
-                            <?php
+                              ?>
+                              <option value="<?= $row->id ?>">
+                                <?= $row->client_type ?>
+                              </option>
+                              <?php
                             }
                             ?>
                           </select>
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="date_birth" class="form-label">date_birth</label>
-                          <input type="date" class="form-control form-control-sm" id="date_birth" name="date_birth" autocomplete="off" />
+                          <input type="date" class="form-control form-control-sm" id="date_birth" name="date_birth"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="phone" class="form-label">phone</label>
-                          <input type="text" class="form-control form-control-sm" id="phone" name="phone" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="phone" name="phone"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="email" class="form-label">email</label>
-                          <input type="text" class="form-control form-control-sm" id="email" name="email" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="email" name="email"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label class="form-label">sex</label>
@@ -155,7 +174,8 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="address" class="form-label">address</label>
-                          <textarea type="text" class="form-control form-control-sm" id="address" name="address" autocomplete="off"></textarea>
+                          <textarea type="text" class="form-control form-control-sm" id="address" name="address"
+                            autocomplete="off"></textarea>
                         </div>
                         <div class="mb-2 col-lg-12">
                           <label for="role_id" class="form-label">role_id</label>
@@ -164,9 +184,11 @@
                             <?php
                             $query = $conn->execute_query("SELECT * FROM roles ORDER BY id DESC LIMIT 4");
                             while ($row = $query->fetch_object()) {
-                            ?>
-                              <option value="<?= $row->id ?>"><?= $row->role ?></option>
-                            <?php
+                              ?>
+                              <option value="<?= $row->id ?>">
+                                <?= $row->role ?>
+                              </option>
+                              <?php
                             }
                             ?>
                           </select>
@@ -214,23 +236,28 @@
                       <form class="row g-3 needs-validation" novalidate>
                         <div class="mb-2 col-lg-6">
                           <label for="id_number" class="form-label">id_number</label>
-                          <input type="text" class="form-control form-control-sm" id="id_number" name="id_number" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="id_number" name="id_number"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="first_name" class="form-label">first_name</label>
-                          <input type="text" class="form-control form-control-sm" id="first_name" name="first_name" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="first_name" name="first_name"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="middle_name" class="form-label">middle_name</label>
-                          <input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="last_name" class="form-label">last_name</label>
-                          <input type="text" class="form-control form-control-sm" id="last_name" name="last_name" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="last_name" name="last_name"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="position" class="form-label">position</label>
-                          <input type="text" class="form-control form-control-sm" id="position" name="position" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="position" name="position"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="division_id" class="form-label">division_id</label>
@@ -239,9 +266,11 @@
                             <?php
                             $query = $conn->execute_query("SELECT * FROM divisions");
                             while ($row = $query->fetch_object()) {
-                            ?>
-                              <option value="<?= $row->id ?>"><?= $row->division ?></option>
-                            <?php
+                              ?>
+                              <option value="<?= $row->id ?>">
+                                <?= $row->division ?>
+                              </option>
+                              <?php
                             }
                             ?>
                           </select>
@@ -253,24 +282,29 @@
                             <?php
                             $query = $conn->execute_query("SELECT * FROM client_types");
                             while ($row = $query->fetch_object()) {
-                            ?>
-                              <option value="<?= $row->id ?>"><?= $row->client_type ?></option>
-                            <?php
+                              ?>
+                              <option value="<?= $row->id ?>">
+                                <?= $row->client_type ?>
+                              </option>
+                              <?php
                             }
                             ?>
                           </select>
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="date_birth" class="form-label">date_birth</label>
-                          <input type="date" class="form-control form-control-sm" id="date_birth" name="date_birth" autocomplete="off" />
+                          <input type="date" class="form-control form-control-sm" id="date_birth" name="date_birth"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="phone" class="form-label">phone</label>
-                          <input type="text" class="form-control form-control-sm" id="phone" name="phone" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="phone" name="phone"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="email" class="form-label">email</label>
-                          <input type="text" class="form-control form-control-sm" id="email" name="email" autocomplete="off" />
+                          <input type="text" class="form-control form-control-sm" id="email" name="email"
+                            autocomplete="off" />
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label class="form-label">sex</label>
@@ -282,7 +316,8 @@
                         </div>
                         <div class="mb-2 col-lg-6">
                           <label for="address" class="form-label">address</label>
-                          <textarea type="text" class="form-control form-control-sm" id="address" name="address" autocomplete="off"></textarea>
+                          <textarea type="text" class="form-control form-control-sm" id="address" name="address"
+                            autocomplete="off"></textarea>
                         </div>
                         <div class="mb-2 col-lg-12">
                           <label for="role_id" class="form-label">role_id</label>
@@ -291,28 +326,28 @@
                             <?php
                             $query = $conn->execute_query("SELECT * FROM roles ORDER BY id DESC LIMIT 4");
                             while ($row = $query->fetch_object()) {
-                            ?>
-                              <option value="<?= $row->id ?>"><?= $row->role ?></option>
-                            <?php
+                              ?>
+                              <option value="<?= $row->id ?>">
+                                <?= $row->role ?>
+                              </option>
+                              <?php
                             }
                             ?>
                           </select>
                         </div>
                         <div class="mb-2 col-lg-6">
-                          <label class="form-label">PWD</label>
-                          <select class="form-select form-select-sm" id="pwd" name="pwd">
-                            <option selected disabled>--</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                          </select>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="pwd" name="pwd">
+                            <label class="form-check-label" for="pwd">
+                              PWD
+                            </label>
+                          </div>
                         </div>
                         <div class="mb-2 col-lg-6">
-                          <label class="form-label">Active</label>
-                          <select class="form-select form-select-sm" id="active" name="active">
-                            <option selected disabled>--</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                          </select>
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="active" name="active">
+                            <label class="form-check-label" for="active">Active</label>
+                          </div>
                         </div>
                         <input type="hidden" name="add_user" />
                         <button id="addform" hidden></button>
@@ -332,13 +367,13 @@
       </section>
 
       <script>
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
           var users4 = $('#users4').DataTable({
             "processing": true,
             "serverSide": true,
             "responsive": true,
             "ajax": "assets/components/includes/datatables.php?users4",
-            "initComplete": function(settings, json) {
+            "initComplete": function (settings, json) {
               $('#users4').show();
 
             }
@@ -348,7 +383,7 @@
             "serverSide": true,
             "responsive": true,
             "ajax": "assets/components/includes/datatables.php?users3",
-            "initComplete": function(settings, json) {
+            "initComplete": function (settings, json) {
               $('#users3').show();
 
             }
@@ -358,7 +393,7 @@
             "serverSide": true,
             "responsive": true,
             "ajax": "assets/components/includes/datatables.php?users2",
-            "initComplete": function(settings, json) {
+            "initComplete": function (settings, json) {
               $('#users2').show();
 
             }
@@ -376,7 +411,7 @@
                   'id': id
                 },
                 dataType: 'json',
-                success: function(response) {
+                success: function (response) {
                   console.log(response);
                   $('#user-edit #id').val(id);
                   $('#user-edit #id_number').val(response.id_number);
@@ -415,7 +450,7 @@
                     title: "Loading",
                     html: "Please wait...",
                     allowOutsideClick: false,
-                    didOpen: function() {
+                    didOpen: function () {
                       Swal.showLoading();
                     },
                   });
@@ -427,14 +462,14 @@
                       'id': id
                     },
                     dataType: "json",
-                    success: function(response) {
-                      setTimeout(function() {
+                    success: function (response) {
+                      setTimeout(function () {
                         Swal.fire({
                           icon: response.status,
                           title: response.message,
                           showConfirmButton: false,
                           timer: 1000,
-                        }).then(function() {
+                        }).then(function () {
                           if (response.redirect) {
                             window.location.href = response.redirect;
                           } else {
@@ -452,10 +487,10 @@
 
         }
       </script>
-    <?php
+      <?php
       break;
     default:
-    ?>
+      ?>
       <section class="section">
         <div class="row">
           <div class="col-lg-12">
@@ -470,7 +505,7 @@
           </div>
         </div>
       </section>
-  <?php
+    <?php
   }
   ?>
 </main><!-- End #main -->
