@@ -10,7 +10,9 @@
           <div class="d-flex justify-content-center py-4">
             <a href="#DTI6-MIS" class="logo d-flex align-items-center w-auto">
               <img src="assets/img/logo.png" alt="">
-              <span class="d-none d-lg-block"><?= $website ?></span>
+              <span class="d-none d-lg-block">
+                <?= $website ?>
+              </span>
             </a>
           </div><!-- End Logo -->
 
@@ -37,19 +39,24 @@
                   <label for="password" class="form-label">Password</label>
                   <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-shield-lock"></i></span>
-                    <input type="password" name="password" class="form-control" id="password" autocomplete="off" required />
+                    <input type="password" name="password" class="form-control" id="password" autocomplete="off"
+                      required />
                   </div>
                 </div>
 
                 <div class="col-12">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="showpwd" onclick="password.type=password.type=='password'?'text':'password'">
+                    <input class="form-check-input" type="checkbox" id="showpwd"
+                      onclick="password.type=password.type=='password'?'text':'password'">
                     <label class="form-check-label" for="showpwd">Show password</label>
                   </div>
                 </div>
                 <div class="col-12">
                   <input type="hidden" name="login" />
-                  <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+                  <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                  <input type="hidden" class="g-recaptcha-response" name="g-recaptcha-response" />
+                  <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"></i>
+                    Login</button>
                 </div>
                 <div class="col-12">
                   <!-- <p class="small mb-0">Don't have an account? <a href="register.php">Create an account</a></p> -->
@@ -70,7 +77,8 @@
 
   </section>
 </main><!-- End #main -->
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+    class="bi bi-arrow-up-short"></i></a>
 
 <!-- Vendor JS Files -->
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

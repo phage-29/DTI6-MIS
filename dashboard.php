@@ -8,7 +8,7 @@
   switch ($_SESSION['role']) {
     case 'Admin':
       $year = $_GET['year'] ?? date('Y');
-  ?>
+      ?>
       <form class="">
         <div class="row">
           <div class="col-lg-2 col-md-4 col-sm-6">
@@ -17,9 +17,11 @@
               <select name="year" onchange="this.form.submit()" class="form-select">
                 <?php
                 for ($i = date('Y'); $i >= 2023; $i--) {
-                ?>
-                  <option value="<?= $i ?>" <?= isset($year) && $year == $i ? 'selected' : '' ?>><?= $i ?></option>
-                <?php
+                  ?>
+                  <option value="<?= $i ?>" <?= isset($year) && $year == $i ? 'selected' : '' ?>>
+                    <?= $i ?>
+                  </option>
+                  <?php
                 }
                 ?>
               </select>
@@ -55,14 +57,15 @@
             <div class="card info-card">
 
               <div class="card-body">
-                <h5 class="card-title">Meetings</h5>
+                <h5 class="card-title">Assistances</h5>
 
                 <div class="d-flex align-items-center">
-                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-light" style="background: #11235A">
-                    <i class="bi bi-person-video2"></i>
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-light"
+                    style="background: #11235A">
+                    <i class="bi bi-person-check"></i>
                   </div>
                   <div class="ps-3">
-                    <h6 id="count_meetings"></h6>
+                    <h6 id="count_helpdesks"></h6>
                   </div>
                 </div>
               </div>
@@ -74,14 +77,15 @@
             <div class="card info-card">
 
               <div class="card-body">
-                <h5 class="card-title">Assistances</h5>
+                <h5 class="card-title">Meetings</h5>
 
                 <div class="d-flex align-items-center">
-                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-light" style="background: #11235A">
-                    <i class="bi bi-person-check"></i>
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-light"
+                    style="background: #11235A">
+                    <i class="bi bi-person-video2"></i>
                   </div>
                   <div class="ps-3">
-                    <h6 id="count_helpdesks"></h6>
+                    <h6 id="count_meetings"></h6>
                   </div>
                 </div>
               </div>
@@ -97,7 +101,8 @@
                 <h5 class="card-title">Equipment</h5>
 
                 <div class="d-flex align-items-center">
-                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-light" style="background: #11235A">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-light"
+                    style="background: #11235A">
                     <i class="bi bi-pc-display"></i>
                   </div>
                   <div class="ps-3">
@@ -188,21 +193,23 @@
 
                       <div class="mb-1">
                         <label for="date_requested">Date Requested</label>
-                        <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested" value="<?= date('Y-m-d') ?>" required />
+                        <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested"
+                          value="<?= date('Y-m-d') ?>" required />
                       </div>
 
                       <div class="mb-1">
                         <label for="topic">Meeting topic or title</label>
                         <div class="text-end">
-                          <textarea name="topic" class="form-control form-control-sm" id="topic" maxlength="150" required></textarea>
+                          <textarea name="topic" class="form-control form-control-sm" id="topic" maxlength="150"
+                            required></textarea>
                           <div id="the-count">
                             <span id="current">0</span>
                             <span id="maximum">/ 150</span>
                           </div>
 
                           <script>
-                            $(document).ready(function() {
-                              $('#editmeeting #topic').on('keyup', function() {
+                            $(document).ready(function () {
+                              $('#editmeeting #topic').on('keyup', function () {
                                 var currentLength = $(this).val().length;
                                 $('#editmeeting #current').text(currentLength);
                               });
@@ -213,23 +220,28 @@
 
                       <div class="mb-1">
                         <label for="date_scheduled">Date of schedule</label>
-                        <input name="date_scheduled" type="date" class="form-control form-control-sm" id="date_scheduled" value="<?= date('Y-m-d') ?>" min="<?= date('Y-m-d') ?>" required />
+                        <input name="date_scheduled" type="date" class="form-control form-control-sm" id="date_scheduled"
+                          value="<?= date('Y-m-d') ?>" min="<?= date('Y-m-d') ?>" required />
                       </div>
 
                       <div class="mb-1">
                         <label for="time_start">Time of schedule starts</label>
-                        <input name="time_start" type="time" class="form-control form-control-sm" id="time_start" value="<?= date('H:i') ?>" required />
+                        <input name="time_start" type="time" class="form-control form-control-sm" id="time_start"
+                          value="<?= date('H:i') ?>" required />
                       </div>
 
                       <div class="mb-1">
                         <label for="time_end">Time of schedule ends</label>
-                        <input name="time_end" type="time" class="form-control form-control-sm" id="time_end" value="<?= date('H:i') ?>" required />
+                        <input name="time_end" type="time" class="form-control form-control-sm" id="time_end"
+                          value="<?= date('H:i') ?>" required />
                       </div>
 
-                      <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="ShowFields" onclick="ShowFields.style.display = 'none';HideFields.style.display = ''">
+                      <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="ShowFields"
+                        onclick="ShowFields.style.display = 'none';HideFields.style.display = ''">
                         Show other fields
                       </a>
-                      <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="HideFields" onclick="HideFields.style.display = 'none';ShowFields.style.display = ''" style="display: none;">
+                      <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="HideFields"
+                        onclick="HideFields.style.display = 'none';ShowFields.style.display = ''" style="display: none;">
                         Hide other fields
                       </a>
                       <div class="collapse" id="collapseExample">
@@ -239,9 +251,11 @@
                             <?php
                             $query = $conn->query("SELECT * FROM meetings_statuses");
                             while ($row = $query->fetch_object()) {
-                            ?>
-                              <option value="<?= $row->id ?>"><?= $row->status ?></option>
-                            <?php
+                              ?>
+                              <option value="<?= $row->id ?>">
+                                <?= $row->status ?>
+                              </option>
+                              <?php
                             }
                             ?>
                           </select>
@@ -254,9 +268,11 @@
                             <?php
                             $query = $conn->query("SELECT * FROM hosts");
                             while ($row = $query->fetch_object()) {
-                            ?>
-                              <option value="<?= $row->id ?>"><?= $row->host_name ?></option>
-                            <?php
+                              ?>
+                              <option value="<?= $row->id ?>">
+                                <?= $row->host_name ?>
+                              </option>
+                              <?php
                             }
                             ?>
                           </select>
@@ -294,7 +310,7 @@
                             <?php
                             $query = $conn->query("SELECT * FROM users WHERE role_id != 4");
                             while ($row = $query->fetch_object()) {
-                            ?>
+                              ?>
                               <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
                             <?php
                             }
@@ -308,7 +324,7 @@
                             <?php
                             $query = $conn->query("SELECT * FROM users WHERE role_id = 1");
                             while ($row = $query->fetch_object()) {
-                            ?>
+                              ?>
                               <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
                             <?php
                             }
@@ -337,7 +353,7 @@
       </section>
 
       <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
           var calendarEl = $("#zoom-calendar")[0];
 
           var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -350,7 +366,7 @@
               hour12: true
             },
             displayEventEnd: true,
-            eventClick: function(info) {
+            eventClick: function (info) {
               $('#editmeeting #date_requested').val(info.event.extendedProps.date_requested);
               $('#editmeeting #topic').val(info.event.extendedProps.topic);
               $('#editmeeting #date_scheduled').val(info.event.extendedProps.date_scheduled);
@@ -378,7 +394,7 @@
               year: "<?= $year ?? date('Y') ?>",
             },
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
               $("#count_users").html(response.counts);
             },
           });
@@ -390,7 +406,7 @@
               year: "<?= $year ?? date('Y') ?>",
             },
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
               $("#count_meetings").html(response.counts);
             },
           });
@@ -402,7 +418,7 @@
               year: "<?= $year ?? date('Y') ?>",
             },
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
               $("#count_helpdesks").html(response.counts);
             },
           });
@@ -414,7 +430,7 @@
               year: "<?= $year ?? date('Y') ?>",
             },
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
               $("#count_equipment").html(response.counts);
             },
           });
@@ -425,7 +441,7 @@
             },
             type: "GET",
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
               barChart(data);
             },
           });
@@ -436,7 +452,7 @@
             },
             type: "GET",
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
               donutChart(data);
             },
           });
@@ -447,7 +463,7 @@
             },
             type: "GET",
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
               pieChart(data);
             },
           });
@@ -458,7 +474,7 @@
             },
             type: "GET",
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
               lineChart(data);
             },
           });
@@ -477,7 +493,7 @@
             series: [{
               name: "Assistances",
               data: data.map(item => parseInt(item.count_helpdesks)),
-            }, ],
+            },],
             chart: {
               type: "bar",
               height: 350,
@@ -509,7 +525,7 @@
               style: {
                 colors: ["#fff"],
               },
-              formatter: function(val, opt) {
+              formatter: function (val, opt) {
                 return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val;
               },
               offsetX: 0,
@@ -589,7 +605,7 @@
             series: [{
               name: "Assistances",
               data: data.map(item => parseInt(item.count_helpdesks)),
-            }, ],
+            },],
             chart: {
               height: 350,
               type: "line",
@@ -627,17 +643,17 @@
           }).render();
         }
       </script>
-    <?php
+      <?php
       break;
     case 'Employee';
-    ?>
+      ?>
       <script>
         window.location.href = 'helpdesks.php';
       </script>
-    <?php
+      <?php
       break;
     default:
-    ?>
+      ?>
       <section class="section">
         <div class="row">
           <div class="col-lg-12">
@@ -652,7 +668,7 @@
           </div>
         </div>
       </section>
-  <?php
+    <?php
   }
   ?>
 </main><!-- End #main -->

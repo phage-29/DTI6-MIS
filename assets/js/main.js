@@ -115,6 +115,7 @@ $(document).ready(function () {
       }
 
       e.preventDefault();
+
       Swal.fire({
         title: "Loading",
         html: "Please wait...",
@@ -144,6 +145,11 @@ $(document).ready(function () {
               }
             });
           }, 1000);
+          grecaptcha.ready(function () {
+            grecaptcha.execute(window.sitekey).then(function (token) {
+              $(".g-recaptcha-response").val(token);
+            });
+          });
         },
       });
     });
@@ -196,6 +202,11 @@ $(document).ready(function () {
               }
             });
           }, 1000);
+          grecaptcha.ready(function () {
+            grecaptcha.execute(window.sitekey).then(function (token) {
+              $(".g-recaptcha-response").val(token);
+            });
+          });
         },
       });
     });

@@ -34,7 +34,18 @@ require_once "assets/components/includes/session.php";
   <script src="assets/vendor/fullcalendar/index.global.min.js"></script>
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/print-js/dist/print.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=<?= sitekey ?>"></script>
+  <script>
+    window.sitekey = "<?= sitekey ?>";
+    grecaptcha.ready(function () {
+      grecaptcha.execute(window.sitekey).then(function (token) {
+        $(".g-recaptcha-response").val(token);
+      });
+    });
+  </script>
 
 </head>
 
 <body>
+  <div class="grecaptcha-badge" data-style="inline" data-badge="bottomright"></div>

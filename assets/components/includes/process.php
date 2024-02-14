@@ -11,50 +11,61 @@ $response = array();
 $response['status'] = 'warning';
 $response['message'] = 'Something went wrong!';
 
-if (isset($_POST['login'])) {
-    $username = validate('username', $conn);
-    $password = validate('password', $conn);
+$responseData = verifyCaptcha($_POST['g-recaptcha-response'], secretkey);
 
-    $query = "SELECT * 
-    FROM users 
-    WHERE username = ?";
+if ($responseData) {
+    if ($_POST['csrf_token'] == $_SESSION['csrf_token']) {
+        if (isset($_POST['login'])) {
 
-    try {
-        $result = $conn->execute_query($query, [$username]);
+            $username = validate('username', $conn);
+            $password = validate('password', $conn);
 
-        if ($result && $result->num_rows === 1) {
+            $query = "SELECT id, password, active FROM users WHERE username = ?";
+            $result = $conn->execute_query($query, [$username]);
 
-            $row = $result->fetch_object();
+            if ($result && $result->num_rows === 1) {
+                $row = $result->fetch_object();
 
-            if (password_verify($password, $row->password)) {
-
-                if ($row->active == 1) {
-
-                    $_SESSION['id'] = $row->id;
-
-                    $response['status'] = 'success';
-                    $response['message'] = 'Login successful!';
-                    $response['redirect'] = 'dashboard.php';
+                if (password_verify($password, $row->password)) {
+                    if ($row->active == 1) {
+                        $_SESSION['id'] = $row->id;
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'Login successful!',
+                            'redirect' => 'dashboard.php'
+                        ];
+                    } else {
+                        $response = [
+                            'status' => 'warning',
+                            'message' => 'Account not activated!'
+                        ];
+                    }
                 } else {
-
-                    $response['status'] = 'warning';
-                    $response['message'] = 'Account not Activated!';
+                    $response = [
+                        'status' => 'warning',
+                        'message' => 'Invalid password!'
+                    ];
                 }
             } else {
-
-                $response['status'] = 'warning';
-                $response['message'] = 'Invalid password!';
+                $response = [
+                    'status' => 'warning',
+                    'message' => 'Username not found!'
+                ];
             }
-        } else {
-
-            $response['status'] = 'warning';
-            $response['message'] = 'Username not found!';
         }
-    } catch (Exception $e) {
-        $response['status'] = 'error';
-        $response['message'] = $e->getMessage();
+    } else {
+        $response = [
+            'status' => 'warning',
+            'message' => 'CSRF token validation failed!'
+        ];
     }
+} else {
+    $response = [
+        'status' => 'warning',
+        'message' => 'Robot verification failed!'
+    ];
 }
+
 
 if (isset($_POST['register'])) {
     $first_name = validate('first_name', $conn);
