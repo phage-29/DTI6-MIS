@@ -50,6 +50,6 @@
 
 .env
 
-vendor/
+# vendor/
 
 # conn.php
