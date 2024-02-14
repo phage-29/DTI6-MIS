@@ -11,7 +11,7 @@ $response = array();
 $response['status'] = 'warning';
 $response['message'] = 'Something went wrong!';
 
-$responseData = verifyCaptcha($_POST['g-recaptcha-response'], secretkey);
+$responseData = verifyCaptcha($_POST['captcha-token'], secretkey);
 
 if ($responseData) {
     if ($_POST['csrf_token'] == $_SESSION['csrf_token']) {

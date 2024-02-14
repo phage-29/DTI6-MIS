@@ -147,7 +147,7 @@ $(document).ready(function () {
           }, 1000);
           grecaptcha.ready(function () {
             grecaptcha.execute(window.sitekey).then(function (token) {
-              $(".g-recaptcha-response").val(token);
+              $(".captcha-token").val(token);
             });
           });
         },
@@ -204,7 +204,7 @@ $(document).ready(function () {
           }, 1000);
           grecaptcha.ready(function () {
             grecaptcha.execute(window.sitekey).then(function (token) {
-              $(".g-recaptcha-response").val(token);
+              $(".captcha-token").val(token);
             });
           });
         },

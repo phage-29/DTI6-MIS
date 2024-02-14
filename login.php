@@ -54,7 +54,7 @@
                 <div class="col-12">
                   <input type="hidden" name="login" />
                   <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
-                  <input type="hidden" class="g-recaptcha-response" name="g-recaptcha-response" />
+                  <input type="hidden" class="captcha-token" name="captcha-token" />
                   <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"></i>
                     Login</button>
                 </div>

@@ -40,7 +40,7 @@ require_once "assets/components/includes/session.php";
     window.sitekey = "<?= sitekey ?>";
     grecaptcha.ready(function () {
       grecaptcha.execute(window.sitekey).then(function (token) {
-        $(".g-recaptcha-response").val(token);
+        $(".captcha-token").val(token);
       });
     });
   </script>
