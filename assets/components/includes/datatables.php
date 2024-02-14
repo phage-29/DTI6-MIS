@@ -164,7 +164,7 @@ if (isset($_GET['users2'])) {
             'db' => 'active',
             'dt' => 5,
             'formatter' => function ($data, $row) {
-                return $row['active'] == 1 ? 'active' : 'inactive';
+                return $row['active'] == 1 ? '<span class="text-success">active</span>' : '<span class="text-secondary">inactive</span>';
             }
         ),
         array(
@@ -204,7 +204,7 @@ if (isset($_GET['users3'])) {
             'db' => 'active',
             'dt' => 5,
             'formatter' => function ($data, $row) {
-                return $row['active'] == 1 ? 'active' : 'inactive';
+                return $row['active'] == 1 ? '<span class="text-success">active</span>' : '<span class="text-secondary">inactive</span>';
             }
         ),
         array(
@@ -244,7 +244,7 @@ if (isset($_GET['users4'])) {
             'db' => 'active',
             'dt' => 5,
             'formatter' => function ($data, $row) {
-                return $row['active'] == 1 ? 'active' : 'inactive';
+                return $row['active'] == 1 ? '<span class="text-success">active</span>' : '<span class="text-secondary">inactive</span>';
             }
         ),
         array(

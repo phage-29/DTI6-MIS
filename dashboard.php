@@ -29,7 +29,7 @@
       </form>
       <section class="section dashboard">
         <div class="row">
-          <div class="col-xxl-3 col-xl-12">
+          <!-- <div class="col-xxl-3 col-xl-12">
 
             <div class="card info-card">
 
@@ -49,9 +49,9 @@
               </div>
             </div>
 
-          </div>
+          </div> -->
 
-          <div class="col-xxl-3 col-md-6">
+          <div class="col-xxl-4 col-md-6">
             <div class="card info-card">
 
               <div class="card-body">
@@ -70,7 +70,7 @@
             </div>
           </div>
 
-          <div class="col-xxl-3 col-md-6">
+          <div class="col-xxl-4 col-md-6">
             <div class="card info-card">
 
               <div class="card-body">
@@ -89,7 +89,7 @@
             </div>
           </div>
 
-          <div class="col-xxl-3 col-xl-12">
+          <div class="col-xxl-4 col-xl-12">
 
             <div class="card info-card">
 
