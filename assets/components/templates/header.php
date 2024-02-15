@@ -48,4 +48,3 @@ require_once "assets/components/includes/session.php";
 </head>
 
 <body>
-  <div class="grecaptcha-badge" data-style="inline" data-badge="bottomright"></div>

@@ -11,9 +11,11 @@ $response = array();
 $response['status'] = 'warning';
 $response['message'] = 'Something went wrong!';
 
-$responseData = verifyCaptcha($_POST['captcha-token'], secretkey);
+if (isset($_POST['captcha-token'])) {
+    $responseData = verifyCaptcha($_POST['captcha-token'], secretkey) ?? null;
+}
 
-if ($responseData) {
+if (isset($responseData)) {
     if ($_POST['csrf_token'] == $_SESSION['csrf_token']) {
         if (isset($_POST['login'])) {
 
@@ -135,7 +137,8 @@ if (isset($_POST['add_user'])) {
     $role_id = validate('role_id', $conn);
     $pwd = isset($_POST['pwd']) ? 1 : 0;
     $active = isset($_POST['active']) ? 1 : 0;
-    $username = $id_number;
+    $division = $conn->query("SELECT * FROM divisions WHERE id = $division_id")->fetch_object()->division;
+    $username = $division . "_" . $last_name;
     $temp_password = substr(str_replace('.', '', uniqid('', true)), 0, 8);
     $hashed_password = password_hash($temp_password, PASSWORD_DEFAULT);
 
@@ -179,7 +182,7 @@ if (isset($_POST['add_user'])) {
                 $Message .= "<br>";
                 $Message .= "<div>Your account has been successfully created. Below are the login credentials for your account:</div>";
                 $Message .= "<br><br>";
-                $Message .= "<div>Username: " . $id_number . "</div>";
+                $Message .= "<div>Username: " . $username . "</div>";
                 $Message .= "<div>Password: " . $temp_password . "</div>";
                 $Message .= "<br><br>";
                 $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";

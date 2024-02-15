@@ -1353,6 +1353,24 @@
                       iframe.remove();
                     }
                   });
+                  break;
+
+                case 'print2':
+                  $.ajax({
+                    type: 'POST',
+                    url: 'print2.php',
+                    data: { 'id': id },
+                    success: function (response) {
+                      var iframe = $('<iframe>');
+                      $('body').append(iframe);
+                      var doc = iframe[0].contentDocument || iframe[0].contentWindow.document;
+                      doc.write(response);
+                      doc.close();
+                      iframe[0].contentWindow.print();
+                      iframe.remove();
+                    }
+                  });
+                  break;
               }
             }
           </script>
