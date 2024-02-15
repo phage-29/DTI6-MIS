@@ -37,7 +37,6 @@ function validate($key, $conn)
     }
 }
 
-// Function to generate a random encryption key
 function generateEncryptionKey($length = 32)
 {
     return bin2hex(random_bytes($length));
@@ -51,7 +50,6 @@ function encryptData($data, $key)
     return base64_encode($iv . $encrypted);
 }
 
-// Function to decrypt data
 function decryptData($encryptedData, $key)
 {
     $data = base64_decode($encryptedData);

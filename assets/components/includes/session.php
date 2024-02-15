@@ -1,13 +1,13 @@
 <?php
 require_once 'assets/components/includes/conn.php';
 
-ini_set('session.cookie_secure', 1); // Ensure cookies are only sent over HTTPS
-ini_set('session.cookie_httponly', 1); // Prevent client-side JavaScript access to cookies
+ini_set('session.cookie_secure', 1);
+ini_set('session.cookie_httponly', 1);
 
 session_start();
 
 if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(255));
 }
 
 if ($protected == true) {
