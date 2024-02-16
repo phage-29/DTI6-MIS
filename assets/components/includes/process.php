@@ -121,6 +121,90 @@ if (isset($_POST['register'])) {
     }
 }
 
+if (isset($_POST['update_profile'])) {
+    $id_number = validate('id_number', $conn);
+    $first_name = validate('first_name', $conn);
+    $middle_name = validate('middle_name', $conn);
+    $last_name = validate('last_name', $conn);
+    $position = validate('position', $conn);
+    $division_id = validate('division_id', $conn);
+    $client_type_id = validate('client_type_id', $conn);
+    $date_birth = validate('date_birth', $conn);
+    $phone = validate('phone', $conn);
+    $email = validate('email', $conn);
+    $sex = validate('sex', $conn);
+    $address = validate('address', $conn);
+    $pwd = isset($_POST['pwd']) ? 1 : 0;
+
+    $query = "SELECT * 
+    FROM users 
+    WHERE id_number = ? AND id != ?";
+
+    $result = $conn->execute_query($query, [$id_number, $_SESSION['id']]);
+
+    if (!$result->num_rows) {
+        $query = "SELECT * 
+            FROM users 
+            WHERE email = ? AND id != ?";
+
+        $result = $conn->execute_query($query, [$email, $_SESSION['id']]);
+
+        if (!$result->num_rows) {
+            $query = "UPDATE users
+                SET `id_number` = ?, `first_name` = ?, `middle_name` = ?, `last_name` = ?, `position` = ?, `division_id` = ?, `client_type_id` = ?, `date_birth` = ?, `phone` = ?, `email` = ?, `sex` = ?, `address` = ?, `pwd` = ?
+                WHERE id = ?";
+
+            $result = $conn->execute_query($query, [$id_number, $first_name, $middle_name, $last_name, $position, $division_id, $client_type_id, $date_birth, $phone, $email, $sex, $address, $pwd, $_SESSION['id']]);
+            $response['status'] = 'success';
+            $response['message'] = 'User updated successful!';
+        } else {
+            $response['status'] = 'warning';
+            $response['message'] = $email . ' already exist!';
+        }
+    } else {
+        $response['status'] = 'warning';
+        $response['message'] = $id_number . ' already exist!';
+    }
+}
+
+if (isset($_POST['change_password'])) {
+    $password = validate('password', $conn);
+    $new_password = validate('new_password', $conn);
+    $ver_password = validate('ver_password', $conn);
+
+    if ($new_password != $password) {
+        if ($ver_password == $new_password) {
+            $query = "SELECT id, password, active FROM users WHERE id = ?";
+            $result = $conn->execute_query($query, [$_SESSION['id']]);
+
+            $row = $result->fetch_object();
+
+            if (password_verify($password, $row->password)) {
+                $response = [
+                    'status' => 'success',
+                    'message' => 'Password updated',
+                    'redirect' => 'profile.php'
+                ];
+            } else {
+                $response = [
+                    'status' => 'warning',
+                    'message' => 'Invalid current password!'
+                ];
+            }
+        } else {
+            $response = [
+                'status' => 'warning',
+                'message' => 'Password don\'t match!'
+            ];
+        }
+    } else {
+        $response = [
+            'status' => 'warning',
+            'message' => 'Current and New passwords should not be the same!'
+        ];
+    }
+}
+
 if (isset($_POST['add_user'])) {
     $id_number = validate('id_number', $conn);
     $first_name = validate('first_name', $conn);
