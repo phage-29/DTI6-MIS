@@ -171,6 +171,7 @@ if (isset($_POST['change_password'])) {
     $password = validate('password', $conn);
     $new_password = validate('new_password', $conn);
     $ver_password = validate('ver_password', $conn);
+    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
     if ($new_password != $password) {
         if ($ver_password == $new_password) {
@@ -180,6 +181,9 @@ if (isset($_POST['change_password'])) {
             $row = $result->fetch_object();
 
             if (password_verify($password, $row->password)) {
+
+                $query = "UPDATE users SET `password` = ? WHERE id = ?";
+                $result = $conn->execute_query($query, [$hashed_password, $_SESSION['id']]);
                 $response = [
                     'status' => 'success',
                     'message' => 'Password updated',
