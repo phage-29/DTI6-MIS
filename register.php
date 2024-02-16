@@ -143,7 +143,7 @@
           </div>
 
           <div class="credits">
-            Designed by <a href="#">Someone</a>
+            Designed by <a href="#">Phage</a>
           </div>
 
         </div>

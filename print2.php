@@ -33,6 +33,7 @@ if (isset($_POST["id"])) {
         hs.status,
         hs.color,
         hs.color_hex,
+        h.property_number,
         h.sent_id,
         hs1.status AS sent_status,
         hs1.color AS sent_color,
@@ -503,12 +504,14 @@ if (isset($_POST["id"])) {
                     <td colspan="2"
                         style="width:163.25pt; border-left:0.75pt solid #000000; border-bottom:0.75pt solid #000000; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top;">
                         <p class="NoSpacing" style="text-align:center; line-height:150%; font-size:10pt;"><strong><span
-                                    style="font-family:Arial;">Equipment Type</span></strong></p>
+                                    style="font-family:Arial;">Equipment Type</span></strong><br>
+                            <?= $row->sub_category ?></p>
                     </td>
                     <td colspan="5"
                         style="width:163.4pt; border-bottom:0.75pt solid #000000; padding-right:5.4pt; padding-left:5.4pt; vertical-align:top;">
                         <p class="NoSpacing" style="text-align:center; line-height:150%; font-size:10pt;"><strong><span
-                                    style="font-family:Arial;">Serial No.</span></strong></p>
+                                    style="font-family:Arial;">Serial No.</span></strong><br>
+                            <?= $row->property_number ?></p>
                         <p class="NoSpacing" style="line-height:150%; font-size:10pt;"><strong><span
                                     style="font-family:Arial;">&nbsp;</span></strong></p>
                         <p class="NoSpacing" style="line-height:150%; font-size:10pt;"><strong><span
@@ -536,11 +539,11 @@ if (isset($_POST["id"])) {
                 </tr>
                 <tr>
                     <td colspan="4"
-                        style="width:250.3pt; height:200.3pt; border:0.75pt solid #000000; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
+                        style="width:250.3pt; height:175pt; border:0.75pt solid #000000; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                         <?= $row->diagnosis ?>
                     </td>
                     <td colspan="5"
-                        style="width:250.9pt; height:200.9pt; border:0.75pt solid #000000; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
+                        style="width:250.9pt; height:175pt; border:0.75pt solid #000000; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top;">
                         <?= $row->remarks ?>
                     </td>
                 </tr>

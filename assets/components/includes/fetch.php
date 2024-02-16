@@ -42,6 +42,7 @@ if (isset($_POST['edit_helpdesk'])) {
         h.datetime_preferred,
         h.status_id,
         hs.status,
+        h.property_number,
         hs.color,
         hs.color_hex,
         h.sent_id,

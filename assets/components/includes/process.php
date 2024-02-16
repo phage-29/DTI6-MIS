@@ -209,6 +209,69 @@ if (isset($_POST['change_password'])) {
     }
 }
 
+if (isset($_POST['forgot_password'])) {
+    $email = validate('email', $conn);
+
+    $query = "SELECT id, password, active FROM users WHERE email = ?";
+    $result = $conn->execute_query($query, [$email]);
+
+    if ($result->num_rows) {
+        $password = tempPassword();
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $expiry = date("Y-m-d H:i:s", strtotime("+2 minutes"));
+
+        $query = "UPDATE users SET password = ?, temp_password = ?, temp_password_exp = ? WHERE email = ?";
+        $result = $conn->execute_query($query, [$hashed_password, $password, $expiry, $email]);
+
+        $Subject = "DTI6 MIS | Temporary Password";
+
+        $Message = "";
+        $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
+        $Message .= "<hr>";
+        $Message .= "<div>";
+        $Message .= "<div>Good day!,</div>";
+        $Message .= "<br>";
+        $Message .= "<div>You have requested a temporary password. Please use the temporary password below to login:</div>";
+        $Message .= "<br><br>";
+        $Message .= "<div>Password: " . $password . "</div>";
+        $Message .= "<br><br>";
+        $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
+        $Message .= "<div><a href='http://r6itbpm.site/DTI6-MIS/index.php'>Click here</a> to login. Thank you.</div>";
+        $Message .= "<br><br>";
+        $Message .= "<div>Best Regards,</div>";
+        $Message .= "<br>";
+        $Message .= "<div>DTI6 MIS Administrator</div>";
+        $Message .= "<div>IT Support Staff</div>";
+        $Message .= "<div>DTI Region VI</div>";
+        $Message .= "<br><hr>";
+        $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
+        $Message .= "</div>";
+
+        sendEmail($email, $Subject, $Message);
+
+        $response['status'] = 'success';
+        $response['message'] = 'Temporary password sent!';
+        $response['redirect'] = 'login.php';
+    } else {
+        $response = [
+            'status' => 'warning',
+            'message' => 'Email not found!'
+        ];
+    }
+}
+
+if (isset($_POST['change_temp_password'])) {
+    $password = validate('password', $conn);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = "UPDATE users SET password = ?, temp_password = ?, temp_password_exp =? WHERE id = ?";
+    $result = $conn->execute_query($query, [$hashed_password, null, null, $_SESSION['id']]);
+
+    $response['status'] = 'success';
+    $response['message'] = 'Change password successful!';
+    $response['redirect'] = 'dashboard.php';
+}
+
 if (isset($_POST['add_user'])) {
     $id_number = validate('id_number', $conn);
     $first_name = validate('first_name', $conn);
@@ -399,6 +462,7 @@ if (isset($_POST['request_helpdesk'])) {
     $datetime_preferred = validate('datetime_preferred', $conn);
     $date_requested = validate('date_requested', $conn);
     $status_id = validate('status_id', $conn);
+    $property_number = validate('property_number', $conn);
     $priority_level_id = validate('priority_level_id', $conn);
     $repair_type_id = validate('repair_type_id', $conn);
     $repair_class_id = validate('repair_class_id', $conn);
@@ -416,10 +480,10 @@ if (isset($_POST['request_helpdesk'])) {
     $request_number = 'REQ-' . $Ym . '-' . str_pad($result->num_rows + 1, 3, '0', STR_PAD_LEFT);
 
     $query = "INSERT 
-    INTO helpdesks (`request_number`,`requested_by`,`date_requested`, `request_type_id`, `category_id`, `sub_category_id`, `complaint`, `datetime_preferred`,`status_id`,`priority_level_id`,`repair_type_id`,`repair_class_id`,`medium_id`,`assigned_to`,`serviced_by`,`approved_by`,`datetime_start`,`datetime_end`,`diagnosis`,`remarks`) 
+    INTO helpdesks (`request_number`,`requested_by`,`date_requested`, `request_type_id`, `category_id`, `sub_category_id`, `complaint`, `datetime_preferred`,`status_id`,`property_number`,`priority_level_id`,`repair_type_id`,`repair_class_id`,`medium_id`,`assigned_to`,`serviced_by`,`approved_by`,`datetime_start`,`datetime_end`,`diagnosis`,`remarks`) 
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     try {
-        $result = $conn->execute_query($query, [$request_number, $requested_by, $date_requested, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $datetime_end, $diagnosis, $remarks]);
+        $result = $conn->execute_query($query, [$request_number, $requested_by, $date_requested, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $property_number, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $datetime_end, $diagnosis, $remarks]);
 
         if (isset($_FILES['files'])) {
             $fileCount = count($_FILES['files']['name']);
@@ -546,6 +610,7 @@ if (isset($_POST['edit_helpdesk'])) {
     $datetime_preferred = validate('datetime_preferred', $conn);
     $date_requested = validate('date_requested', $conn);
     $status_id = validate('status_id', $conn);
+    $property_number = validate('property_number', $conn);
     $priority_level_id = validate('priority_level_id', $conn);
     $repair_type_id = validate('repair_type_id', $conn);
     $repair_class_id = validate('repair_class_id', $conn);
@@ -559,10 +624,10 @@ if (isset($_POST['edit_helpdesk'])) {
     $remarks = validate('remarks', $conn);
 
     $query = "UPDATE helpdesks
-    SET requested_by = ?, request_type_id = ?, category_id = ?, sub_category_id = ?, complaint = ?, datetime_preferred = ?, status_id = ?, priority_level_id = ?, repair_type_id = ?, repair_class_id = ?, medium_id = ?, assigned_to = ?, serviced_by = ?, approved_by = ?, datetime_start = ?, datetime_end = ?, diagnosis = ?, remarks = ?
+    SET requested_by = ?, request_type_id = ?, category_id = ?, sub_category_id = ?, complaint = ?, datetime_preferred = ?, status_id = ?, property_number = ?, priority_level_id = ?, repair_type_id = ?, repair_class_id = ?, medium_id = ?, assigned_to = ?, serviced_by = ?, approved_by = ?, datetime_start = ?, datetime_end = ?, diagnosis = ?, remarks = ?
     WHERE id = ?";
     try {
-        $result = $conn->execute_query($query, [$requested_by, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $datetime_end, $diagnosis, $remarks, $id]);
+        $result = $conn->execute_query($query, [$requested_by, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $property_number, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $datetime_end, $diagnosis, $remarks, $id]);
 
         $query = $conn->execute_query("SELECT
             h.*,

@@ -31,30 +31,9 @@
       </form>
       <section class="section dashboard">
         <div class="row">
-          <!-- <div class="col-xxl-3 col-xl-12">
-
-            <div class="card info-card">
-
-              <div class="card-body">
-                <h5 class="card-title">Users</h5>
-
-                <div class="d-flex align-items-center">
-                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-light" style="background: #11235A">
-                    <i class="bi bi-people"></i>
-                  </div>
-                  <div class="ps-3">
-                    <h6 id="count_users"></h6>
-
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div> -->
 
           <div class="col-xxl-4 col-md-6">
-            <div class="card info-card">
+            <div class="card info-card" onclick="location='helpdesks.php'">
 
               <div class="card-body">
                 <h5 class="card-title">Assistances</h5>
@@ -74,7 +53,7 @@
           </div>
 
           <div class="col-xxl-4 col-md-6">
-            <div class="card info-card">
+            <div class="card info-card" onclick="location='meetings.php'">
 
               <div class="card-body">
                 <h5 class="card-title">Meetings</h5>

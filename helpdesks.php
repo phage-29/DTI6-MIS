@@ -162,6 +162,10 @@
                       </select>
                     </div>
                     <div class="mb-1">
+                      <label for="property_number">Property number/ Serial number</label>
+                      <input name="property_number" type="text" class="form-control form-control-sm" id="property_number" />
+                    </div>
+                    <div class="mb-1">
                       <label for="priority_level_id">Priority level</label>
                       <select name="priority_level_id" class="form-select form-select-sm" id="priority_level_id">
                         <option value="" selected disabled>--</option>
@@ -474,6 +478,10 @@
                       </select>
                     </div>
                     <div class="mb-1">
+                      <label for="property_number">Property number/ Serial number</label>
+                      <input name="property_number" type="text" class="form-control form-control-sm" id="property_number" disabled />
+                    </div>
+                    <div class="mb-1">
                       <label for="priority_level_id">Priority level</label>
                       <select name="priority_level_id" class="form-select form-select-sm" id="priority_level_id" disabled>
                         <option value="" selected disabled>--</option>
@@ -757,6 +765,11 @@
                         }
                         ?>
                       </select>
+                    </div>
+
+                    <div class="mb-1">
+                      <label for="property_number">Property number/ Serial number</label>
+                      <input name="property_number" type="text" class="form-control form-control-sm" id="property_number" />
                     </div>
 
                     <div class="mb-1">
@@ -1245,6 +1258,7 @@
                       $('#viewModal #complaint').html(response.complaint);
                       $('#viewModal #datetime_preferred').val(response.datetime_preferred);
                       $('#viewModal #status_id').val(response.status_id);
+                      $('#viewModal #property_number').val(response.property_number);
                       $('#viewModal #priority_level_id').val(response.priority_level_id);
                       $('#viewModal #repair_type_id').val(response.repair_type_id);
                       $('#viewModal #repair_class_id').val(response.repair_class_id);
@@ -1281,6 +1295,7 @@
                       $('#editModal #complaint').html(response.complaint);
                       $('#editModal #datetime_preferred').val(response.datetime_preferred);
                       $('#editModal #status_id').val(response.status_id);
+                      $('#editModal #property_number').val(response.property_number);
                       $('#editModal #priority_level_id').val(response.priority_level_id);
                       $('#editModal #repair_type_id').val(response.repair_type_id);
                       $('#editModal #repair_class_id').val(response.repair_class_id);
