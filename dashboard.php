@@ -168,7 +168,7 @@
                 <div class="modal-body">
                   <div class="user-edit">
 
-                    <form id="editmeeting" class="row g-3 enctype-validation" enctype="multipart/form-data" novalidate>
+                    <form id="editmeeting" class="row g-3 needs-validation" enctype="multipart/form-data" novalidate>
 
                       <div class="mb-1">
                         <label for="date_requested">Date Requested</label>
@@ -311,10 +311,12 @@
                           </select>
                         </div> -->
                       </div>
-                      <div class="text-end">
-                        <input type="hidden" name="id" id="id" />
-                        <input type="hidden" name="edit_meeting" />
-                        <input type="submit" id="editform" hidden />
+                      <div hidden>
+                        <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                        <input class="captcha-token" name="captcha-token" />
+                        <input name="id" id="id" />
+                        <input name="edit_meeting" />
+                        <input type="submit" id="editform" />
                       </div>
                     </form>
 

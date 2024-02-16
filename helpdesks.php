@@ -299,8 +299,12 @@
                       </select>
                     </div>
                   </div>
+                  <div hidden>
+                    <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                    <input class="captcha-token" name="captcha-token" />
+                    <input name="request_helpdesk" />
+                  </div>
                   <div class="text-end">
-                    <input type="hidden" name="request_helpdesk" />
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
@@ -479,7 +483,8 @@
                     </div>
                     <div class="mb-1">
                       <label for="property_number">Property number/ Serial number</label>
-                      <input name="property_number" type="text" class="form-control form-control-sm" id="property_number" disabled />
+                      <input name="property_number" type="text" class="form-control form-control-sm" id="property_number"
+                        disabled />
                     </div>
                     <div class="mb-1">
                       <label for="priority_level_id">Priority level</label>
@@ -916,10 +921,12 @@
                       </select>
                     </div>
 
-                    <div class="text-end">
-                      <input type="hidden" name="id" id="id" />
-                      <input type="hidden" name="edit_helpdesk" />
-                      <button type="submit" id="editModalSubmit" hidden></button>
+                    <div hidden>
+                      <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                      <input class="captcha-token" name="captcha-token" />
+                      <input name="id" id="id" />
+                      <input name="edit_helpdesk" />
+                      <button type="submit" id="editModalSubmit"></button>
                     </div>
                   </form>
                 </div>
@@ -946,7 +953,9 @@
                         different aspects of our services. Your feedback and impressions will help us in improving our
                         services in order to better serve our clients. Rest assured all information you will provide shall
                         be treated with strict confidentiality. </strong></p>
+
                     <hr>
+
                     <div class="row mb-2 crit1">
                       <div class="col-lg-6 col-md-12 col-sm-12 small">
                         <p><strong>RESPONSIVENESS, ASSURANCE, AND INTEGRITY</strong></p>
@@ -980,6 +989,7 @@
                       </div>
                       <input type="hidden" name="crit1" id="crit1" />
                     </div>
+
                     <div class="row mb-2 crit2">
                       <div class="col-lg-6 col-md-12 col-sm-12 small">
                         <p><strong>RELIABILITY AND OUTCOME</strong></p>
@@ -1014,6 +1024,7 @@
                       </div>
                       <input type="hidden" name="crit2" id="crit2" />
                     </div>
+
                     <div class="row mb-2 crit3">
                       <div class="col-lg-6 col-md-12 col-sm-12 small">
                         <p><strong>ACCESS AND FACILITIES</strong></p>
@@ -1047,6 +1058,7 @@
                       </div>
                       <input type="hidden" name="crit3" id="crit3" />
                     </div>
+
                     <div class="row mb-2 crit4">
                       <div class="col-lg-6 col-md-12 col-sm-12 small">
                         <p><strong>COMMUNICATION</strong></p>
@@ -1080,7 +1092,9 @@
                       </div>
                       <input type="hidden" name="crit4" id="crit4" />
                     </div>
+
                     <hr>
+
                     <div class="row mb-2 overall">
                       <div class="col-lg-6 col-md-12 col-sm-12 small">
                         <p><strong>OVERALL SATISFACTION RATING</strong></p>
@@ -1124,32 +1138,41 @@
                         $(button).addClass('text-warning');
                       }
                     </script>
+
                     <hr>
                     <hr>
+
                     <p class="small"><strong>PART II. COMMENTS AND SUGGESTIONS</strong></p>
+
                     <hr>
+
                     <div class="mb-2">
                       <label for="reasons" class="small">Please write in the space below your reason/s for your
                         "DISSATISFIED" or "VERY DISSATISFIED" rating so that we will know in which area/s we need to
                         improve.</label>
-                      <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150"
-                        required></textarea>
+                      <textarea name="reasons" class="form-control form-control-sm" id="reasons" maxlength="150"></textarea>
                     </div>
+
                     <div class="mb-2">
                       <label for="comments" class="small">Please give comments/suggestions to help us improve our
                         service/s:</label>
-                      <textarea name="comments" class="form-control form-control-sm" id="comments" maxlength="150"
-                        required></textarea>
+                      <textarea name="comments" class="form-control form-control-sm" id="comments"
+                        maxlength="150"></textarea>
                     </div>
                     <hr>
                     <hr>
                     <p class="m-0 p-0 text-center"><strong>THANK YOU!!!</strong></p>
-                    <input type="hidden" name="helpdesks_id" id="helpdesks_id" />
-                    <input type="hidden" name="id" id="id" />
 
-                    <input name="add_csf" id="add_csf" disabled hidden />
-                    <input name="edit_csf" id="edit_csf" disabled hidden />
-                    <button id="csfbtn" hidden></button>
+                    <div hidden>
+                      <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                      <input class="captcha-token" name="captcha-token" />
+                      <input name="helpdesks_id" id="helpdesks_id" />
+                      <input name="id" id="id" />
+                      <input name="add_csf" id="add_csf" disabled />
+                      <input name="edit_csf" id="edit_csf" disabled />
+                      <button type="submit" id="csfbtn"></button>
+                    </div>
+
                   </form>
                 </div>
                 <div class="modal-footer">
@@ -1513,10 +1536,14 @@
                     <input name="files[]" type="file" class="form-control form-control-sm" id="files"
                       accept=".pdf,.doc,.docx,.txt,image/*" multiple />
                   </div>
+                  <div hidden>
+                    <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                    <input class="captcha-token" name="captcha-token" />
+                    <input name="date_requested" value="<?= date('Y-m-d') ?>" />
+                    <input name="status_id" value="1" />
+                    <input name="request_helpdesk" />
+                  </div>
                   <div class="text-end">
-                    <input type="hidden" name="date_requested" value="<?= date('Y-m-d') ?>" />
-                    <input type="hidden" name="status_id" value="1" />
-                    <input type="hidden" name="request_helpdesk" />
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
@@ -1668,9 +1695,11 @@
                     </div>
 
                     <div class="text-end">
-                      <input type="hidden" name="date_requested" value="<?= date('Y-m-d') ?>" />
-                      <input type="hidden" name="status_id" value="2" />
-                      <input type="hidden" name="request_helpdesk" />
+                      <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                      <input class="captcha-token" name="captcha-token" />
+                      <input name="date_requested" value="<?= date('Y-m-d') ?>" />
+                      <input name="status_id" value="2" />
+                      <input name="request_helpdesk" />
                     </div>
                   </form>
                 </div>
@@ -1803,9 +1832,11 @@
                     </div>
 
                     <div class="text-end">
-                      <input type="hidden" name="date_requested" value="<?= date('Y-m-d') ?>" />
-                      <input type="hidden" name="status_id" value="2" />
-                      <input type="hidden" name="request_helpdesk" />
+                      <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                      <input class="captcha-token" name="captcha-token" />
+                      <input name="date_requested" value="<?= date('Y-m-d') ?>" />
+                      <input name="status_id" value="2" />
+                      <input name="request_helpdesk" />
                     </div>
                   </form>
                 </div>
@@ -2030,12 +2061,16 @@
                     <hr>
                     <hr>
                     <p class="m-0 p-0 text-center"><strong>THANK YOU!!!</strong></p>
-                    <input type="hidden" name="helpdesks_id" id="helpdesks_id" />
-                    <input type="hidden" name="id" id="id" />
 
-                    <input name="add_csf" id="add_csf" disabled hidden />
-                    <input name="edit_csf" id="edit_csf" disabled hidden />
-                    <button id="csfbtn" hidden></button>
+                    <div hidden>
+                      <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                      <input class="captcha-token" name="captcha-token" />
+                      <input name="helpdesks_id" id="helpdesks_id" />
+                      <input name="id" id="id" />
+                      <input name="add_csf" id="add_csf" disabled />
+                      <input name="edit_csf" id="edit_csf" disabled />
+                      <button type="submit" id="csfbtn"></button>
+                    </div>
                   </form>
                 </div>
                 <div class="modal-footer">

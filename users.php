@@ -207,9 +207,13 @@
                             <label class="form-check-label" for="active">Active</label>
                           </div>
                         </div>
-                        <input type="hidden" name="id" id="id" />
-                        <input type="hidden" name="edit_user" />
-                        <button id="editform" hidden></button>
+                        <div hidden>
+                          <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                          <input class="captcha-token" name="captcha-token" />
+                        <input name="id" id="id" />
+                        <input name="edit_user" />
+                        <button id="editform"></button>
+                        </div>
                       </form><!-- End user Edit Form -->
 
                     </div>
@@ -349,8 +353,12 @@
                             <label class="form-check-label" for="active">Active</label>
                           </div>
                         </div>
-                        <input type="hidden" name="add_user" />
-                        <button id="addform" hidden></button>
+                        <div hidden>
+                          <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                          <input class="captcha-token" name="captcha-token" />
+                          <input name="add_user" />
+                          <button type="submit" id="addform"></button>
+                        </div>
                       </form><!-- End user Add Form -->
 
                     </div>

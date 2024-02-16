@@ -233,9 +233,13 @@ require_once "assets/components/templates/header.php";
                                     <textarea name="comments" class="form-control form-control-sm" id="comments"
                                         maxlength="150"></textarea>
                                 </div>
-                                <input type="hidden" name="helpdesks_id" id="helpdesks_id" />
-                                <input type="hidden" name="quick_csf" />
-                                <input type="submit" id="csfbtn" hidden />
+                                <div hidden>
+                                    <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                                    <input class="captcha-token" name="captcha-token" />
+                                    <input name="helpdesks_id" id="helpdesks_id" />
+                                    <input name="quick_csf" />
+                                    <input type="submit" id="csfbtn" />
+                                </div>
                             </form>
                         </div>
 

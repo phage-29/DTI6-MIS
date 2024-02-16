@@ -15,7 +15,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Zoom Request Form</h5>
-                <form id="addmeeting" class="row g-3 enctype-validation" enctype="multipart/form-data" novalidate>
+                <form id="addmeeting" class="row g-3 needs-validation" enctype="multipart/form-data" novalidate>
 
                   <div class="mb-1">
                     <label for="date_requested">Date requested</label>
@@ -158,8 +158,12 @@
                       </select>
                     </div> -->
                   </div>
+                  <div hidden>
+                    <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                    <input class="captcha-token" name="captcha-token" />
+                    <input name="request_meeting" />
+                  </div>
                   <div class="text-end">
-                    <input type="hidden" name="request_meeting" />
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
@@ -305,10 +309,12 @@
                             ?>
                           </select>
                         </div> -->
-                      <div class="text-end">
-                        <input type="hidden" name="id" id="id" />
-                        <input type="hidden" name="edit_meeting" />
-                        <input type="submit" id="editform" hidden />
+                      <div hidden>
+                        <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                        <input class="captcha-token" name="captcha-token" />
+                        <input name="id" id="id" />
+                        <input name="edit_meeting" />
+                        <input type="submit" id="editform" />
                       </div>
                     </form>
 

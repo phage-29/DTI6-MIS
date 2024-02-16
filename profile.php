@@ -176,6 +176,8 @@
                     </div>
                   </div>
                   <div hidden>
+                    <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                    <input class="captcha-token" name="captcha-token" />
                     <input name="update_profile" />
                   </div>
                   <div class="text-center">
@@ -210,6 +212,8 @@
                     </div>
                   </div>
                   <div hidden>
+                    <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                    <input class="captcha-token" name="captcha-token" />
                     <input name="change_password" />
                   </div>
                   <div class="text-center">

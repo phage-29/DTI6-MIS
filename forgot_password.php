@@ -34,9 +34,14 @@
                     <input type="text" name="email" class="form-control" id="email" autocomplete="off" required />
                   </div>
                 </div>
-                
+
+                <div hidden>
+                  <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+                  <input class="captcha-token" name="captcha-token" />
+                  <input name="forgot_password" />
+                </div>
+
                 <div class="col-12">
-                  <input type="hidden" name="forgot_password" />
                   <button class="btn btn-primary w-100" type="submit">
                     Forgot password</button>
                 </div>
