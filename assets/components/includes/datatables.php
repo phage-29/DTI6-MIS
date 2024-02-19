@@ -262,7 +262,7 @@ if (isset($_GET['reports1'])) {
     $table = '(SELECT
     hd.id,
     hd.request_number,
-    CONCAT(u.first_name, " ", u.middle_name) AS requested_by_name,
+    CONCAT (u.first_name, " ", u.middle_name) AS requested_by_name,
     u.email,
     d.division,
     hd.date_requested,
@@ -273,13 +273,16 @@ if (isset($_GET['reports1'])) {
     rp.repair_type,
     hd.datetime_start,
     hd.datetime_end,
-    TIMEDIFF(hd.datetime_end, hd.datetime_start) AS turnaround_time,
-    CONCAT(u1.first_name, " ", u1.last_name) AS serviced_by_name,
-    CONCAT(u2.first_name, " ", u2.last_name) AS approved_by_name,
+    TIMEDIFF (hd.datetime_end, hd.datetime_start) AS turnaround_time,
+    CONCAT (u1.first_name, " ", u1.last_name) AS serviced_by_name,
+    CONCAT (u2.first_name, " ", u2.last_name) AS approved_by_name,
     hd.diagnosis,
     hd.remarks,
     hs.status,
-    csf.id as csf_id
+    CASE
+        WHEN csf.id IS NOT NULL THEN 1
+        ELSE 0
+    END AS csf_id_not_null
 FROM
     csf
     RIGHT JOIN helpdesks hd ON csf.helpdesks_id = hd.id
