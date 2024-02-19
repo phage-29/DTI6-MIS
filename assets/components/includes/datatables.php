@@ -279,6 +279,7 @@ if (isset($_GET['reports1'])) {
     hd.diagnosis,
     hd.remarks,
     hs.status,
+    hs.color,
     CASE
         WHEN csf.id IS NOT NULL THEN 1
         ELSE 0
@@ -301,21 +302,58 @@ FROM
         array('db' => 'requested_by_name', 'dt' => 1),
         array('db' => 'email', 'dt' => 2),
         array('db' => 'division', 'dt' => 3),
-        array('db' => 'date_requested', 'dt' => 4),
+        array(
+            'db' => 'date_requested',
+            'dt' => 4,
+            'formatter' => function ($data) {
+                return date('d M, Y', strtotime($data));
+            }
+        ),
         array('db' => 'request_type', 'dt' => 5),
         array('db' => 'category', 'dt' => 6),
         array('db' => 'sub_category', 'dt' => 7),
         array('db' => 'complaint', 'dt' => 8),
         array('db' => 'repair_type', 'dt' => 9),
-        array('db' => 'datetime_start', 'dt' => 10),
-        array('db' => 'datetime_end', 'dt' => 11),
-        array('db' => 'turnaround_time', 'dt' => 12),
+        array(
+            'db' => 'datetime_start',
+            'dt' => 10,
+            'formatter' => function ($data) {
+                return date('d M, Y | H:i A', strtotime($data));
+            }
+        ),
+        array(
+            'db' => 'datetime_end',
+            'dt' => 11,
+            'formatter' => function ($data) {
+                return date('d M, Y | H:i A', strtotime($data));
+            }
+        ),
+        array(
+            'db' => 'turnaround_time',
+            'dt' => 12,
+            'formatter' => function ($data) {
+                return date('H:i:s', strtotime($data));
+            }
+        ),
         array('db' => 'serviced_by_name', 'dt' => 13),
         array('db' => 'approved_by_name', 'dt' => 14),
         array('db' => 'diagnosis', 'dt' => 15),
         array('db' => 'remarks', 'dt' => 16),
-        array('db' => 'status', 'dt' => 17),
-        array('db' => 'csf_id', 'dt' => 18),
+        array(
+            'db' => 'status',
+            'dt' => 17,
+            'formatter' => function ($data, $row) {
+                return '<span class="text-' . $row['color'] . '">' . $data . '</span>';
+            }
+        ),
+        array(
+            'db' => 'csf_id',
+            'dt' => 18,
+            'formatter' => function ($data) {
+                return $data == 1 ? '<span class="text-success">Submitted</span>' : '<span class="text-primary">Pending</span>';
+            }
+        ),
+        array('db' => 'color', 'dt' => 19),
     );
 }
 

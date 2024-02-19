@@ -314,8 +314,8 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">ICT Request List<button class="btn btn-primary float-end">Filter</button></h5>
-                <table id="admintblreports" class="display">
+                <h5 class="card-title">ICT Request List<button class="btn btn-primary float-end"><i class="bi bi-filter"></i> Filter</button></h5>
+                <table id="admintblreports" class="display small" style="width:100%;display:none;">
                   <thead>
                     <tr>
                       <th>Request no.</th>
@@ -349,12 +349,17 @@
               var admintblreports = $('#admintblreports').DataTable({
                 "processing": true,
                 "serverSide": true,
-                "scrollX": true,
+                "responsive": true,
+                dom: 'Bfrtip',
+                buttons: ['excel'],
                 "columnDefs": [{
-                  "className": "dt-nowrap",
+                  "className": "dt-nowrap small",
                   "targets": "_all"
                 }],
-                "ajax": "assets/components/includes/datatables.php?reports1"
+                "ajax": "assets/components/includes/datatables.php?reports1",
+                "initComplete": function (settings, json) {
+                  $('#admintblreports').show();
+                }
               });
             });
           </script>
