@@ -2,7 +2,6 @@
 
 // get connection
 require_once 'conn.php';
-require_once 'common_functions.php';
 
 session_start();
 
@@ -238,8 +237,8 @@ if (isset($responseData)) {
                     $Message .= "<br><hr>";
                     $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
                     $Message .= "</div>";
-    
-                    sendEmail($user->email, $Subject, $Message);   
+
+                    sendEmail($user->email, $Subject, $Message);
                 }
 
                 $response['status'] = 'success';
@@ -724,10 +723,6 @@ if (isset($responseData)) {
             $time_end = validate('time_end', $conn);
             $status_id = validate('status_id', $conn);
             $host_id = validate('host_id', $conn);
-            $meetingid = validate('meetingid', $conn);
-            $passcode = validate('passcode', $conn);
-            $join_link = validate('join_link', $conn);
-            $start_link = validate('start_link', $conn);
             $remarks = validate('remarks', $conn);
             $generated_by = validate('generated_by', $conn);
             $approved_by = validate('approved_by', $conn);
@@ -769,18 +764,18 @@ if (isset($responseData)) {
 
                     $query = "INSERT INTO
                 meetings (
-                    meeting_number, requested_by, date_requested, topic, date_scheduled, time_start, time_end, status_id, host_id, meetingid, passcode, join_link, start_link, remarks, generated_by, approved_by
+                    meeting_number, requested_by, date_requested, topic, date_scheduled, time_start, time_end, status_id, host_id, remarks, generated_by, approved_by
                 )
             VALUES (
-                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
                 )";
-                    $result = $conn->execute_query($query, [$meeting_number, $requested_by, $date_requested, $topic, $date_scheduled, $time_start, $time_end, $status_id, $host_id, $meetingid, $passcode, $join_link, $start_link, $remarks, $generated_by, $approved_by]);
+                    $result = $conn->execute_query($query, [$meeting_number, $requested_by, $date_requested, $topic, $date_scheduled, $time_start, $time_end, $status_id, $host_id, $remarks, $generated_by, $approved_by]);
 
-                    if ($_SESSION['role'] == 'Employee') {
-                        $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$requested_by]);
-                        $row = $query->fetch_object();
+                    $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$requested_by]);
+                    $row = $query->fetch_object();
+                    if ($status_id == 2) {
 
-                        $Subject = "DTI6 MIS | " . $request_number;
+                        $Subject = "DTI6 MIS | " . $meeting_number;
 
                         $Message = "";
                         $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
@@ -788,18 +783,10 @@ if (isset($responseData)) {
                         $Message .= "<div>";
                         $Message .= "<div>Good day!,</div>";
                         $Message .= "<br>";
-                        $Message .= "<div>We acknowledge and appreciate your report related to IT/ICT Issue.</div>";
+                        $Message .= "<div>" . str_replace("\\r\\n", "<br>", $remarks) . "</div>";
                         $Message .= "<br>";
                         $Message .= "<br>";
-                        $Message .= "<div>Here are the details of your ticket:</div>";
-                        $Message .= "<br>";
-                        $Message .= "<div>Ticket Number: " . $request_number . "</div>";
-                        $Message .= "<div>Date Submitted: " . date_format(date_create($date_requested), "d M, Y") . "</div>";
-                        $Message .= "<div>Description of Issue: " . $complaint . "</div>";
-                        $Message .= "<br>";
-                        $Message .= "<br>";
-                        $Message .= "<div>Our support team will reach out to you with updates.</div>";
-                        $Message .= "<div>Thank you.</div>";
+                        $Message .= "<div>Thank you!</div>";
                         $Message .= "<br>";
                         $Message .= "<br>";
                         $Message .= "<div>Best Regards,</div>";
@@ -837,31 +824,23 @@ if (isset($responseData)) {
             $time_end = validate('time_end', $conn);
             $status_id = validate('status_id', $conn);
             $host_id = validate('host_id', $conn);
-            $meetingid = validate('meetingid', $conn);
-            $passcode = validate('passcode', $conn);
-            $join_link = validate('join_link', $conn);
-            $start_link = validate('start_link', $conn);
             $remarks = validate('remarks', $conn);
             $generated_by = validate('generated_by', $conn);
             $approved_by = validate('approved_by', $conn);
 
             $query = "UPDATE `meetings` SET
-        `requested_by` = ?,
-        `date_requested` = ?,
-        `topic` = ?,
-        `date_scheduled` = ?,
-        `time_start` = ?,
-        `time_end` = ?,
-        `status_id` = ?,
-        `host_id` = ?,
-        `meetingid` = ?,
-        `passcode` = ?,
-        `join_link` = ?,
-        `start_link` = ?,
-        `remarks` = ?,
-        `generated_by` = ?,
-        `approved_by` = ?
-    WHERE `id` = ?";
+                `requested_by` = ?,
+                `date_requested` = ?,
+                `topic` = ?,
+                `date_scheduled` = ?,
+                `time_start` = ?,
+                `time_end` = ?,
+                `status_id` = ?,
+                `host_id` = ?,
+                `remarks` = ?,
+                `generated_by` = ?,
+                `approved_by` = ?
+            WHERE `id` = ?";
 
             try {
                 $result = $conn->execute_query($query, [
@@ -873,15 +852,41 @@ if (isset($responseData)) {
                     $time_end,
                     $status_id,
                     $host_id,
-                    $meetingid,
-                    $passcode,
-                    $join_link,
-                    $start_link,
                     $remarks,
                     $generated_by,
                     $approved_by,
                     $id
                 ]);
+
+                $query = $conn->query("SELECT * FROM meetings m LEFT JOIN users u ON m.requested_by = u.id WHERE m.id = $id");
+                $row = $query->fetch_object();
+                if ($status_id == 2) {
+
+                    $Subject = "DTI6 MIS | " . $row->meeting_number;
+
+                    $Message = "";
+                    $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
+                    $Message .= "<hr>";
+                    $Message .= "<div>";
+                    $Message .= "<div>Good day!,</div>";
+                    $Message .= "<br>";
+                    $Message .= "<div>" . str_replace("\\\\r\\\\n", "<br>", $remarks) . "</div>";
+                    $Message .= "<br>";
+                    $Message .= "<br>";
+                    $Message .= "<div>Thank you!</div>";
+                    $Message .= "<br>";
+                    $Message .= "<br>";
+                    $Message .= "<div>Best Regards,</div>";
+                    $Message .= "<br>";
+                    $Message .= "<div>DTI6 MIS Administrator</div>";
+                    $Message .= "<div>DTI Region VI</div>";
+                    $Message .= "<br>";
+                    $Message .= "<hr>";
+                    $Message .= "<div>&copy; Copyright <strong>DTI6 MIS </strong>2024. All Rights Reserved</div>";
+                    $Message .= "</div>";
+
+                    sendEmail($row->email, $Subject, $Message);
+                }
 
                 $response['status'] = 'success';
                 $response['message'] = 'Schedule update successful!';

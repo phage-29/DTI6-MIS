@@ -20,9 +20,9 @@ function sendEmail($sendTo, $subject, $content)
     $mail->isHTML(true);
     $mail->setFrom('dti6.mis@gmail.com', 'MIS Administrator');
     $mail->addAddress($sendTo);
-    $mail->AddBCC('angelopatrimonio@dti.gov.ph');
-    $mail->AddBCC('bemyjohncollado@dti.gov.ph');
-    $mail->AddBCC('dace.phage@gmail.com');
+    // $mail->AddBCC('angelopatrimonio@dti.gov.ph');
+    // $mail->AddBCC('bemyjohncollado@dti.gov.ph');
+    // $mail->AddBCC('dace.phage@gmail.com');
     $mail->Subject = $subject;
     $mail->Body = $content;
     $mail->send();
@@ -30,8 +30,17 @@ function sendEmail($sendTo, $subject, $content)
 function validate($key, $conn)
 {
     if (isset($_POST[$key]) && is_string($_POST[$key]) && trim($_POST[$key]) !== '') {
-        
-        return $conn->real_escape_string(htmlspecialchars(trim($_POST[$key]), ENT_QUOTES, 'UTF-8'));
+
+        return $conn->real_escape_string($_POST[$key]);
+    } else {
+        return null;
+    }
+}
+
+function reverse_validate($value, $conn)
+{
+    if ($value !== null) {
+        return htmlspecialchars_decode($conn->escape_string($value));
     } else {
         return null;
     }
@@ -79,7 +88,8 @@ function verifyCaptcha($recaptchaResponse, $secretKey)
     return $responseData['success'];
 }
 
-function tempPassword($length = 8) {
+function tempPassword($length = 8)
+{
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';

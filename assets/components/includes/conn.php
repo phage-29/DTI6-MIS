@@ -24,3 +24,5 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8");
 
 $enckey = $_ENV['enckey'];
+
+require_once 'common_functions.php';

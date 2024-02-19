@@ -262,7 +262,7 @@ if (isset($_GET['reports1'])) {
     $table = '(SELECT
     hd.id,
     hd.request_number,
-    CONCAT (u.first_name, " ", u.middle_name) AS requested_by_name,
+    CONCAT (u.first_name, " ", u.last_name) AS requested_by_name,
     u.email,
     d.division,
     hd.date_requested,

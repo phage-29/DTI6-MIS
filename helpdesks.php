@@ -28,7 +28,7 @@
                     <select name="requested_by" class="form-select form-select-sm" id="requested_by">
                       <option value="" selected disabled>--</option>
                       <?php
-                      $query = $conn->query("SELECT * FROM users WHERE role_id = 4");
+                      $query = $conn->query("SELECT * FROM users WHERE role_id = 4 ORDER BY first_name ASC");
                       while ($row = $query->fetch_object()) {
                         ?>
                         <option value="<?= $row->id ?>">
@@ -356,7 +356,7 @@
                       <select name="requested_by" class="form-select form-select-sm" id="requested_by" disabled>
                         <option value="" selected disabled>--</option>
                         <?php
-                        $query = $conn->query("SELECT * FROM users WHERE role_id = 4");
+                        $query = $conn->query("SELECT * FROM users WHERE role_id = 4 ORDER BY first_name ASC");
                         while ($row = $query->fetch_object()) {
                           ?>
                           <option value="<?= $row->id ?>">
@@ -652,7 +652,7 @@
                       <select name="requested_by" class="form-select form-select-sm" id="requested_by">
                         <option value="" selected disabled>--</option>
                         <?php
-                        $query = $conn->query("SELECT * FROM users WHERE role_id = 4");
+                        $query = $conn->query("SELECT * FROM users WHERE role_id = 4 ORDER BY first_name ASC");
                         while ($row = $query->fetch_object()) {
                           ?>
                           <option value="<?= $row->id ?>">
