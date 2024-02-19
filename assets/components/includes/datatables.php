@@ -318,14 +318,14 @@ FROM
             'db' => 'datetime_start',
             'dt' => 10,
             'formatter' => function ($data) {
-                return date('d M, Y | H:i A', strtotime($data));
+                return date('d M, Y H:i A', strtotime($data));
             }
         ),
         array(
             'db' => 'datetime_end',
             'dt' => 11,
             'formatter' => function ($data) {
-                return date('d M, Y | H:i A', strtotime($data));
+                return date('d M, Y H:i A', strtotime($data));
             }
         ),
         array(
