@@ -258,6 +258,64 @@ if (isset($_GET['users4'])) {
     );
 }
 
+if (isset($_GET['reports1'])) {
+    $table = '(SELECT
+    hd.id,
+    hd.request_number,
+    CONCAT(u.first_name, " ", u.middle_name) AS requested_by_name,
+    u.email,
+    d.division,
+    hd.date_requested,
+    rt.request_type,
+    c.category,
+    sc.sub_category,
+    hd.complaint,
+    rp.repair_type,
+    hd.datetime_start,
+    hd.datetime_end,
+    TIMEDIFF(hd.datetime_end, hd.datetime_start) AS turnaround_time,
+    CONCAT(u1.first_name, " ", u1.last_name) AS serviced_by_name,
+    CONCAT(u2.first_name, " ", u2.last_name) AS approved_by_name,
+    hd.diagnosis,
+    hd.remarks,
+    hs.status,
+    csf.id as csf_id
+FROM
+    csf
+    RIGHT JOIN helpdesks hd ON csf.helpdesks_id = hd.id
+    LEFT JOIN users u ON hd.requested_by = u.id
+    LEFT JOIN divisions d ON u.division_id = d.id
+    LEFT JOIN request_types rt ON hd.request_type_id = rt.id
+    LEFT JOIN categories c ON hd.category_id = c.id
+    LEFT JOIN sub_categories sc ON hd.sub_category_id = sc.id
+    LEFT JOIN repair_types rp ON hd.repair_type_id = rp.id
+    LEFT JOIN users u1 ON hd.serviced_by = u1.id
+    LEFT JOIN users u2 ON hd.approved_by = u2.id
+    LEFT JOIN helpdesks_statuses hs ON hd.status_id = hs.id) reports';
+
+    $columns = array(
+        array('db' => 'request_number', 'dt' => 0),
+        array('db' => 'requested_by_name', 'dt' => 1),
+        array('db' => 'email', 'dt' => 2),
+        array('db' => 'division', 'dt' => 3),
+        array('db' => 'date_requested', 'dt' => 4),
+        array('db' => 'request_type', 'dt' => 5),
+        array('db' => 'category', 'dt' => 6),
+        array('db' => 'sub_category', 'dt' => 7),
+        array('db' => 'complaint', 'dt' => 8),
+        array('db' => 'repair_type', 'dt' => 9),
+        array('db' => 'datetime_start', 'dt' => 10),
+        array('db' => 'datetime_end', 'dt' => 11),
+        array('db' => 'turnaround_time', 'dt' => 12),
+        array('db' => 'serviced_by_name', 'dt' => 13),
+        array('db' => 'approved_by_name', 'dt' => 14),
+        array('db' => 'diagnosis', 'dt' => 15),
+        array('db' => 'remarks', 'dt' => 16),
+        array('db' => 'status', 'dt' => 17),
+        array('db' => 'csf_id', 'dt' => 18),
+    );
+}
+
 require 'ssp.class.php';
 
 echo json_encode(

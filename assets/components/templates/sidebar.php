@@ -8,7 +8,7 @@
             case 'Admin':
             case 'Officer':
             case 'Staff':
-        ?>
+                ?>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="dashboard.php">
                         <i class="bi bi-grid"></i>
@@ -34,10 +34,16 @@
                         <span>Meetings</span>
                     </a>
                 </li>
-            <?php
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="reports.php">
+                        <i class="bi bi-window-dock"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                <?php
                 break;
             case 'Employee':
-            ?>
+                ?>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="helpdesks.php">
                         <i class="bi bi-window-dock"></i>
@@ -51,7 +57,7 @@
                         <span>Meetings</span>
                     </a>
                 </li>
-        <?php
+                <?php
                 break;
         }
         ?>

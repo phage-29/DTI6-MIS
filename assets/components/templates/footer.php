@@ -1,6 +1,6 @@
 <!-- Modal -->
-<div class="modal fade" id="updatePasswordModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updatePasswordModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="updatePasswordModal" data-bs-backdrop="static" tabindex="-1"
+  aria-labelledby="updatePasswordModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -20,6 +20,8 @@
             <span class="text-danger" id="dnm" hidden>do not match.</span>
           </div>
           <div hidden>
+            <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
+            <input class="captcha-token" name="captcha-token" />
             <input id="change_temp_password" name="change_temp_password" value="" />
           </div>
           <div class="text-end">
