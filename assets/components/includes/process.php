@@ -212,34 +212,35 @@ if (isset($responseData)) {
 
                 $getuser = "SELECT * FROM users WHERE email = ?";
                 $fetchuser = $conn->execute_query($getuser, [$email]);
-                $user = $fetchuser->fetch_object();
 
-                $Subject = "DTI6 MIS | Temporary Password";
+                while ($user = $fetchuser->fetch_object();) {
+                    $Subject = "DTI6 MIS | Temporary Password";
 
-                $Message = "";
-                $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
-                $Message .= "<hr>";
-                $Message .= "<div>";
-                $Message .= "<div>Good day!,</div>";
-                $Message .= "<br>";
-                $Message .= "<div>You have requested a temporary password. Please use the temporary password below to login:</div>";
-                $Message .= "<br><br>";
-                $Message .= "<div>Username: " . $user->username . "</div>";
-                $Message .= "<div>Password: " . $user->temp_password . "</div>";
-                $Message .= "<br><br>";
-                $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
-                $Message .= "<div><a href='http://r6itbpm.site/DTI6-MIS/index.php'>Click here</a> to login. Thank you.</div>";
-                $Message .= "<br><br>";
-                $Message .= "<div>Best Regards,</div>";
-                $Message .= "<br>";
-                $Message .= "<div>DTI6 MIS Administrator</div>";
-                $Message .= "<div>IT Support Staff</div>";
-                $Message .= "<div>DTI Region VI</div>";
-                $Message .= "<br><hr>";
-                $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
-                $Message .= "</div>";
-
-                sendEmail($email, $Subject, $Message);
+                    $Message = "";
+                    $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
+                    $Message .= "<hr>";
+                    $Message .= "<div>";
+                    $Message .= "<div>Good day!,</div>";
+                    $Message .= "<br>";
+                    $Message .= "<div>You have requested a temporary password. Please use the temporary password below to login:</div>";
+                    $Message .= "<br><br>";
+                    $Message .= "<div>Username: " . $user->username . "</div>";
+                    $Message .= "<div>Password: " . $user->temp_password . "</div>";
+                    $Message .= "<br><br>";
+                    $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
+                    $Message .= "<div><a href='http://r6itbpm.site/DTI6-MIS/index.php'>Click here</a> to login. Thank you.</div>";
+                    $Message .= "<br><br>";
+                    $Message .= "<div>Best Regards,</div>";
+                    $Message .= "<br>";
+                    $Message .= "<div>DTI6 MIS Administrator</div>";
+                    $Message .= "<div>IT Support Staff</div>";
+                    $Message .= "<div>DTI Region VI</div>";
+                    $Message .= "<br><hr>";
+                    $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
+                    $Message .= "</div>";
+    
+                    sendEmail($user->email, $Subject, $Message);   
+                }
 
                 $response['status'] = 'success';
                 $response['message'] = 'Temporary password sent!';
