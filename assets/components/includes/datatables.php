@@ -282,7 +282,7 @@ if (isset($_GET['reports1'])) {
     CASE
         WHEN csf.id IS NOT NULL THEN 1
         ELSE 0
-    END AS csf_id_not_null
+    END AS csf_id
 FROM
     csf
     RIGHT JOIN helpdesks hd ON csf.helpdesks_id = hd.id
