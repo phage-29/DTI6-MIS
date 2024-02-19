@@ -213,7 +213,7 @@ if (isset($responseData)) {
                 $getuser = "SELECT * FROM users WHERE email = ?";
                 $fetchuser = $conn->execute_query($getuser, [$email]);
 
-                while ($user = $fetchuser->fetch_object();) {
+                while ($user = $fetchuser->fetch_object()) {
                     $Subject = "DTI6 MIS | Temporary Password";
 
                     $Message = "";
