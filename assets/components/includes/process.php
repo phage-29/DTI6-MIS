@@ -210,7 +210,9 @@ if (isset($responseData)) {
                 $query2 = "UPDATE users SET password = ?, temp_password = ?, temp_password_exp = ? WHERE email = ?";
                 $result2 = $conn->execute_query($query2, [$hashed_password, $password, $expiry, $email]);
 
-                $row = $result->fetch_object();
+                $getuser = "SELECT * FROM users WHERE email = ?";
+                $fetchuser = $conn->execute_query($getuser, [$email]);
+                $user = $fetchuser->fetch_object();
 
                 $Subject = "DTI6 MIS | Temporary Password";
 
@@ -222,8 +224,8 @@ if (isset($responseData)) {
                 $Message .= "<br>";
                 $Message .= "<div>You have requested a temporary password. Please use the temporary password below to login:</div>";
                 $Message .= "<br><br>";
-                $Message .= "<div>Username: " . $row->username . "</div>";
-                $Message .= "<div>Password: " . $row->temp_password . "</div>";
+                $Message .= "<div>Username: " . $user->username . "</div>";
+                $Message .= "<div>Password: " . $user->temp_password . "</div>";
                 $Message .= "<br><br>";
                 $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
                 $Message .= "<div><a href='http://r6itbpm.site/DTI6-MIS/index.php'>Click here</a> to login. Thank you.</div>";
