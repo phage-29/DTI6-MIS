@@ -306,7 +306,7 @@ if (isset($_GET['reports1'])) {
         $table .= " WHERE date_requested BETWEEN '$fromDate' AND '$toDate'";
     }
 
-    if (isset($_GET['status_id'])) {
+    if (!empty($_GET['status_id'])) {
         $statusId = $conn->real_escape_string($_GET['status_id']);
 
         $table .= isset($fromDate, $toDate) ? " AND status_id = $statusId" : " WHERE status_id = $statusId";

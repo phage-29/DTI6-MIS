@@ -337,7 +337,7 @@
                       <div class="mb-3">
                         <label for="status_id" class="form-label">Status</label>
                         <select class="form-select" id="status_id" name="status_id">
-                          <option selected disabled>--</option>
+                          <option value="" selected>--</option>
                           <?php
                           $query = $conn->query('SELECT * FROM helpdesks_statuses');
                           while ($row = $query->fetch_object()) {
