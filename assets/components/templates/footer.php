@@ -43,7 +43,7 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
   <div class="copyright">
-    <img src="assets/img/logo.png" width="auto" height="24px"> &copy; 2024 <?= website ?> DTI.
+    <img src="assets/img/logo.png" width="auto" height="24px"> &copy; 2024 <?= website ?>.
     All Rights Reserved
   </div>
   <div class="credits">
