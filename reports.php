@@ -326,21 +326,23 @@
                     <form>
                       <div class="mb-3">
                         <label for="from" class="form-label">From</label>
-                        <input type="date" class="form-control" id="from" name="from">
+                        <input type="date" class="form-control" id="from" name="from"
+                          value="<?= isset($_GET['from']) ? $_GET['from'] : date('Y-m-01') ?>">
                       </div>
                       <div class="mb-3">
                         <label for="to" class="form-label">to</label>
-                        <input type="date" class="form-control" id="to" name="to">
+                        <input type="date" class="form-control" id="to" name="to"
+                          value="<?= isset($_GET['to']) ? $_GET['to'] : date('Y-m-d') ?>">
                       </div>
                       <div class="mb-3">
                         <label for="status_id" class="form-label">Status</label>
                         <select class="form-select" id="status_id" name="status_id">
-                          <option>--</option>
+                          <option selected disabled>--</option>
                           <?php
                           $query = $conn->query('SELECT * FROM helpdesks_statuses');
                           while ($row = $query->fetch_object()) {
                             ?>
-                            <option value="<?= $row->id ?>">
+                            <option value="<?= $row->id ?>" <?= isset($_GET['status_id']) && $_GET['status_id'] == $row->id ? 'selected' : '' ?>>
                               <?= $row->status ?>
                             </option>
                             <?php
@@ -407,7 +409,7 @@
                   "className": "dt-nowrap small",
                   "targets": "_all"
                 }],
-                "ajax": "assets/components/includes/datatables.php?reports1<?= isset($_GET['status_id']) ? '&status=' . $_GET['status_id'] : '' ?><?= isset($_GET['from']) ? '&from=' . $_GET['from'] : '' ?><?= isset($_GET['to']) ? '&to=' . $_GET['to'] : '' ?>",
+                "ajax": "assets/components/includes/datatables.php?reports1<?= isset($_GET['status_id']) ? '&status_id=' . $_GET['status_id'] : '' ?><?= isset($_GET['from']) ? '&from=' . $_GET['from'] : '' ?><?= isset($_GET['to']) ? '&to=' . $_GET['to'] : '' ?>",
                 "initComplete": function (settings, json) {
                   $('#admintblreports').show();
                 }
