@@ -125,7 +125,7 @@
 
                     <div class="mb-1">
                       <label for="remarks">Zoom Details</label>
-                      <textarea name="remarks" class="form-control form-control-sm" id="remarks"></textarea>
+                      <textarea name="remarks" class="form-control form-control-sm" id="remarks" rows="10"></textarea>
                     </div>
                   </div>
                   <div hidden>
@@ -247,7 +247,7 @@
 
                       <div class="mb-1">
                         <label for="remarks">Zoom Details</label>
-                        <textarea name="remarks" class="form-control form-control-sm" id="remarks"></textarea>
+                        <textarea name="remarks" class="form-control form-control-sm" id="remarks" rows="11"></textarea>
                       </div>
                       <div hidden>
                         <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
@@ -282,8 +282,8 @@
                 },
                 displayEventEnd: true,
                 eventClick: function (info) {
-                  console.log(info);
                   $('#editmeeting #date_requested').val(info.event.extendedProps.date_requested);
+                  $('#editmeeting #requested_by').val(info.event.extendedProps.requested_by);
                   $('#editmeeting #topic').html(info.event.extendedProps.topic);
                   $('#editmeeting #date_scheduled').val(info.event.extendedProps.date_scheduled);
                   $('#editmeeting #time_start').val(info.event.extendedProps.time_start);
