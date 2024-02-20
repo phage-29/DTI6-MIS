@@ -296,19 +296,20 @@ if (isset($_GET['reports1'])) {
         LEFT JOIN users u1 ON hd.serviced_by = u1.id
         LEFT JOIN users u2 ON hd.approved_by = u2.id
         LEFT JOIN helpdesks_statuses hs ON hd.status_id = hs.id';
+    if (isset($_GET['from'], $_GET['to'])) {
+        $from = $conn->real_escape_string($_GET['from']);
+        $to = $conn->real_escape_string($_GET['to']);
 
-    $from = $conn->real_escape_string($_GET['from']);
-    $to = $conn->real_escape_string($_GET['to']);
+        $fromDate = date('Y-m-d', strtotime($from));
+        $toDate = date('Y-m-d', strtotime($to));
 
-    $fromDate = date('Y-m-d', strtotime($from));
-    $toDate = date('Y-m-d', strtotime($to));
-
-    $table .= " WHERE date_requested BETWEEN '$fromDate' AND '$toDate'";
+        $table .= " WHERE date_requested BETWEEN '$fromDate' AND '$toDate'";
+    }
 
     if (isset($_GET['status_id'])) {
         $statusId = $conn->real_escape_string($_GET['status_id']);
 
-        $table .= " AND status_id = '$statusId'";
+        $table .= isset($fromDate, $toDate) ? " AND status_id = $statusId" : " WHERE status_id = $statusId";
     }
     $table .= ') reports';
 
