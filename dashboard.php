@@ -213,102 +213,42 @@
                         <input name="time_end" type="time" class="form-control form-control-sm" id="time_end"
                           value="<?= date('H:i') ?>" required />
                       </div>
-
-                      <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="ShowFields"
-                        onclick="ShowFields.style.display = 'none';HideFields.style.display = ''">
-                        Show other fields
-                      </a>
-                      <a class="text-end btn-link" data-bs-toggle="collapse" href="#collapseExample" id="HideFields"
-                        onclick="HideFields.style.display = 'none';ShowFields.style.display = ''" style="display: none;">
-                        Hide other fields
-                      </a>
-                      <div class="collapse" id="collapseExample">
-                        <div class="mb-1">
-                          <label for="status_id">Meeting status</label>
-                          <select name="status_id" class="form-select form-select-sm" id="status_id">
-                            <?php
-                            $query = $conn->query("SELECT * FROM meetings_statuses");
-                            while ($row = $query->fetch_object()) {
-                              ?>
-                              <option value="<?= $row->id ?>">
-                                <?= $row->status ?>
-                              </option>
-                              <?php
-                            }
+                      <div class="mb-1">
+                        <label for="status_id">Meeting status</label>
+                        <select name="status_id" class="form-select form-select-sm" id="status_id">
+                          <?php
+                          $query = $conn->query("SELECT * FROM meetings_statuses");
+                          while ($row = $query->fetch_object()) {
                             ?>
-                          </select>
-                        </div>
-
-                        <div class="mb-1">
-                          <label for="host_id">Hosted by</label>
-                          <select name="host_id" class="form-select form-select-sm" id="host_id">
-                            <option value="" selected disabled>--</option>
+                            <option value="<?= $row->id ?>">
+                              <?= $row->status ?>
+                            </option>
                             <?php
-                            $query = $conn->query("SELECT * FROM hosts");
-                            while ($row = $query->fetch_object()) {
-                              ?>
-                              <option value="<?= $row->id ?>">
-                                <?= $row->host_name ?>
-                              </option>
-                              <?php
-                            }
+                          }
+                          ?>
+                        </select>
+                      </div>
+
+                      <div class="mb-1">
+                        <label for="host_id">Hosted by</label>
+                        <select name="host_id" class="form-select form-select-sm" id="host_id">
+                          <option value="" selected disabled>--</option>
+                          <?php
+                          $query = $conn->query("SELECT * FROM hosts");
+                          while ($row = $query->fetch_object()) {
                             ?>
-                          </select>
-                        </div>
-
-                        <div class="mb-1">
-                          <label for="meetingid">Meeting ID</label>
-                          <input name="meetingid" type="text" class="form-control form-control-sm" id="meetingid" />
-                        </div>
-
-                        <div class="mb-1">
-                          <label for="passcode">Passcode</label>
-                          <input name="passcode" type="text" class="form-control form-control-sm" id="passcode" />
-                        </div>
-
-                        <div class="mb-1">
-                          <label for="join_link">Join link</label>
-                          <textarea name="join_link" class="form-control form-control-sm" id="join_link"></textarea>
-                        </div>
-
-                        <div class="mb-1">
-                          <label for="start_link">Start link</label>
-                          <textarea name="start_link" class="form-control form-control-sm" id="start_link"></textarea>
-                        </div>
-
-                        <div class="mb-1">
-                          <label for="remarks">Remarks</label>
-                          <textarea name="remarks" class="form-control form-control-sm" id="remarks"></textarea>
-                        </div>
-
-                        <!-- <div class="mb-1">
-                          <label for="generated_by">Generated by</label>
-                          <select name="generated_by" class="form-select form-select-sm" id="generated_by">
-                            <option value="" selected disabled>--</option>
+                            <option value="<?= $row->id ?>">
+                              <?= $row->host_name ?>
+                            </option>
                             <?php
-                            $query = $conn->query("SELECT * FROM users WHERE role_id != 4");
-                            while ($row = $query->fetch_object()) {
-                              ?>
-                              <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                            <?php
-                            }
-                            ?>
-                          </select>
-                        </div>
-                        <div class="mb-1">
-                          <label for="approved_by">Approved by</label>
-                          <select name="approved_by" class="form-select form-select-sm" id="approved_by">
-                            <option value="" selected disabled>--</option>
-                            <?php
-                            $query = $conn->query("SELECT * FROM users WHERE role_id = 1");
-                            while ($row = $query->fetch_object()) {
-                              ?>
-                              <option value="<?= $row->id ?>"><?= $row->first_name ?> <?= $row->last_name ?></option>
-                            <?php
-                            }
-                            ?>
-                          </select>
-                        </div> -->
+                          }
+                          ?>
+                        </select>
+                      </div>
+
+                      <div class="mb-1">
+                        <label for="remarks">Remarks</label>
+                        <textarea name="remarks" class="form-control form-control-sm" id="remarks" rows="10"></textarea>
                       </div>
                       <div hidden>
                         <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
@@ -357,7 +297,7 @@
               $('#editmeeting #passcode').val(info.event.extendedProps.passcode);
               $('#editmeeting #join_link').val(info.event.extendedProps.join_link);
               $('#editmeeting #start_link').val(info.event.extendedProps.start_link);
-              $('#editmeeting #remarks').val(info.event.extendedProps.remarks);
+              $('#editmeeting #remarks').html(info.event.extendedProps.remarks);
               $('#editmeeting #id').val(info.event.extendedProps.id);
               $('#editModal').modal('show');
               $('.fc-popover-close').click();
