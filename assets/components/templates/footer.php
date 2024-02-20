@@ -43,8 +43,8 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
   <div class="copyright">
-    DTI6-MIS &copy; Copyright <strong><span>DTI Region VI</span></strong>
-    <?= date('Y') ?>. All Rights Reserved
+    <img src="assets/img/logo.png" width="auto" height="24px"> &copy; 2024 <?= website ?> DTI.
+    All Rights Reserved
   </div>
   <div class="credits">
     Designed by <a href="#">Phage</a>

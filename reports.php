@@ -314,8 +314,57 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">ICT Request List<button class="btn btn-primary float-end"><i
-                      class="bi bi-filter"></i> Filter</button></h5>
+                <h5 class="card-title">ICT Request List
+                  <button class="btn btn-primary float-end" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample">
+                    <i class="bi bi-filter"></i> Filter
+                  </button>
+                </h5>
+
+                <div class="collapse position-absolute end-0" id="collapseExample" style="z-index:1;">
+                  <div class="card card-body border border-1 bg-light">
+                    <form>
+                      <div class="mb-3">
+                        <label for="from" class="form-label">From</label>
+                        <input type="date" class="form-control" id="from" name="from">
+                      </div>
+                      <div class="mb-3">
+                        <label for="to" class="form-label">to</label>
+                        <input type="date" class="form-control" id="to" name="to">
+                      </div>
+                      <div class="mb-3">
+                        <label for="status_id" class="form-label">Status</label>
+                        <select class="form-select" id="status_id" name="status_id">
+                          <option>--</option>
+                          <?php
+                          $query = $conn->query('SELECT * FROM helpdesks_statuses');
+                          while ($row = $query->fetch_object()) {
+                            ?>
+                            <option value="<?= $row->id ?>">
+                              <?= $row->status ?>
+                            </option>
+                            <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                      <div class="mb-3 text-end">
+                        <button class="btn btn-primary btn-sm">apply</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <script>
+                  document.addEventListener('click', function (event) {
+                    var isClickInside = document.getElementById('collapseExample').contains(event.target);
+                    var isButtonClick = event.target.getAttribute('data-bs-target') === '#collapseExample';
+                    if (!isClickInside && !isButtonClick) {
+                      var collapse = new bootstrap.Collapse(document.getElementById('collapseExample'));
+                      collapse.hide();
+                    }
+                  });
+                </script>
                 <table id="admintblreports" class="display small" style="width:100%;display:none;">
                   <thead>
                     <tr>
@@ -358,7 +407,7 @@
                   "className": "dt-nowrap small",
                   "targets": "_all"
                 }],
-                "ajax": "assets/components/includes/datatables.php?reports1",
+                "ajax": "assets/components/includes/datatables.php?reports1<?= isset($_GET['status_id']) ? '&status=' . $_GET['status_id'] : '' ?><?= isset($_GET['from']) ? '&from=' . $_GET['from'] : '' ?><?= isset($_GET['to']) ? '&to=' . $_GET['to'] : '' ?>",
                 "initComplete": function (settings, json) {
                   $('#admintblreports').show();
                 }

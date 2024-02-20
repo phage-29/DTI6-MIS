@@ -260,42 +260,58 @@ if (isset($_GET['users4'])) {
 
 if (isset($_GET['reports1'])) {
     $table = '(SELECT
-    hd.id,
-    hd.request_number,
-    CONCAT (u.first_name, " ", u.last_name) AS requested_by_name,
-    u.email,
-    d.division,
-    hd.date_requested,
-    rt.request_type,
-    c.category,
-    sc.sub_category,
-    hd.complaint,
-    rp.repair_type,
-    hd.datetime_start,
-    hd.datetime_end,
-    TIMEDIFF (hd.datetime_end, hd.datetime_start) AS turnaround_time,
-    CONCAT (u1.first_name, " ", u1.last_name) AS serviced_by_name,
-    CONCAT (u2.first_name, " ", u2.last_name) AS approved_by_name,
-    hd.diagnosis,
-    hd.remarks,
-    hs.status,
-    hs.color,
-    CASE
-        WHEN csf.id IS NOT NULL THEN 1
-        ELSE 0
-    END AS csf_id
-FROM
-    csf
-    RIGHT JOIN helpdesks hd ON csf.helpdesks_id = hd.id
-    LEFT JOIN users u ON hd.requested_by = u.id
-    LEFT JOIN divisions d ON u.division_id = d.id
-    LEFT JOIN request_types rt ON hd.request_type_id = rt.id
-    LEFT JOIN categories c ON hd.category_id = c.id
-    LEFT JOIN sub_categories sc ON hd.sub_category_id = sc.id
-    LEFT JOIN repair_types rp ON hd.repair_type_id = rp.id
-    LEFT JOIN users u1 ON hd.serviced_by = u1.id
-    LEFT JOIN users u2 ON hd.approved_by = u2.id
-    LEFT JOIN helpdesks_statuses hs ON hd.status_id = hs.id) reports';
+        hd.id,
+        hd.request_number,
+        CONCAT (u.first_name, " ", u.last_name) AS requested_by_name,
+        u.email,
+        d.division,
+        hd.date_requested,
+        rt.request_type,
+        c.category,
+        sc.sub_category,
+        hd.complaint,
+        rp.repair_type,
+        hd.datetime_start,
+        hd.datetime_end,
+        TIMEDIFF (hd.datetime_end, hd.datetime_start) AS turnaround_time,
+        CONCAT (u1.first_name, " ", u1.last_name) AS serviced_by_name,
+        CONCAT (u2.first_name, " ", u2.last_name) AS approved_by_name,
+        hd.diagnosis,
+        hd.remarks,
+        hs.status,
+        hs.color,
+        CASE
+            WHEN csf.id IS NOT NULL THEN 1
+            ELSE 0
+        END AS csf_id
+    FROM
+        csf
+        RIGHT JOIN helpdesks hd ON csf.helpdesks_id = hd.id
+        LEFT JOIN users u ON hd.requested_by = u.id
+        LEFT JOIN divisions d ON u.division_id = d.id
+        LEFT JOIN request_types rt ON hd.request_type_id = rt.id
+        LEFT JOIN categories c ON hd.category_id = c.id
+        LEFT JOIN sub_categories sc ON hd.sub_category_id = sc.id
+        LEFT JOIN repair_types rp ON hd.repair_type_id = rp.id
+        LEFT JOIN users u1 ON hd.serviced_by = u1.id
+        LEFT JOIN users u2 ON hd.approved_by = u2.id
+        LEFT JOIN helpdesks_statuses hs ON hd.status_id = hs.id';
+    if (isset($_GET['from'], $_GET['to'])) {
+        $from = $conn->real_escape_string($_GET['from']);
+        $to = $conn->real_escape_string($_GET['to']);
+
+        $fromDate = date('Y-m-d', strtotime($from));
+        $toDate = date('Y-m-d', strtotime($to));
+
+        $table .= " WHERE date_requested BETWEEN '$fromDate' AND '$toDate'";
+    }
+
+    if (isset($_GET['status_id'])) {
+        $statusId = $conn->real_escape_string($_GET['status_id']);
+
+        $table .= isset($fromDate, $toDate) ? " AND status_id = $statusId" : " WHERE status_id = $statusId";
+    }
+    $table .= ') reports';
 
     $columns = array(
         array('db' => 'request_number', 'dt' => 0),
