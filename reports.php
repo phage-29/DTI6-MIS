@@ -334,6 +334,32 @@
                         <input type="date" class="form-control" id="to" name="to"
                           value="<?= isset($_GET['to']) ? $_GET['to'] : date('Y-m-d') ?>">
                       </div>
+                      <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                          var fromInput = document.getElementById("from");
+                          var toInput = document.getElementById("to");
+
+                          var currentDate = new Date().toISOString().split('T')[0];
+
+                          var defaultFrom = '<?= isset($_GET['from']) ? $_GET['from'] : date('Y-m-01') ?>';
+                          var defaultTo = '<?= isset($_GET['to']) ? $_GET['to'] : date('Y-m-d') ?>';
+
+                          fromInput.value = defaultFrom;
+                          toInput.value = defaultTo;
+
+                          fromInput.addEventListener('change', function () {
+                            if (fromInput.value > toInput.value) {
+                              toInput.value = fromInput.value;
+                            }
+                          });
+
+                          toInput.addEventListener('change', function () {
+                            if (toInput.value < fromInput.value) {
+                              fromInput.value = toInput.value;
+                            }
+                          });
+                        });
+                      </script>
                       <div class="mb-3">
                         <label for="status_id" class="form-label">Status</label>
                         <select class="form-select" id="status_id" name="status_id">
