@@ -19,12 +19,15 @@ require_once "assets/components/templates/header.php";
                     </div><!-- End Logo -->
 
                     <div class="card">
-                        <div class="card-header row ">
-                            <p class="col-lg-6">Request No.: <br><strong id="request_no"></strong></p>
-                            <p class="col-lg-6">Request Type: <br><strong id="request_type"></strong></p>
-                            <p class="col-lg-6">Category/Sub Category: <br><strong id="category"></strong></p>
-                            <p class="col-lg-6">Date Requested: <br><strong id="date_requested"></strong></p>
-                            <p class="col-lg-12">Defect/ Request/ Complaint: <br><strong id="complaint"></strong></p>
+                        <div class="card-header">
+                            <div class="row">
+                                <p class="col-lg-6">Request No.: <br><strong id="request_no"></strong></p>
+                                <p class="col-lg-6">Request Type: <br><strong id="request_type"></strong></p>
+                                <p class="col-lg-6">Category/Sub Category: <br><strong id="category"></strong></p>
+                                <p class="col-lg-6">Date Requested: <br><strong id="date_requested"></strong></p>
+                                <p class="col-lg-12">Defect/ Request/ Complaint: <br><strong id="complaint"></strong>
+                                </p>
+                            </div>
                         </div>
 
                         <div class="card-body">
