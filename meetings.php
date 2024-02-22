@@ -271,14 +271,21 @@
             jQuery(document).ready(function () {
               var calendarEl = $("#zoom-calendar")[0];
 
+              var initialView = $(window).width() < 768 ? "listMonth" : "dayGridMonth";
+
               var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: "dayGridMonth",
+                initialView: initialView,
                 events: 'assets/components/includes/meetings.php',
                 dayMaxEventRows: 1,
                 eventTimeFormat: {
                   hour: '2-digit',
                   minute: '2-digit',
                   hour12: true
+                },
+                headerToolbar: {
+                  start: 'title',
+                  center: '',
+                  end: 'prev,next'
                 },
                 displayEventEnd: true,
                 eventClick: function (info) {
