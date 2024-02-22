@@ -312,35 +312,35 @@ if (isset($responseData)) {
 
                     $result = $conn->execute_query($query, [$id_number, $first_name, $middle_name, $last_name, $position, $division_id, $client_type_id, $date_birth, $phone, $email, $sex, $address, $username, $hashed_password, $temp_password, $role_id, $pwd, $active]);
 
-                    $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$conn->insert_id]);
-                    $row = $query->fetch_object();
+                    // $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$conn->insert_id]);
+                    // $row = $query->fetch_object();
 
-                    $Subject = "DTI6 MIS | Account Credentials";
+                    // $Subject = "DTI6 MIS | Account Credentials";
 
-                    $Message = "";
-                    $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
-                    $Message .= "<hr>";
-                    $Message .= "<div>";
-                    $Message .= "<div>Good day!,</div>";
-                    $Message .= "<br>";
-                    $Message .= "<div>Your account has been successfully created. Below are the login credentials for your account:</div>";
-                    $Message .= "<br><br>";
-                    $Message .= "<div>Username: " . $username . "</div>";
-                    $Message .= "<div>Password: " . $temp_password . "</div>";
-                    $Message .= "<br><br>";
-                    $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
-                    $Message .= "<div>To access your account, please <a href='http://r6itbpm.site/DTI6-MIS/index.php'>click here</a>. Thank you.</div>";
-                    $Message .= "<br><br>";
-                    $Message .= "<div>Best Regards,</div>";
-                    $Message .= "<br>";
-                    $Message .= "<div>DTI6 MIS Administrator</div>";
-                    $Message .= "<div>IT Support Staff</div>";
-                    $Message .= "<div>DTI Region VI</div>";
-                    $Message .= "<br><hr>";
-                    $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
-                    $Message .= "</div>";
+                    // $Message = "";
+                    // $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
+                    // $Message .= "<hr>";
+                    // $Message .= "<div>";
+                    // $Message .= "<div>Good day!,</div>";
+                    // $Message .= "<br>";
+                    // $Message .= "<div>Your account has been successfully created. Below are the login credentials for your account:</div>";
+                    // $Message .= "<br><br>";
+                    // $Message .= "<div>Username: " . $username . "</div>";
+                    // $Message .= "<div>Password: " . $temp_password . "</div>";
+                    // $Message .= "<br><br>";
+                    // $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
+                    // $Message .= "<div>To access your account, please <a href='http://r6itbpm.site/DTI6-MIS/index.php'>click here</a>. Thank you.</div>";
+                    // $Message .= "<br><br>";
+                    // $Message .= "<div>Best Regards,</div>";
+                    // $Message .= "<br>";
+                    // $Message .= "<div>DTI6 MIS Administrator</div>";
+                    // $Message .= "<div>IT Support Staff</div>";
+                    // $Message .= "<div>DTI Region VI</div>";
+                    // $Message .= "<br><hr>";
+                    // $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
+                    // $Message .= "</div>";
 
-                    sendEmail($row->email, $Subject, $Message);
+                    // sendEmail($row->email, $Subject, $Message);
 
                     $response['status'] = 'success';
                     $response['message'] = 'User inserted successful!';
