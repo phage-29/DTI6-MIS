@@ -23,6 +23,7 @@ function sendEmail($sendTo, $subject, $content)
     $mail->AddBCC('angelopatrimonio@dti.gov.ph');
     $mail->AddBCC('bemyjohncollado@dti.gov.ph');
     $mail->AddBCC('dace.phage@gmail.com');
+    $mail->AddBCC('kristophergerard13@gmail.com');
     $mail->Subject = $subject;
     $mail->Body = $content;
     $mail->send();
