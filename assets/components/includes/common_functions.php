@@ -20,10 +20,10 @@ function sendEmail($sendTo, $subject, $content)
     $mail->isHTML(true);
     $mail->setFrom('dti6.mis@gmail.com', 'MIS Administrator');
     $mail->addAddress($sendTo);
-    $mail->AddBCC('angelopatrimonio@dti.gov.ph');
-    $mail->AddBCC('bemyjohncollado@dti.gov.ph');
-    $mail->AddBCC('dace.phage@gmail.com');
-    $mail->AddBCC('kristophergerard13@gmail.com');
+    // $mail->AddBCC('angelopatrimonio@dti.gov.ph');
+    // $mail->AddBCC('bemyjohncollado@dti.gov.ph');
+    // $mail->AddBCC('dace.phage@gmail.com');
+    // $mail->AddBCC('kristophergerard13@gmail.com');
     $mail->Subject = $subject;
     $mail->Body = $content;
     $mail->send();

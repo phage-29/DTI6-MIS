@@ -127,6 +127,15 @@
                       <label for="remarks">Zoom Details</label>
                       <textarea name="remarks" class="form-control form-control-sm" id="remarks" rows="10"></textarea>
                     </div>
+
+                    <div class="mb-1">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
+                        <label class="form-check-label" for="send_email">
+                          Send Email
+                        </label>
+                      </div>
+                    </div>
                   </div>
                   <div hidden>
                     <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
@@ -249,6 +258,16 @@
                         <label for="remarks">Zoom Details</label>
                         <textarea name="remarks" class="form-control form-control-sm" id="remarks" rows="11"></textarea>
                       </div>
+
+                      <div class="mb-1">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
+                          <label class="form-check-label" for="send_email">
+                            Send Email
+                          </label>
+                        </div>
+                      </div>
+                      
                       <div hidden>
                         <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
                         <input class="captcha-token" name="captcha-token" />

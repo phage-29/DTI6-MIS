@@ -235,9 +235,25 @@
                         id="datetime_start" />
                     </div>
                     <div class="mb-1">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="pull_out" name="pull_out">
+                        <label class="form-check-label" for="pull_out">
+                          Device pulled out
+                        </label>
+                      </div>
+                    </div>
+                    <div class="mb-1">
                       <label for="datetime_end">Date and time ended</label>
                       <input name="datetime_end" type="datetime-local" class="form-control form-control-sm"
                         id="datetime_end" />
+                    </div>
+                    <div class="mb-1" id="turnOver">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="turn_over" name="turn_over">
+                        <label class="form-check-label" for="turn_over">
+                          Device turned over
+                        </label>
+                      </div>
                     </div>
                     <div class="mb-1">
                       <label for="diagnosis">Diagnosis and/or action taken</label>
@@ -298,7 +314,34 @@
                         ?>
                       </select>
                     </div>
+                    <div class="mb-3">
+                      <label for="approved_by">Approved by</label>
+                      <select name="approved_by" class="form-select form-select-sm" id="approved_by">
+                        <option value="" selected disabled>--</option>
+                        <?php
+                        $query = $conn->query("SELECT * FROM users WHERE role_id = 1");
+                        while ($row = $query->fetch_object()) {
+                          ?>
+                          <option value="<?= $row->id ?>">
+                            <?= $row->first_name ?>
+                            <?= $row->last_name ?>
+                          </option>
+                          <?php
+                        }
+                        ?>
+                      </select>
+                    </div>
+
+                    <div class="mb-1">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
+                        <label class="form-check-label" for="send_email">
+                          Send Email
+                        </label>
+                      </div>
+                    </div>
                   </div>
+
                   <div hidden>
                     <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
                     <input class="captcha-token" name="captcha-token" />
@@ -556,9 +599,25 @@
                         id="datetime_start" disabled />
                     </div>
                     <div class="mb-1">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="pull_out" name="pull_out" disabled />
+                        <label class="form-check-label" for="pull_out">
+                          Device pulled out
+                        </label>
+                      </div>
+                    </div>
+                    <div class="mb-1">
                       <label for="datetime_end">Date and time ended</label>
                       <input name="datetime_end" type="datetime-local" class="form-control form-control-sm"
                         id="datetime_end" disabled />
+                    </div>
+                    <div class="mb-1" id="turnOver">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="turn_over" name="turn_over" disabled />
+                        <label class="form-check-label" for="turn_over">
+                          Device turned over
+                        </label>
+                      </div>
                     </div>
                     <div class="mb-1">
                       <label for="diagnosis">Diagnosis and/or action taken</label>
@@ -852,9 +911,27 @@
                     </div>
 
                     <div class="mb-1">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="pull_out" name="pull_out">
+                        <label class="form-check-label" for="pull_out">
+                          Device pulled out
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="mb-1">
                       <label for="datetime_end">Date and time ended</label>
                       <input name="datetime_end" type="datetime-local" class="form-control form-control-sm"
                         id="datetime_end" />
+                    </div>
+
+                    <div class="mb-1" id="turnOver">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="turn_over" name="turn_over">
+                        <label class="form-check-label" for="turn_over">
+                          Device turned over
+                        </label>
+                      </div>
                     </div>
 
                     <div class="mb-1">
@@ -919,6 +996,15 @@
                         }
                         ?>
                       </select>
+                    </div>
+
+                    <div class="mb-1">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
+                        <label class="form-check-label" for="send_email">
+                          Send Email
+                        </label>
+                      </div>
                     </div>
 
                     <div hidden>
@@ -1290,7 +1376,9 @@
                       $('#viewModal #serviced_by').val(response.serviced_by);
                       $('#viewModal #approved_by').val(response.approved_by);
                       $('#viewModal #datetime_start').val(response.datetime_start);
+                      $('#viewModal #pull_out').prop("checked", response.pull_out == 1 ? true : false);
                       $('#viewModal #datetime_end').val(response.datetime_end);
+                      $('#viewModal #turn_over').prop("checked", response.turn_over == 1 ? true : false);
                       $('#viewModal #diagnosis').html(response.diagnosis);
                       $('#viewModal #remarks').html(response.remarks);
                       $('#viewModalLabel').html(response.request_number + ' (<span class="text-' + response.color + '">' + response.status + '</span>)');
@@ -1327,7 +1415,9 @@
                       $('#editModal #serviced_by').val(response.serviced_by);
                       $('#editModal #approved_by').val(response.approved_by);
                       $('#editModal #datetime_start').val(response.datetime_start);
+                      $('#editModal #pull_out').prop("checked", response.pull_out == 1 ? true : false);
                       $('#editModal #datetime_end').val(response.datetime_end);
+                      $('#editModal #turn_over').prop("checked", response.turn_over == 1 ? true : false);
                       $('#editModal #diagnosis').html(response.diagnosis);
                       $('#editModal #remarks').html(response.remarks);
                       $('#editModalLabel').html(response.request_number + ' (<span class="text-' + response.color + '">' + response.status + '</span>)');

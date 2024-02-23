@@ -69,6 +69,8 @@ if (isset($_POST['edit_helpdesk'])) {
         h.remarks,
         h.created_at,
         h.updated_at,
+        h.pull_out,
+        h.turn_over,
         c2.id AS csf_id,
         c2.crit1,
         c2.crit2,

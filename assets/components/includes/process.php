@@ -312,36 +312,37 @@ if (isset($responseData)) {
 
                     $result = $conn->execute_query($query, [$id_number, $first_name, $middle_name, $last_name, $position, $division_id, $client_type_id, $date_birth, $phone, $email, $sex, $address, $username, $hashed_password, $temp_password, $role_id, $pwd, $active]);
 
-                    // $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$conn->insert_id]);
-                    // $row = $query->fetch_object();
+                    if (isset($_POST["send_email"])) {
+                        $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$conn->insert_id]);
+                        $row = $query->fetch_object();
 
-                    // $Subject = "DTI6 MIS | Account Credentials";
+                        $Subject = "DTI6 MIS | Account Credentials";
 
-                    // $Message = "";
-                    // $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
-                    // $Message .= "<hr>";
-                    // $Message .= "<div>";
-                    // $Message .= "<div>Good day!,</div>";
-                    // $Message .= "<br>";
-                    // $Message .= "<div>Your account has been successfully created. Below are the login credentials for your account:</div>";
-                    // $Message .= "<br><br>";
-                    // $Message .= "<div>Username: " . $username . "</div>";
-                    // $Message .= "<div>Password: " . $temp_password . "</div>";
-                    // $Message .= "<br><br>";
-                    // $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
-                    // $Message .= "<div>To access your account, please <a href='http://r6itbpm.site/DTI6-MIS/index.php'>click here</a>. Thank you.</div>";
-                    // $Message .= "<br><br>";
-                    // $Message .= "<div>Best Regards,</div>";
-                    // $Message .= "<br>";
-                    // $Message .= "<div>DTI6 MIS Administrator</div>";
-                    // $Message .= "<div>IT Support Staff</div>";
-                    // $Message .= "<div>DTI Region VI</div>";
-                    // $Message .= "<br><hr>";
-                    // $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
-                    // $Message .= "</div>";
+                        $Message = "";
+                        $Message .= "<p><img src='https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png' alt='' width='58' height='55'></p>";
+                        $Message .= "<hr>";
+                        $Message .= "<div>";
+                        $Message .= "<div>Good day!,</div>";
+                        $Message .= "<br>";
+                        $Message .= "<div>Your account has been successfully created. Below are the login credentials for your account:</div>";
+                        $Message .= "<br><br>";
+                        $Message .= "<div>Username: " . $username . "</div>";
+                        $Message .= "<div>Password: " . $temp_password . "</div>";
+                        $Message .= "<br><br>";
+                        $Message .= "<div>For security reasons, we recommend that you change your password after your first login.</div>";
+                        $Message .= "<div>To access your account, please <a href='http://r6itbpm.site/DTI6-MIS/index.php'>click here</a>. Thank you.</div>";
+                        $Message .= "<br><br>";
+                        $Message .= "<div>Best Regards,</div>";
+                        $Message .= "<br>";
+                        $Message .= "<div>DTI6 MIS Administrator</div>";
+                        $Message .= "<div>IT Support Staff</div>";
+                        $Message .= "<div>DTI Region VI</div>";
+                        $Message .= "<br><hr>";
+                        $Message .= "<div>&copy; Copyright&nbsp;<strong>DTI6 MIS&nbsp;</strong>2024. All Rights Reserved</div>";
+                        $Message .= "</div>";
 
-                    // sendEmail($row->email, $Subject, $Message);
-
+                        sendEmail($row->email, $Subject, $Message);
+                    }
                     $response['status'] = 'success';
                     $response['message'] = 'User inserted successful!';
                     $response['redirect'] = 'users.php';
@@ -454,7 +455,9 @@ if (isset($responseData)) {
         $serviced_by = validate('serviced_by', $conn);
         $approved_by = validate('approved_by', $conn);
         $datetime_start = validate('datetime_start', $conn);
+        $pull_out = isset($_POST['pull_out']) ? 1 : 0;
         $datetime_end = validate('datetime_end', $conn);
+        $turn_over = isset($_POST['turn_over']) ? 1 : 0;
         $diagnosis = validate('diagnosis', $conn);
         $remarks = validate('remarks', $conn);
 
@@ -463,10 +466,10 @@ if (isset($responseData)) {
         $request_number = 'REQ-' . $Ym . '-' . str_pad($result->num_rows + 1, 3, '0', STR_PAD_LEFT);
 
         $query = "INSERT 
-    INTO helpdesks (`request_number`,`requested_by`,`date_requested`, `request_type_id`, `category_id`, `sub_category_id`, `complaint`, `datetime_preferred`,`status_id`,`property_number`,`priority_level_id`,`repair_type_id`,`repair_class_id`,`medium_id`,`assigned_to`,`serviced_by`,`approved_by`,`datetime_start`,`datetime_end`,`diagnosis`,`remarks`) 
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    INTO helpdesks (`request_number`,`requested_by`,`date_requested`, `request_type_id`, `category_id`, `sub_category_id`, `complaint`, `datetime_preferred`,`status_id`,`property_number`,`priority_level_id`,`repair_type_id`,`repair_class_id`,`medium_id`,`assigned_to`,`serviced_by`,`approved_by`,`datetime_start`,`pull_out`,`datetime_end`,`turn_over`,`diagnosis`,`remarks`) 
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
-            $result = $conn->execute_query($query, [$request_number, $requested_by, $date_requested, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $property_number, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $datetime_end, $diagnosis, $remarks]);
+            $result = $conn->execute_query($query, [$request_number, $requested_by, $date_requested, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $property_number, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $pull_out, $datetime_end, $turn_over, $diagnosis, $remarks]);
 
             if (isset($_FILES['files'])) {
                 $fileCount = count($_FILES['files']['name']);
@@ -494,47 +497,48 @@ if (isset($responseData)) {
                     }
                 }
             }
-            if ($_SESSION['role'] == 'Employee') {
-                $query = $conn->execute_query("SELECT
-            h.*,
-            CONCAT(
-                u1.first_name, ' ', u1.last_name
-            ) AS requested_by,
-            u1.email,
-            rt.request_type,
-            c.category,
-            sc.sub_category,
-            hs.status,
-            pl.priority_level,
-            rtype.repair_type,
-            rclass.repair_class,
-            m.medium,
-            CONCAT(
-                u2.first_name, ' ', u2.last_name
-            ) AS assigned_to,
-            CONCAT(
-                u3.first_name, ' ', u3.last_name
-            ) AS serviced_by,
-            CONCAT(
-                u4.first_name, ' ', u4.last_name
-            ) AS approved_by
-        FROM
-            helpdesks h
-            LEFT JOIN users u1 ON h.requested_by = u1.id
-            LEFT JOIN request_types rt ON h.request_type_id = rt.id
-            LEFT JOIN categories c ON h.category_id = c.id
-            LEFT JOIN sub_categories sc ON h.sub_category_id = sc.id
-            LEFT JOIN helpdesks_statuses hs ON h.status_id = hs.id
-            LEFT JOIN priority_levels pl ON h.priority_level_id = pl.id
-            LEFT JOIN repair_types rtype ON h.repair_type_id = rtype.id
-            LEFT JOIN repair_classes rclass ON h.repair_class_id = rclass.id
-            LEFT JOIN mediums m ON h.medium_id = m.id
-            LEFT JOIN users u2 ON h.assigned_to = u2.id
-            LEFT JOIN users u3 ON h.serviced_by = u3.id
-            LEFT JOIN users u4 ON h.approved_by = u4.id
-        WHERE 
-            h.id = ?", [$conn->insert_id]);
-                $row = $query->fetch_object();
+            if ($_SESSION['role'] == 'Employee' || isset($_POST["send_email"])) {
+                $query = "SELECT
+                    h.*,
+                    CONCAT(
+                        u1.first_name, ' ', u1.last_name
+                    ) AS requested_by,
+                    u1.email,
+                    rt.request_type,
+                    c.category,
+                    sc.sub_category,
+                    hs.status,
+                    pl.priority_level,
+                    rtype.repair_type,
+                    rclass.repair_class,
+                    m.medium,
+                    CONCAT(
+                        u2.first_name, ' ', u2.last_name
+                    ) AS assigned_to,
+                    CONCAT(
+                        u3.first_name, ' ', u3.last_name
+                    ) AS serviced_by,
+                    CONCAT(
+                        u4.first_name, ' ', u4.last_name
+                    ) AS approved_by
+                FROM
+                    helpdesks h
+                    LEFT JOIN users u1 ON h.requested_by = u1.id
+                    LEFT JOIN request_types rt ON h.request_type_id = rt.id
+                    LEFT JOIN categories c ON h.category_id = c.id
+                    LEFT JOIN sub_categories sc ON h.sub_category_id = sc.id
+                    LEFT JOIN helpdesks_statuses hs ON h.status_id = hs.id
+                    LEFT JOIN priority_levels pl ON h.priority_level_id = pl.id
+                    LEFT JOIN repair_types rtype ON h.repair_type_id = rtype.id
+                    LEFT JOIN repair_classes rclass ON h.repair_class_id = rclass.id
+                    LEFT JOIN mediums m ON h.medium_id = m.id
+                    LEFT JOIN users u2 ON h.assigned_to = u2.id
+                    LEFT JOIN users u3 ON h.serviced_by = u3.id
+                    LEFT JOIN users u4 ON h.approved_by = u4.id
+                WHERE 
+                    h.id = ?";
+                $result = $conn->execute_query($query, [$conn->insert_id]);
+                $row = $result->fetch_object();
 
                 $Subject = "DTI6 MIS | " . $row->request_number;
 
@@ -602,15 +606,17 @@ if (isset($responseData)) {
         $serviced_by = validate('serviced_by', $conn);
         $approved_by = validate('approved_by', $conn);
         $datetime_start = validate('datetime_start', $conn);
+        $pull_out = isset($_POST['pull_out']) ? 1 : 0;
         $datetime_end = validate('datetime_end', $conn);
+        $turn_over = isset($_POST['turn_over']) ? 1 : 0;
         $diagnosis = validate('diagnosis', $conn);
         $remarks = validate('remarks', $conn);
 
         $query = "UPDATE helpdesks
-    SET requested_by = ?, request_type_id = ?, category_id = ?, sub_category_id = ?, complaint = ?, datetime_preferred = ?, status_id = ?, property_number = ?, priority_level_id = ?, repair_type_id = ?, repair_class_id = ?, medium_id = ?, assigned_to = ?, serviced_by = ?, approved_by = ?, datetime_start = ?, datetime_end = ?, diagnosis = ?, remarks = ?
+    SET requested_by = ?, request_type_id = ?, category_id = ?, sub_category_id = ?, complaint = ?, datetime_preferred = ?, status_id = ?, property_number = ?, priority_level_id = ?, repair_type_id = ?, repair_class_id = ?, medium_id = ?, assigned_to = ?, serviced_by = ?, approved_by = ?, datetime_start = ?, pull_out = ?, datetime_end = ?, turn_over = ?, diagnosis = ?, remarks = ?
     WHERE id = ?";
         try {
-            $result = $conn->execute_query($query, [$requested_by, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $property_number, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $datetime_end, $diagnosis, $remarks, $id]);
+            $result = $conn->execute_query($query, [$requested_by, $request_type_id, $category_id, $sub_category_id, $complaint, $datetime_preferred, $status_id, $property_number, $priority_level_id, $repair_type_id, $repair_class_id, $medium_id, $assigned_to, $serviced_by, $approved_by, $datetime_start, $pull_out, $datetime_end, $turn_over, $diagnosis, $remarks, $id]);
 
             $query = $conn->execute_query("SELECT
             h.*,
@@ -653,7 +659,7 @@ if (isset($responseData)) {
             h.id = ?", [$id]);
             $row = $query->fetch_object();
 
-            if ($row->status_id > $row->sent_id) {
+            if ($row->status_id > $row->sent_id || isset($_POST["send_email"])) {
                 $Subject = "DTI6 MIS | " . $row->request_number . '(' . $row->status . ')';
 
                 $Message = "";
@@ -773,7 +779,7 @@ if (isset($responseData)) {
 
                 $query = $conn->execute_query("SELECT * FROM users WHERE id = ?", [$requested_by]);
                 $row = $query->fetch_object();
-                if ($status_id == 2) {
+                if ($status_id == 2 || isset($_POST["send_email"])) {
 
                     $Subject = "DTI6 MIS | " . $meeting_number;
 
@@ -860,7 +866,7 @@ if (isset($responseData)) {
 
             $query = $conn->query("SELECT * FROM meetings m LEFT JOIN users u ON m.requested_by = u.id WHERE m.id = $id");
             $row = $query->fetch_object();
-            if ($status_id == 2) {
+            if ($status_id == 2 || isset($_POST["send_email"])) {
 
                 $Subject = "DTI6 MIS | " . $row->meeting_number;
 

@@ -21,10 +21,10 @@
                     <button class="nav-link active" id="nav-employees-tab" data-bs-toggle="tab"
                       data-bs-target="#nav-employees" type="button" role="tab" aria-controls="nav-employees"
                       aria-selected="true">employees</button>
-                    <button class="nav-link" id="nav-staffs-tab" data-bs-toggle="tab" data-bs-target="#nav-staffs"
+                    <!-- <button class="nav-link" id="nav-staffs-tab" data-bs-toggle="tab" data-bs-target="#nav-staffs"
                       type="button" role="tab" aria-controls="nav-staffs" aria-selected="false">staffs</button>
                     <button class="nav-link" id="nav-officers-tab" data-bs-toggle="tab" data-bs-target="#nav-officers"
-                      type="button" role="tab" aria-controls="nav-officers" aria-selected="false">officers</button>
+                      type="button" role="tab" aria-controls="nav-officers" aria-selected="false">officers</button> -->
                   </div>
                 </nav>
                 <div class="tab-content pt-5" id="nav-tabContent">
@@ -44,7 +44,7 @@
                       </thead>
                     </table>
                   </div>
-                  <div class="tab-pane fade" id="nav-staffs" role="tabpanel" aria-labelledby="nav-staffs-tab" tabindex="0">
+                  <!-- <div class="tab-pane fade" id="nav-staffs" role="tabpanel" aria-labelledby="nav-staffs-tab" tabindex="0">
                     <table id="users3" class="display" style="width:100%;display:none;">
                       <thead>
                         <tr>
@@ -74,7 +74,7 @@
                         </tr>
                       </thead>
                     </table>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -207,12 +207,21 @@
                             <label class="form-check-label" for="active">Active</label>
                           </div>
                         </div>
+
+                        <div class="mb-1 col-lg-12">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
+                            <label class="form-check-label" for="send_email">
+                              Send Email
+                            </label>
+                          </div>
+                        </div>
                         <div hidden>
                           <input name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>" />
                           <input class="captcha-token" name="captcha-token" />
-                        <input name="id" id="id" />
-                        <input name="edit_user" />
-                        <button id="editform"></button>
+                          <input name="id" id="id" />
+                          <input name="edit_user" />
+                          <button id="editform"></button>
                         </div>
                       </form><!-- End user Edit Form -->
 
@@ -351,6 +360,15 @@
                           <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="active" name="active">
                             <label class="form-check-label" for="active">Active</label>
+                          </div>
+                        </div>
+
+                        <div class="mb-1 col-lg-12">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
+                            <label class="form-check-label" for="send_email">
+                              Send Email
+                            </label>
                           </div>
                         </div>
                         <div hidden>
