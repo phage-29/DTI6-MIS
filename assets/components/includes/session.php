@@ -21,7 +21,7 @@ if ($protected == true) {
 
         $_SESSION['last_activity'] = time();
 
-        $query = "SELECT *
+        $query = "SELECT u.*, d.division, d.division_desc, ct.client_type, ct.client_type_desc, r.role, r.role_desc
         FROM users u
         LEFT JOIN divisions d ON u.division_id = d.id
         LEFT JOIN client_types ct ON u.client_type_id = ct.id
