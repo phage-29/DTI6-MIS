@@ -414,12 +414,12 @@
 
                       <div class="mb-1">
                         <label for="date_requested">Date Requested</label>
-                        <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested" required />
+                        <input name="date_requested" type="date" class="form-control form-control-sm" id="date_requested" disabled />
                       </div>
 
                       <div class="mb-1">
                         <label for="requested_by">Requestor</label>
-                        <select name="requested_by" class="form-select form-select-sm" id="requested_by">
+                        <select name="requested_by" class="form-select form-select-sm" id="requested_by" disabled>
                           <option value="" selected disabled>--</option>
                           <?php
                           $query = $conn->query("SELECT * FROM users WHERE role_id = 4 ORDER BY first_name ASC");
@@ -438,23 +438,23 @@
                       <div class="mb-1">
                         <label for="topic">Meeting topic or title</label>
                         <div class="text-end">
-                          <textarea name="topic" class="form-control form-control-sm" id="topic" maxlength="150" required></textarea>
+                          <textarea name="topic" class="form-control form-control-sm" id="topic" maxlength="150" disabled></textarea>
                         </div>
                       </div>
 
                       <div class="mb-1">
                         <label for="date_scheduled">Date of schedule</label>
-                        <input name="date_scheduled" type="date" class="form-control form-control-sm" id="date_scheduled" min="<?= date('Y-m-d') ?>" required />
+                        <input name="date_scheduled" type="date" class="form-control form-control-sm" id="date_scheduled" min="<?= date('Y-m-d') ?>" disabled />
                       </div>
 
                       <div class="mb-1">
                         <label for="time_start">Time of schedule starts</label>
-                        <input name="time_start" type="time" class="form-control form-control-sm" id="time_start" required />
+                        <input name="time_start" type="time" class="form-control form-control-sm" id="time_start" disabled />
                       </div>
 
                       <div class="mb-1">
                         <label for="time_end">Time of schedule ends</label>
-                        <input name="time_end" type="time" class="form-control form-control-sm" id="time_end" required />
+                        <input name="time_end" type="time" class="form-control form-control-sm" id="time_end" disabled />
                       </div>
 
                       <div hidden>
