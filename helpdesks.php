@@ -260,7 +260,7 @@
                       <textarea name="diagnosis" type="date" class="form-control form-control-sm" id="diagnosis"></textarea>
                     </div>
                     <div class="mb-1">
-                      <label for="remarks">Remarks and/or reccomendation</label>
+                      <label for="remarks">Remarks and/or recommendation</label>
                       <textarea name="remarks" type="date" class="form-control form-control-sm" id="remarks"></textarea>
                     </div>
                     <div class="mb-1">
@@ -298,23 +298,6 @@
                       </select>
                     </div>
                     <div class="mb-1">
-                      <label for="approved_by">Approved by</label>
-                      <select name="approved_by" class="form-select form-select-sm" id="approved_by">
-                        <option value="" selected disabled>--</option>
-                        <?php
-                        $query = $conn->query("SELECT * FROM users WHERE role_id = 1");
-                        while ($row = $query->fetch_object()) {
-                          ?>
-                          <option value="<?= $row->id ?>">
-                            <?= $row->first_name ?>
-                            <?= $row->last_name ?>
-                          </option>
-                          <?php
-                        }
-                        ?>
-                      </select>
-                    </div>
-                    <div class="mb-3">
                       <label for="approved_by">Approved by</label>
                       <select name="approved_by" class="form-select form-select-sm" id="approved_by">
                         <option value="" selected disabled>--</option>

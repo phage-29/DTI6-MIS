@@ -232,7 +232,7 @@ if (isset($_GET['users4'])) {
         users AS u
         LEFT JOIN roles AS r ON u.role_id = r.id
         LEFT JOIN divisions AS d ON u.division_id = d.id
-    WHERE u.role_id = '4') getusers";
+    WHERE u.role_id != '1') getusers";
 
     $columns = array(
         array('db' => 'id_number', 'dt' => 0),
