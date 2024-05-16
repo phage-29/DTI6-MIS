@@ -34,7 +34,17 @@ require_once "assets/components/includes/session.php";
   <script src="assets/vendor/fullcalendar/index.global.min.js"></script>
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/print-js/dist/print.js"></script>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FX8D7BF4SZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-FX8D7BF4SZ');
+  </script>
+
   <script src="https://www.google.com/recaptcha/api.js?render=<?= sitekey ?>"></script>
   <script>
     window.sitekey = "<?= sitekey ?>";
